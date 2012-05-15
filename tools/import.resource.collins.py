@@ -56,7 +56,7 @@ def crawl_freq_pages():
             page.delete()
             print i, 'del', page.en
     cursor = tokens.Token.find({
-        'trash': False,
+        'is_trash': False,
         'is_phrase': False,
 #        'courses': {'$in': ['CET4', 'CET6', 'GRE', 'TOEFL', "TOEIC"]}
     })

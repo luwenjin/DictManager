@@ -31,7 +31,7 @@
             {% else %}
         <li>
             {% endif %}
-            <a href="javascript:change_param('token_id', '{{_token._id}}')" {%if _token.trash%}disabled{%endif%}>{{_token.en}}</a>
+            <a href="javascript:change_param('token_id', '{{_token._id}}')" {%if _token.is_trash%}disabled{%endif%}>{{_token.en}}</a>
         </li>
         {% endfor %}
     </ul>

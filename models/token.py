@@ -10,16 +10,16 @@ class Token(Document):
     __collection__ = 'tokens'
     structure = {
         'en': unicode,
-        'low': unicode, # 小写的en
+        'low': unicode, # lower case 'en', auto modify on save
         'ph_en': unicode,
         'ph_us': unicode,
-        'exp_core': unicode,
+        'exp_core': unicode, #c core expltion
         'exps_cn': [{'POSs': [unicode], 'text': unicode}],
-        'is_phrase': bool,
-        'courses': [unicode], # 哪些课程有这个单词？
-        'modified_at': datetime,
-        'created_at': datetime,
-        'trash': bool, # 对于某些垃圾词，为防止重复导入，不物理删除，但打上标记
+        'is_phrase': bool, #auto modify on save
+        'courses': [unicode], # course names
+        'modified_at': datetime, #auto modify on save
+        'created_at': datetime, #auto modify on save
+        'is_trash': bool, # 对于某些垃圾词，为防止重复导入，不物理删除，但打上标记
         'last_editor': unicode,
         'note': unicode, #备注字段
         'src': unicode,
@@ -30,7 +30,7 @@ class Token(Document):
         'ph_us': u'',
         'exps_cn': [],
         'exp_core': u'',
-        'trash': False,
+        'is_trash': False,
         'note': '',
         'last_editor': None,
         'mark': False,
@@ -40,7 +40,7 @@ class Token(Document):
         {'fields': ['low']},
         {'fields': ['is_phrase']},
         {'fields': ['courses']},
-        {'fields': ['trash']},
+        {'fields': ['is_trash']},
         {'fields': ['mark']},
     ]
     use_dot_notation = True
@@ -58,7 +58,7 @@ class Token(Document):
         if not old_token:
             old_token = tokens.Token()
             old_token.en = old_en
-            old_token.trash = True
+            old_token.is_trash = True
             old_token.save()
         return True
 
