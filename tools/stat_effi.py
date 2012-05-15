@@ -1,4 +1,5 @@
 #coding:utf-8
+"""用来统计算法的效率"""
 import sys
 import os
 parent_path = os.path.split(os.path.split(os.path.abspath('.'))[0])[0]
