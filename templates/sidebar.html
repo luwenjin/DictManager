@@ -1,0 +1,43 @@
+{% if session.role == 'admin' %}
+    <select class="span1" name="course_select" id="course_select">
+        <option>ALL</option>
+        {% for course in sidebar.course_list %}
+        <option>{{course}}</option>
+        {% endfor %}
+    </select>
+
+    <select class="span2" name="flaw_select" id="flaw_select">
+        <option>ALL</option>
+        {% for flaw in sidebar.flaw_list %}
+        <option>{{flaw}}</option>
+        {% endfor %}
+    </select>
+
+    <select class="span2" name="editor_select" id="editor_select">
+        <option>all editors</option>
+        {% for editor in sidebar.editor_list %}
+        <option>{{editor}}</option>
+        {% endfor %}
+    </select>
+{% endif %}
+
+
+    <input id="search_word" value="{{search_word}}">
+
+    <ul id="token_list" class="unstyled">
+        {% for _token in sidebar.token_list %}
+            {% if _token.en == token.en %}
+        <li class="active">
+            {% else %}
+        <li>
+            {% endif %}
+            <a href="javascript:change_param('token_id', '{{_token._id}}')" {%if _token.trash%}disabled{%endif%}>{{_token.en}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% from 'macros.html' import pagination %}
+    {{ pagination( sidebar.pager.current, sidebar.pager.total ) }}
+
+<script type="text/javascript" src="/static/js/sidebar.js"></script>
+

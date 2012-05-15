@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<form id="sentences_form" class="form-horizontal" method="POST" action="/sentences">
+    <fieldset>
+        <input type="hidden" name="token_id" value="{{token._id}}">
+        <input type="hidden" name="course" value="{{course}}">
+        <h2>
+            {% set foreign = token.foreign %}
+            “{{foreign}}”的例句
+            <small>{{ course }}</small></h2>
+        <table class="table">
+            {% for sentence in sentences %}
+            <tr {#{% if banned %}class="banned"{% endif %} #}>
+                <td>
+                    {#
+                    {% set btn_class = '' %}
+                    {% set banned_courses = sentence.get_banned_courses(foreign) %}
+                    {% if banned_courses|length ==0 %}
+                        {% set btn_class = 'btn-success' %}
+                    {% endif %}
+                    <a href="javascript:void(0)" class="all btn btn-small {{btn_class}}">ALL</a>
+                    #}
+                </td>
+                <td>
+                    <input type="hidden" name="sentence_id" value="{{sentence._id}}">
+                    <b>{{sentence.foreign}}</b><br/>
+                    <span>{{sentence.chinese}}</span><br/>
+                    {#
+                    {% for _course in sidebar.course_list %}
+                    {% set btn_class = '' %}
+                        {% if not sentence.is_banned(foreign, _course) %}
+                            {% set btn_class = 'btn-success' %}
+                        {% endif %}
+                        {% set btn_size = 'btn-mini' %}
+                        {% if _course == course %}
+                            {% set btn_size = 'btn' %}
+                        {% endif %}
+                        <a href="javascript:void(0)" class="course btn {{btn_size}} {{btn_class}}">{{_course}}</a>
+                    {% endfor %}
+                    #}
+                </td>
+            </tr>
+            {% else %}
+            <h1>没有例句</h1>
+            {% endfor %}
+        </table>
+
+
+    </fieldset>
+
+    <!--<div class="form-actions">-->
+        <!--<button type="submit" class="btn btn-primary btn-large">-->
+            <!--<i class="icon-ok icon-white"></i>-->
+            <!--保存-->
+        <!--</button>-->
+    <!--</div>-->
+
+</form>
+{% endblock %}
+
+{% block bottom %}
+<script type="text/javascript" src="/static/js/sentences.js"></script>
+{% endblock %}

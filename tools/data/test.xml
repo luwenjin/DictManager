@@ -1,0 +1,1819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yodaodict>
+<lang>eng</lang>
+<input><![CDATA[up]]></input>
+<return-phrase><![CDATA[$]]></return-phrase>
+                                                                		   <basic>
+	   <type>ee</type>
+           <name>英英释义</name>
+	   <authoritative-dict>
+<word>
+<return-phrase><l><i><![CDATA[up]]></i></l></return-phrase>
+<phone>ʌp</phone>
+<speech><![CDATA[up]]></speech>
+<trs>
+<pos><![CDATA[v.]]></pos>
+<tr>
+<l>
+<i><![CDATA[raise]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[up the ante]]></i>
+</l></f></i></exam>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[adj.]]></pos>
+<tr>
+<l>
+<i><![CDATA[being or moving higher in position or greater in some value; being above a former position or level]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[the anchor is up]]></i>
+<i><![CDATA[the sun is up]]></i>
+<i><![CDATA[he lay face up]]></i>
+<i><![CDATA[he is up by a pawn]]></i>
+<i><![CDATA[the market is up]]></i>
+<i><![CDATA[the corn is up]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[getting higher or more vigorous]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[its an up market]]></i>
+</l></f></i></exam>
+<similar-words>
+<similar><![CDATA[improving]]></similar>
+</similar-words>
+</tr>
+<tr>
+<l>
+<i><![CDATA[extending or moving toward a higher place]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[the up staircase]]></i>
+<i><![CDATA[a general upward movement of fish]]></i>
+</l></f></i></exam>
+<similar-words>
+<similar><![CDATA[upward(a)]]></similar>
+</similar-words>
+</tr>
+<tr>
+<l>
+<i><![CDATA[(usually followed by `on' or `for') in readiness]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[he was up on his homework]]></i>
+<i><![CDATA[had to be up for the game]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[open]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[the windows are up]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[(used of computers) operating properly]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[how soon will the computers be up?]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[used up]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[time is up]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[out of bed]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[up by seven each morning]]></i>
+</l></f></i></exam>
+<similar-words>
+<similar><![CDATA[astir(p)]]></similar>
+</similar-words>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[adv.]]></pos>
+<tr>
+<l>
+<i><![CDATA[spatially or metaphorically from a lower to a higher position]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[look up!]]></i>
+<i><![CDATA[the music surged up]]></i>
+<i><![CDATA[the fragments flew upwards]]></i>
+<i><![CDATA[prices soared upwards]]></i>
+<i><![CDATA[upwardly mobile]]></i>
+</l></f></i></exam>
+<similar-words>
+<similar><![CDATA[upwards]]></similar>
+<similar><![CDATA[upward]]></similar>
+<similar><![CDATA[upwardly]]></similar>
+</similar-words>
+</tr>
+<tr>
+<l>
+<i><![CDATA[to a higher intensity]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[he turned up the volume]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[nearer to the speaker]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[he walked up and grabbed my lapels]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[to a more central or a more northerly place]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[was transferred up to headquarters]]></i>
+<i><![CDATA[up to Canada for a vacation]]></i>
+</l></f></i></exam>
+</tr>
+<tr>
+<l>
+<i><![CDATA[to a later time]]></i></l>
+<exam><i><f><l>
+<i><![CDATA[they moved the meeting date up]]></i>
+<i><![CDATA[from childhood upward]]></i>
+</l></f></i></exam>
+<similar-words>
+<similar><![CDATA[upwards]]></similar>
+<similar><![CDATA[upward]]></similar>
+</similar-words>
+</tr>
+</trs>
+</word>
+<source>
+<url>http://wordnet.princeton.edu</url>
+<name>WordNet</name>
+<copyright></copyright>
+</source>
+</authoritative-dict>
+	   </basic>	
+			   <basic>
+	                <name>英汉翻译</name>
+	   	   <type>ec</type>
+	   	   	   	<simple-dict>
+<word>
+<return-phrase><l><i><![CDATA[up]]></i></l></return-phrase>
+<phone>ʌp</phone>
+<speech><![CDATA[up]]></speech>
+<trs>
+           <tr><l><i><![CDATA[adv. 起来；上涨；向上]]></i></l></tr>
+               <tr><l><i><![CDATA[prep. 在…之上；向…的较高处]]></i></l></tr>
+               <tr><l><i><![CDATA[adj. 涨的；起床的；向上的]]></i></l></tr>
+               <tr><l><i><![CDATA[n. 上升；繁荣]]></i></l></tr>
+    </trs>
+<wfs>
+<wf><name><![CDATA[过去式]]></name><value><![CDATA[upped]]></value></wf>
+<wf><name><![CDATA[过去分词]]></name><value><![CDATA[upped]]></value></wf>
+<wf><name><![CDATA[现在分词]]></name><value><![CDATA[upping]]></value></wf>
+</wfs>
+ </word>
+<source>
+                          <url>http://dict.youdao.com</url>
+        <name>有道词典</name>
+           <copyright></copyright>
+</source>
+</simple-dict>
+	   	   	        <authoritative-dict>
+<word>
+<return-phrase><l><i><![CDATA[up]]></i><i action="sup"><![CDATA[1]]></i></l></return-phrase>
+<phone>ʌp</phone>
+<trs>
+<pos><![CDATA[adv.]]></pos>
+<tr>
+<l><i><![CDATA[向北方；在北方]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[向这边；朝说话人这边]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[由低到高；由弱到强；由轻到响]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[(价格、产量、质量等)由低到高]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[向上；在上面，在高处；在楼上]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[趋向或处于直立姿势]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[起床；起来]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[向发源地，向上游，向中心]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[向较高地位，向较好环境]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[赶上；达到]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[领先，处于领先地位]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[一直保持联系，一直都了解]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[起动；活动；运转]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[情绪激动起来]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[产生；成形]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[封存起，贮藏起；在紧闭状态中]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[集拢起来，收缩起来]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[达到要求点，达到最终点]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[完成了，结束了]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[停下来]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[彻底地；完全地]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[【航海学】向上风]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[[美国口语](鸡尾酒)不加冰块地]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[[用于祈使句]起来]]></i></l>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[prep.]]></pos>
+<tr>
+<l><i><![CDATA[在…上面；向…上面；沿…往上：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[The bus climbed steadily up the road.]]></i></l></f>
+<n><l><i><![CDATA[公共汽车稳定地沿公路向上爬。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[向(高处)；在(高处)：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[They live up the hill.]]></i></l></f>
+<n><l><i><![CDATA[他们住在山上。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[向(更远处)；在(更远处)；沿…而去：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[They walked up the street.]]></i></l></f>
+<n><l><i><![CDATA[他们沿大街走去。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[向…的上游；沿…前进：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[They travelled up the river valley.]]></i></l></f>
+<n><l><i><![CDATA[他们向河流上游地区行进。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[逆向；逆流而上：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[The boat is sailing up the Seine.]]></i></l></f>
+<n><l><i><![CDATA[小船在塞纳河中逆流而上。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[[口语]到；在：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[I'm going up the East Lake in the afternoon.]]></i></l></f>
+<n><l><i><![CDATA[下午我要到东湖去。]]></i></l></n>
+</i>
+</exam>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[adj.]]></pos>
+<tr>
+<l><i><![CDATA[向上的；上行的；上方的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[[口语]知道的；熟悉的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[结束的，终止的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[进行的；发生的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[较高的；高级的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[竖立的，垂直的；举起的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[高出地面的；在地平线以上的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[在空中的；高高的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[醒着的； 起床的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[骑在马上的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[(河水)上涨的；高出岸边的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[建成的，建造的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[面向上的，朝上的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[(道路)正在整修的，路面破损的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[情绪高涨的；兴高采烈的；幸福的，愉快的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[出了岔子的；有问题的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[开往…的；在途中的；运转中的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[准备好的；可供使用的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[上升的；上涨的；增加的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[上年纪的，年迈的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[被起诉的，被告的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[领先的，在…前面的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[得分相等的，平局的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[在考虑中的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[打赌的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[取决于…的，由…决定的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[【计算机】处于良好工作状态的]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[已开始竞选的；已亮相的]]></i></l>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[n.]]></pos>
+<tr>
+<l><i><![CDATA[上升，升高]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[兴旺，繁荣；走运；兴高采烈，心满意足]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[高地；上坡]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[(价格等)上涨]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[[美国俚语]兴奋剂]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[上楼电梯]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[[美国俚语]预期的买主]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[鸿运高照的人]]></i></l>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[vt.]]></pos>
+ <tr>
+<l><i><![CDATA[[口语]]]></i></l>
+
+<tr>
+<l><i><![CDATA[增加；加速：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[to up output]]></i></l></f>
+<n><l><i><![CDATA[增加生产]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[提高；加大(赌注)]]></i></l>
+</tr>
+</tr>
+</trs>
+<trs>
+<pos><![CDATA[vi.]]></pos>
+ <tr>
+<l><i><![CDATA[[口语]]]></i></l>
+
+<tr>
+<l><i><![CDATA[突然开始做某事：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[Then he upped and ran away from home.]]></i></l></f>
+<n><l><i><![CDATA[然后他突然离家出走。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[惊起，跳起：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[She upped and threw the teapot at him.]]></i></l></f>
+<n><l><i><![CDATA[她跳起来，将茶壶向他掷去。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[举起(常与 with 连用)：]]></i></l>
+<exam>
+<i>
+<f><l><i><![CDATA[He upped with his fist.]]></i></l></f>
+<n><l><i><![CDATA[他举起拳头。]]></i></l></n>
+</i>
+</exam>
+</tr>
+<tr>
+<l><i><![CDATA[服用兴奋剂]]></i></l>
+</tr>
+</tr>
+</trs>
+<phrs>
+<i>
+<phr><l><i><![CDATA[(be) up against]]></i></l></phr>
+<des><l><i><![CDATA[[口语]面临，面对；碰上(阻碍、困难等)]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[(be) up against it]]></i></l></phr>
+<des><l><i><![CDATA[碰到极大困难，处境十分困难]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[(be) up and about (或 around)]]></i></l></phr>
+<des><l><i><![CDATA[(病情好转)能起床走动；已经起床]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[be up before]]></i></l></phr>
+<des><l><i><![CDATA[被送交(法院、法官等)，上(法院)]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[(be) up for]]></i></l></phr>
+<tr>
+<l><i><![CDATA[在(选举、任命等中)被提名]]></i></l>
+<l><i><![CDATA[在法庭(受审)，因…受审]]></i></l>
+<l><i><![CDATA[被关押；被监禁]]></i></l>
+<l><i><![CDATA[打算；考虑]]></i></l>
+<l><i><![CDATA[被提出(讨论等)]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[(be) up on (或 in)]]></i></l></phr>
+<des><l><i><![CDATA[[口语]熟悉；精通，擅长]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[have someone up]]></i></l></phr>
+<tr>
+<l><i><![CDATA[把某人请来作客 [亦作 have someone down]]]></i></l>
+<l><i><![CDATA[召见；传唤；对某人起诉]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[not up to much]]></i></l></phr>
+<des><l><i><![CDATA[(身体)不大舒服]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[up and coming]]></i></l></phr>
+<tr>
+<l><i><![CDATA[前途大有希望的]]></i></l>
+<l><i><![CDATA[精力充沛的；精明能干的]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[up and doing]]></i></l></phr>
+<des><l><i><![CDATA[忙碌的；勤快的；精力充沛的；积极肯干的]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[up and down]]></i></l></phr>
+<tr>
+<l><i><![CDATA[一来一往地，来回地]]></i></l>
+<l><i><![CDATA[上上下下；起起伏伏；时好时坏]]></i></l>
+<l><i><![CDATA[各处；到处]]></i></l>
+<l><i><![CDATA[[美国口语] 直截了当地，坦率地]]></i></l>
+<l><i><![CDATA[彻底地；完全地；详细地]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[up hill and down dale]]></i></l></phr>
+<tr>
+<l><i><![CDATA[翻山越谷；山南海北；到处]]></i></l>
+<l><i><![CDATA[不顾一切地，拼命地；坚持不懈地]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[up stage]]></i></l></phr>
+<tr>
+<l><i><![CDATA[[俚语]]]></i></l>
+<l><i><![CDATA[舞台上的显要位置]]></i></l>
+<l><i><![CDATA[自高自大，盛气凌人]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[up till]]></i></l></phr>
+<des><l><i><![CDATA[= up until]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[up to]]></i></l></phr>
+<tr>
+<l><i><![CDATA[[口语]]]></i></l>
+<l><i><![CDATA[正在做；从事，忙于]]></i></l>
+<l><i><![CDATA[胜任，能做；足以应付；适于]]></i></l>
+<l><i><![CDATA[达到(某数量、规格等)]]></i></l>
+<l><i><![CDATA[多达；直到]]></i></l>
+<l><i><![CDATA[[美国英语]该由…决定；由…负责]]></i></l>
+<l><i><![CDATA[接近于…；比得上]]></i></l>
+<l><i><![CDATA[能识破，能看透(诡计等)]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[up to the ears (或 eyes,neck)]]></i></l></phr>
+<des><l><i><![CDATA[深陷于，沉溺于，埋头于；忙于]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[up until]]></i></l></phr>
+<des><l><i><![CDATA[(时间上)一直到]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[up with]]></i></l></phr>
+<tr>
+<l><i><![CDATA[举起；扬起；拿起]]></i></l>
+<l><i><![CDATA[比得上；接近于]]></i></l>
+<l><i><![CDATA[和…并肩而行；赶上]]></i></l>
+</tr>
+</i>
+<i>
+<phr><l><i><![CDATA[well up for]]></i></l></phr>
+<des><l><i><![CDATA[对…满有把握；对…有充分准备]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[(well) up in (或 on)]]></i></l></phr>
+<des><l><i><![CDATA[[口语]熟悉；精通；擅长于]]></i></l></des>
+</i>
+<i>
+<phr><l><i><![CDATA[What's up?]]></i></l></phr>
+<des><l><i><![CDATA[[口语]怎么啦?出了什么事?]]></i></l></des>
+</i>
+</phrs>
+<wfs>
+<wf>
+<pos><![CDATA[vt.]]></pos>
+<i><![CDATA[upped]]></i>
+<i><![CDATA[upping]]></i>
+</wf>
+</wfs>
+</word>
+<word>
+<return-phrase><l><i><![CDATA[up]]></i><i action="sup"><![CDATA[2]]></i></l></return-phrase>
+<phone>ʌp</phone>
+<trs>
+<pos><![CDATA[adj.]]></pos>
+ <tr>
+<l><i><![CDATA[【物理学】上的(指核子的一个组分)]]></i></l>
+
+</tr>
+</trs>
+<wfs>
+</wfs>
+</word>
+<word>
+<return-phrase><l><i><![CDATA[UP]]></i></l></return-phrase>
+<phone></phone>
+<trs>
+<pos><![CDATA[abbr.]]></pos>
+<tr>
+<l><i><![CDATA[underproof]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[United Press(美国)合众社]]></i></l>
+</tr>
+</trs>
+<wfs>
+</wfs>
+</word>
+<word>
+<return-phrase><l><i><![CDATA[up.]]></i></l></return-phrase>
+<phone></phone>
+<trs>
+<pos><![CDATA[abbr.]]></pos>
+<tr>
+<l><i><![CDATA[underproof]]></i></l>
+</tr>
+<tr>
+<l><i><![CDATA[upper]]></i></l>
+</tr>
+</trs>
+<wfs>
+</wfs>
+</word>
+<word>
+<return-phrase><l><i><![CDATA[u.p.]]></i></l></return-phrase>
+<phone></phone>
+<trs>
+<pos><![CDATA[abbr.]]></pos>
+ <tr>
+<l><i><![CDATA[underproof]]></i></l>
+
+</tr>
+</trs>
+<wfs>
+</wfs>
+</word>
+<source>
+<url></url>
+<name><![CDATA[21世纪大英汉词典]]></name>
+<copyright></copyright>
+</source>
+</authoritative-dict>
+	   	   </basic>
+			 <basic>
+	 <type>phrs</type>
+     <name>词组短语</name>	
+	 
+<eng-phrs-dict>
+  <word><![CDATA[up]]></word>
+    <phrs>
+        	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up with]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[拿起，举起；拥护]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up in]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[[口]精通]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up and down]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[上上下下；到处；前前后后；来来往往]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up on]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[熟悉；精通]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up until]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[一直到…为止]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	            	  <headword>
+		<l><i>
+		<![CDATA[up and coming]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[21世纪]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[◎前途大有希望的]]></i></l></tr>
+	    		<tr><l><i><![CDATA[◎精力充沛的；精明能干的]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up and doing]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[敏捷；忙碌；活泼]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+          	<phr>
+	  	  	  <headword>
+		<l><i>
+		<![CDATA[up stage]]>
+		</i></l>
+	  </headword>
+	  <source>
+		<![CDATA[]]>
+          </source>
+	  <trs>
+	    		<tr><l><i><![CDATA[舞台上的显要位置]]></i></l></tr>
+	    	  </trs>	
+	</phr>
+        </phrs>		
+</eng-phrs-dict>
+	 </basic>
+	        	 <basic>
+      <type>syno</type>
+	  <name>同近义词</name>
+          <eng-syno-dict>
+  <word><![CDATA[up]]></word>
+    <synos>	
+  	<syno>
+	  <pos><![CDATA[adv.]]></pos> 	
+          <tran><![CDATA[起来；上涨；向上]]></tran>
+       	  <ws>
+            	                    		    <w><![CDATA[upward]]></w>	
+                                    		    <w><![CDATA[zenithward]]></w>	
+                                  </ws> 
+	</syno>
+  	<syno>
+	  <pos><![CDATA[prep.]]></pos> 	
+          <tran><![CDATA[在…之上；向…的较高处]]></tran>
+       	  <ws>
+            	                    		    <w><![CDATA[onto]]></w>	
+                                    		    <w><![CDATA[upon]]></w>	
+                                  </ws> 
+	</syno>
+  	<syno>
+	  <pos><![CDATA[adj.]]></pos> 	
+          <tran><![CDATA[涨的；起床的；向上的]]></tran>
+       	  <ws>
+            	                    		    <w><![CDATA[upgrade]]></w>	
+                                    		    <w><![CDATA[upward]]></w>	
+                                  </ws> 
+	</syno>
+  	<syno>
+	  <pos><![CDATA[n.]]></pos> 	
+          <tran><![CDATA[上升；繁荣]]></tran>
+       	  <ws>
+            	                    		    <w><![CDATA[prosperity]]></w>	
+                                    		    <w><![CDATA[rise]]></w>	
+                                    		    <w><![CDATA[upgrade]]></w>	
+                                    		    <w><![CDATA[raise]]></w>	
+                                    		    <w><![CDATA[ascension]]></w>	
+                                  </ws> 
+	</syno>
+    </synos>		
+</eng-syno-dict>
+         </basic>
+             	 <basic>
+     <type>collins</type>
+	 <name>kelinsi</name>
+         <collins-dict>
+    <super-headwords>
+                   <super-headword><![CDATA[PREPOSITION, ADVERB, AND ADJECTIVE USES]]></super-headword>
+                   <super-headword><![CDATA[USED IN COMBINATION AS A PREPOSITION]]></super-headword>
+                   <super-headword><![CDATA[VERB USES]]></super-headword>
+            </super-headwords>
+    <collins-entries>
+                    <super-headword><![CDATA[PREPOSITION, ADVERB, AND ADJECTIVE USES]]></super-headword>
+                                <headword><![CDATA[up]]></headword>
+                                                                                                    <basic-entries>
+                                             <basic-entry>
+                                     <headword><![CDATA[up]]></headword>
+                 
+                                                                                
+                                                                       <cet><![CDATA[CET4]]></cet>
+                                                                                                                                                                                                                                                                                                  <ref-ref><![CDATA[Please look at meaning <no>16</no> to see if the expression you are looking for is shown under another headword.]]></ref-ref>
+                                                            <box-ls>
+                                    <box-l><![CDATA[<b>Up</b> is often used with verbs of movement such as "jump" and "pull," and also in phrasal verbs such as "give up" and "wash up."]]></box-l>
+                                </box-ls>
+                                                                                        <box-comms>
+                                    <box-com><![CDATA[介词读作<pr>ʌp</pr>。副词和形容词读作<pr><u>ʌ</u>p</pr>。]]></box-com>
+                                </box-comms>
+                                </basic-entry>
+                                </basic-entries>
+                	<entries>
+            		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PREP]]></pos>
+                                                                <pos-tips><![CDATA[介词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If a person or thing goes <b>up</b> something such as a slope, ladder, or chimney, they move away from the ground or to a higher position. 向上]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[They were climbing up a narrow mountain road.]]></eng-sent>
+                        <chn-sent><![CDATA[他们正爬上一条狭窄的山路。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[I ran up the stairs and saw Alison lying at the top.]]></eng-sent>
+                        <chn-sent><![CDATA[我跑上楼梯，看见艾莉森躺在顶上。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[<b>Up</b> is also an adverb. 向上地]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Finally, after an hour, I went up to Jeremy's room.]]></eng-sent>
+                        <chn-sent><![CDATA[一个小时后，我终于上楼去了杰里米的房间。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[Intense balls of flame rose up into the sky.]]></eng-sent>
+                        <chn-sent><![CDATA[炙热的火球冲上天空。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PREP]]></pos>
+                                                                <pos-tips><![CDATA[介词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If a person or thing is <b>up</b> something such as a ladder or a mountain, they are near the top of it. 靠近…顶端]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[He was up a ladder sawing off the tops of his apple trees.]]></eng-sent>
+                        <chn-sent><![CDATA[他在梯子上锯苹果树的树冠。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[<b>Up</b> is also an adverb. 靠近顶端]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[...a research station perched 4,000 meters up on the lip of the crater.]]></eng-sent>
+                        <chn-sent><![CDATA[…位于海拔4000米，靠近火山口的一个研究站。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[ADV after v]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[You use <b>up</b> to indicate that you are looking or facing in a direction that is away from the ground or toward a higher level. 朝上]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Keep your head up, and look around you from time to time.]]></eng-sent>
+                        <chn-sent><![CDATA[抬起头来,不时地环顾四周。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[ADV after v]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If someone stands <b>up</b>, they move so that they are standing. 起来]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[He stood up and went to the window.]]></eng-sent>
+                        <chn-sent><![CDATA[他站了起来，走向窗户。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[ADV after v]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PREP]]></pos>
+                                                                <pos-tips><![CDATA[介词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you go or look <b>up</b> something such as a road or river, you go or look along it. If you are <b>up</b> a road or river, you are somewhere along it. 沿着]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[A line of tanks came up the road from the city.]]></eng-sent>
+                        <chn-sent><![CDATA[一排坦克由市里沿路开过来了。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[We leaned on the wooden rail of the bridge and looked up the river.]]></eng-sent>
+                        <chn-sent><![CDATA[我们靠在桥的木栏杆上，沿河望去。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[v PREP n]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you are traveling to a particular place, you can say that you are going <b>up</b> to that place, especially if you are going toward the north or to a higher level of land. If you are already in such a place, you can say that you are <b>up</b> there. 向上 (尤指向北方或向高处); 在 (北方或高处)]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[I'll be up to see you tomorrow.]]></eng-sent>
+                        <chn-sent><![CDATA[我明天上来看你。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[He was living up North.]]></eng-sent>
+                        <chn-sent><![CDATA[他当时正住在北方。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                               <registr><![CDATA[mainly SPOKEN]]></registr>
+                                                                                                                                                                                                                                            </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you go <b>up</b> to something or someone, you move to the place where they are and stop there. 往]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[The girl ran the rest of the way across the street and up to the car.]]></eng-sent>
+                        <chn-sent><![CDATA[那个女孩穿过街道，跑完剩下的一段路，来到那辆车旁。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[On the way out a boy of about ten came up on roller skates.]]></eng-sent>
+                        <chn-sent><![CDATA[在出去的路上，一个大约十岁的男孩穿着旱冰鞋滑了过来。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADV]]></pos>
+                                                                <pos-tips><![CDATA[副词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If an amount of something goes <b>up</b>, it increases. If an amount of something is <b>up</b>, it has increased and is at a higher level than it was. 增多; 上涨]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[The total budget went up almost $300 million.]]></eng-sent>
+                        <chn-sent><![CDATA[总预算几乎增加了3亿美元。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[Tourism is up, jobs are up, individual income is up.]]></eng-sent>
+                        <chn-sent><![CDATA[旅游火了，职位多了，个人收入涨了。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADJ]]></pos>
+                                                                <pos-tips><![CDATA[形容词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you are <b>up</b>, you are not in bed. 起床的]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Are you sure you should be up?]]></eng-sent>
+                        <chn-sent><![CDATA[你肯定你该起床了吗?]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[These days they were up at the crack of dawn.]]></eng-sent>
+                        <chn-sent><![CDATA[这些天他们在破晓时就起床。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[v-link ADJ]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADJ]]></pos>
+                                                                <pos-tips><![CDATA[形容词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If a period of time is <b>up</b>, it has come to an end. (时间) 到点的]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[The moment the half-hour was up, Brooks rose.]]></eng-sent>
+                        <chn-sent><![CDATA[半小时一到,布鲁克斯就起来了。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[v-link ADJ]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[ADJ]]></pos>
+                                                                <pos-tips><![CDATA[形容词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If a computer or computer system is <b>up</b>, it is working. Compare <x>down</x>. (计算机或计算机系统) 工作的]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[The new system is up and ready to run.]]></eng-sent>
+                        <chn-sent><![CDATA[新系统工作了，可以开始运行了。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                           <gram><![CDATA[v-link ADJ]]></gram>
+                                                                                                                                                                                                                </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If someone who has been in bed for some time, for example because they have been sick, is <b>up and about</b>, they are now out of bed and living their normal life. 已下床从事正常活动的]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[How are you Lennox? Good to see you up and about.]]></eng-sent>
+                        <chn-sent><![CDATA[伦诺克斯你好吗? 真高兴看到你恢复正常活动了。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you say that <b>something is up</b>, you mean that something is wrong or that something worrying is happening. 出问题]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[What is it then? Something's up, isn't it?]]></eng-sent>
+                        <chn-sent><![CDATA[那么这是怎么回事？出问题了，是不是？]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                               <registr><![CDATA[INFORMAL]]></registr>
+                                                                                                                                                                                                                                            </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you say to someone "<b>What's up?</b>" or if you tell them <b>what's up</b>, you are asking them or telling them what is wrong or what is worrying them. 出了什么事？]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA["What's up?" I said to him.－"Just tired," he answered.]]></eng-sent>
+                        <chn-sent><![CDATA[“出了什么事？”我对他说。－ “只是累了，”他答道。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                               <registr><![CDATA[INFORMAL]]></registr>
+                                                                                                                                                                                                                                            </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you move <b>up and down</b> somewhere, you move there repeatedly in one direction and then in the opposite direction. 上下地; 来来回回]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[I used to jump up and down to keep warm.]]></eng-sent>
+                        <chn-sent><![CDATA[我过去常常上下跳动来保暖。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[I strolled up and down thoughtfully before calling a taxi.]]></eng-sent>
+                        <chn-sent><![CDATA[叫出租车前,我若有所思地来回踱步。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                <headword><![CDATA[up in arms]]></headword>
+                                                                                            
+                                                                                                                                                                                                                                                                                       <sees>
+                                                                                                                                    <seeword><![CDATA[arm]]></seeword>
+                                                                                                                                    </sees>
+                                                                                                                                                        </tran-entry>
+    	                    </entry>
+       	</entries>
+        </collins-entries>
+    <collins-entries>
+                    <super-headword><![CDATA[USED IN COMBINATION AS A PREPOSITION]]></super-headword>
+                                <headword><![CDATA[up]]></headword>
+                            <phonetic><![CDATA[<u>ʌ</u>p]]></phonetic>
+                                                                                                    <basic-entries>
+                                             <basic-entry>
+                                     <headword><![CDATA[up]]></headword>
+                 
+                                                                                
+                                                                                                                                                                                                                                                                                                                              <ref-ref><![CDATA[Please look at meaning <no>9</no> to see if the expression you are looking for is shown under another headword.]]></ref-ref>
+                                                                                                                    </basic-entry>
+                                </basic-entries>
+                	<entries>
+            		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you feel <b>up to</b> doing something, you are well enough to do it. 能胜任]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Those patients who were up to it could move to the adjacent pool.]]></eng-sent>
+                        <chn-sent><![CDATA[身体状况允许的病人可以到旁边的那个游泳池去。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[His fellow directors were not up to running the business without him.]]></eng-sent>
+                        <chn-sent><![CDATA[没有他，其他主管管理不了这家企业。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[To be <b>up to</b> something means to be secretly doing something that you should not be doing. 捣鬼]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Why did you need a room unless you were up to something?]]></eng-sent>
+                        <chn-sent><![CDATA[除非你要捣什么鬼，不然为什么需要一个房间呢？]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[They must have known what their father was up to.]]></eng-sent>
+                        <chn-sent><![CDATA[他们一定已经知道他们的父亲在暗地里做什么。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                               <registr><![CDATA[INFORMAL]]></registr>
+                                                                                                                                                                                                                                            </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you say that it is <b>up to</b> someone to do something, you mean that it is their responsibility to do it. 是…的责任]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[It was up to him to make it right, no matter how long it took.]]></eng-sent>
+                        <chn-sent><![CDATA[不管需要花多长时间，把事情摆平是他的责任。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[I'm sure I'd have spotted him if it had been up to me.]]></eng-sent>
+                        <chn-sent><![CDATA[要是换了我，我肯定已经认出他了。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[<b>Up until</b> or <b>up to</b> are used to indicate the latest time at which something can happen, or the end of the period of time that you are referring to. 直至]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Please feel free to call me any time up until 9:30 at night.]]></eng-sent>
+                        <chn-sent><![CDATA[晚上9:30之前随时都可以给我打电话。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[You use <b>up to</b> to say how large something can be or what level it has reached. 多达; 高达]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[Up to twenty thousand students paid between five and six thousand dollars.]]></eng-sent>
+                        <chn-sent><![CDATA[多达2万名学生支付了5000到6000美元。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If someone or something is <b>up for</b> election, review, or discussion, they are about to be considered. 将被考虑]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[A third of the Senate and the entire House are up for re-election.]]></eng-sent>
+                        <chn-sent><![CDATA[1/3的参议员和全体众议员将重新选举。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you are <b>up for</b> something, you are willing or eager to do it. 愿意做; 急于做]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[I'm starved. Who's up for pizza?]]></eng-sent>
+                        <chn-sent><![CDATA[我快饿死了。谁想吃比萨饼？]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                               <registr><![CDATA[INFORMAL]]></registr>
+                                                                                                                                                                                                                                            </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[PHRASE]]></pos>
+                                                                <pos-tips><![CDATA[习语]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you are <b>up against</b> something, you have a very difficult situation or problem to deal with. 面临 (困境或困难)]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[The chairwoman is up against the greatest challenge to her position.]]></eng-sent>
+                        <chn-sent><![CDATA[女主席面临她职位的最大挑战。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                <headword><![CDATA[up to par]]></headword>
+                                                                                            
+                                                                                                                                                                                                                                                                                       <sees>
+                                                                                                                                    <seeword><![CDATA[par]]></seeword>
+                                                                                                                                    </sees>
+                                                                                                                                                        </tran-entry>
+    	                    </entry>
+       	</entries>
+        </collins-entries>
+    <collins-entries>
+                    <super-headword><![CDATA[VERB USES]]></super-headword>
+                                <headword><![CDATA[up]]></headword>
+                            <phonetic><![CDATA[<u>ʌ</u>p]]></phonetic>
+                                                                                                    <basic-entries>
+                                             <basic-entry>
+                                     <headword><![CDATA[up]]></headword>
+                 
+                                                                <wordforms>
+                                                    <wordform>
+                                        <word><![CDATA[ups]]></word>
+                                                            </wordform>
+                                    <wordform>
+                                        <word><![CDATA[upping]]></word>
+                                                            </wordform>
+                                    <wordform>
+                                        <word><![CDATA[upped]]></word>
+                                                            </wordform>
+                                </wordforms>
+                                                
+                                                                                                                                                                                                                                                                                                                                                                                                                  </basic-entry>
+                                </basic-entries>
+                	<entries>
+            		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[V-T]]></pos>
+                                                                <pos-tips><![CDATA[及物动词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you <b>up</b> something such as the amount of money you are offering for something, you increase it. 增加; 提高]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[He upped his offer for the company.]]></eng-sent>
+                        <chn-sent><![CDATA[他提高了对该公司的出价。]]></chn-sent>
+                    </sent>
+                                    <sent>
+                        <eng-sent><![CDATA[Drug stores upped sales by 63 percent.]]></eng-sent>
+                        <chn-sent><![CDATA[药店的销售额增加了63%。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+    		<entry>
+    		        	        	                                                    <tran-entry>
+                                                                    <pos-entry>
+                                                                                                                                                                    <pos><![CDATA[V-I]]></pos>
+                                                                <pos-tips><![CDATA[不及物动词]]></pos-tips>
+                                        </pos-entry>
+                                                    <tran><![CDATA[If you <b>up</b> and leave a place, you go away from it, often suddenly or unexpectedly. 突然行动]]></tran>
+                                                            <exam-sents>
+                                    <sent>
+                        <eng-sent><![CDATA[One day he just upped and left.]]></eng-sent>
+                        <chn-sent><![CDATA[有一天他突然离开了。]]></chn-sent>
+                    </sent>
+                                </exam-sents>
+                                
+                                                                                                                                                                                                                                                                                                                                                                                                           </tran-entry>
+    	                    </entry>
+       	</entries>
+        </collins-entries>
+</collins-dict>
+      </basic>
+          	 <basic>
+      	<type>rel-word</type>
+	  	<name>同根词</name>
+          <rel-word-dict>
+  <word><![CDATA[up]]></word>
+  
+  <stem><![CDATA[up]]></stem>
+  
+   
+ <rels>	
+  	<rel>
+	  <pos><![CDATA[adj.]]></pos> 	
+       	  <words>
+            	                        <word><![CDATA[upward]]></word>	
+                <tran><![CDATA[ 向上的；上升的]]></tran>
+                                            <word><![CDATA[upmost]]></word>	
+                <tran><![CDATA[ 最高的；最重要的（等于uppermost）]]></tran>
+                                      </words> 
+	</rel>
+  	<rel>
+	  <pos><![CDATA[adv.]]></pos> 	
+       	  <words>
+            	                        <word><![CDATA[upward]]></word>	
+                <tran><![CDATA[ 向上]]></tran>
+                                            <word><![CDATA[upwardly]]></word>	
+                <tran><![CDATA[ 向上地；在上面地]]></tran>
+                                      </words> 
+	</rel>
+    </rels>
+</rel-word-dict>
+         </basic>
+                <basic>
+    	<type>special</type>
+    	<name>专业释义</name>
+    	<special-dict>
+					<total><![CDATA[2,447,543]]></total>
+               	<summary>
+                  <text>以上统计来源于2,447,534篇论文数据，部分数据来源于</text>
+                  <sources>
+                      <source>
+                          <site>NoteExpress</site>
+                          <url>http://cn.noteexpress.net/CompanyWeb/</url>
+                      </source>
+                  </sources>
+              	</summary>
+
+		<co-add><![CDATA[http://cn.noteexpress.net/]]></co-add>
+		<entries>
+		                <entry>
+				<major><![CDATA[计算机科学技术]]></major>
+				<num><![CDATA[1]]></num>
+				<trs>
+				                    <tr>
+					<nat><![CDATA[处于良好工作状态的]]></nat>
+					<cite><![CDATA[0]]></cite>
+					                    </tr>
+                				</trs>
+                </entry>
+		                <entry>
+				<major><![CDATA[机械工程]]></major>
+				<num><![CDATA[1]]></num>
+				<trs>
+				                    <tr>
+					<nat><![CDATA[不饱和聚酯]]></nat>
+					<cite><![CDATA[10]]></cite>
+					                                                                                                                    	                                    	<url><![CDATA[http://cn.noteexpress.net/]]></url>
+                                                                                                                                                                                                                                                                            <docTitle><![CDATA[UP/MMT纳米复合材料的制备、摩擦磨损性能及有机蒙脱土改性玻璃钢的研究]]></docTitle>
+                                                                                                                                                                                                                                        <engSent><![CDATA[As the results, the nanocomposites showed much better wear resistance than the <b>UP</b> matrix, while the friction-reducing ability alters slightly.]]></engSent>
+                                                                                                                                                                                                                                        <chnSent><![CDATA[结果表明，复合材料的耐磨性能显著优于<b>不饱和聚酯</b>。]]></chnSent>
+                                                                                                            
+                                        </tr>
+                				</trs>
+                </entry>
+		                <entry>
+				<major><![CDATA[语言学]]></major>
+				<num><![CDATA[1]]></num>
+				<trs>
+				                    <tr>
+					<nat><![CDATA[上]]></nat>
+					<cite><![CDATA[520]]></cite>
+					                                                                                                                    	                                    	<url><![CDATA[http://www.acad.cnki.net/kns55/detail.aspx?FileName=2010084498.nh&dbName=CMFD2010]]></url>
+                                                                                                                                                                                                                                                                            <docTitle><![CDATA[现代汉语社会地位的空间隐喻实验研究 ]]></docTitle>
+                                                                                                                                                                                                                                        <engSent><![CDATA["<b>Up</b>/down", "big/small" is of the two common spatial concepts in our daily life.]]></engSent>
+                                                                                                                                                                                                                                        <chnSent><![CDATA[“<b>上</b>／下”、“大／小”是我们日常生活中最常见的两个空间概念。]]></chnSent>
+                                                                                                            
+                                        </tr>
+                				</trs>
+                </entry>
+				</entries>
+	</special-dict>
+    </basic>
+    		    <!-- 汉汉解释内容开始 -->
+  
+   <yodao-web-dict>
+<copyright></copyright>
+<web-translation same="true">
+<key><![CDATA[up]]></key>
+<key-speech><![CDATA[up]]></key-speech>
+<trans>
+<value><![CDATA[上行]]></value>
+<summary><line><![CDATA[<b>up</b>(<b>上行</b>), 此释义来源于网络辞典。]]></line></summary>
+<url><![CDATA[http://www.youdao.com/search?keyfrom=dict&q=up+上行]]></url>
+<support>100</support>
+</trans>
+<trans>
+<value><![CDATA[在上面]]></value>
+<summary><line><![CDATA[<b>up</b>(<b>在上面</b>), 此释义来源于网络辞典。]]></line></summary>
+<url><![CDATA[http://www.youdao.com/search?keyfrom=dict&q=up+在上面]]></url>
+<support>50</support>
+</trans>
+<trans>
+<value><![CDATA[DMU]]></value>
+<summary><line><![CDATA[...此根蒂根基长举行产物预设建模和仿真预设，以到达革新产物方案预设的目的虚拟产物也就是最初的数码试验模子<b>DMU</b>(Digital Mock-<b>up</b>)，虚拟产物预设低级阶段的虚拟油泥建模(Virtual Clay Modeling)，可以顺应创造性预设历程所提出的直不雅要求，预设职员可以在虚拟...]]></line></summary>
+<url><![CDATA[http://www.youdao.com/search?keyfrom=dict&q=up+DMU]]></url>
+<support>27</support>
+</trans>
+<trans>
+<value><![CDATA[KEB]]></value>
+<summary><line><![CDATA[利用<b>KEB</b>(Kinetic Energy Back-<b>up</b>)功能，在瞬时停电状态可以不入行基极封锁而是继续运行最适合用于薄膜生产线和纤维生产线等的瞬时停电的措施及在机床主轴电机停电...]]></line></summary>
+<url><![CDATA[http://www.youdao.com/search?keyfrom=dict&q=up+KEB]]></url>
+<support>10</support>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[Speed up]]></key>
+<key-speech><![CDATA[Speed+up]]></key-speech>
+<trans>
+<value><![CDATA[加速]]></value>
+</trans>
+<trans>
+<value><![CDATA[加快速度]]></value>
+</trans>
+<trans>
+<value><![CDATA[使加速]]></value>
+</trans>
+<trans>
+<value><![CDATA[增加速度]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[hold up]]></key>
+<key-speech><![CDATA[hold+up]]></key-speech>
+<trans>
+<value><![CDATA[举起]]></value>
+</trans>
+<trans>
+<value><![CDATA[支持]]></value>
+</trans>
+<trans>
+<value><![CDATA[展示]]></value>
+</trans>
+<trans>
+<value><![CDATA[抢劫]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[give up]]></key>
+<key-speech><![CDATA[give+up]]></key-speech>
+<trans>
+<value><![CDATA[放弃]]></value>
+</trans>
+<trans>
+<value><![CDATA[停止]]></value>
+</trans>
+<trans>
+<value><![CDATA[使埋头于]]></value>
+</trans>
+<trans>
+<value><![CDATA[投降]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[hurry up]]></key>
+<key-speech><![CDATA[hurry+up]]></key-speech>
+<trans>
+<value><![CDATA[赶快]]></value>
+</trans>
+<trans>
+<value><![CDATA[赶陕]]></value>
+</trans>
+<trans>
+<value><![CDATA[匆匆完成]]></value>
+</trans>
+<trans>
+<value><![CDATA[快点]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[look up]]></key>
+<key-speech><![CDATA[look+up]]></key-speech>
+<trans>
+<value><![CDATA[查找]]></value>
+</trans>
+<trans>
+<value><![CDATA[向上看]]></value>
+</trans>
+<trans>
+<value><![CDATA[查出]]></value>
+</trans>
+<trans>
+<value><![CDATA[查阅]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[pull up]]></key>
+<key-speech><![CDATA[pull+up]]></key-speech>
+<trans>
+<value><![CDATA[停下]]></value>
+</trans>
+<trans>
+<value><![CDATA[上拉]]></value>
+</trans>
+<trans>
+<value><![CDATA[拔掉]]></value>
+</trans>
+<trans>
+<value><![CDATA[停车]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[back up]]></key>
+<key-speech><![CDATA[back+up]]></key-speech>
+<trans>
+<value><![CDATA[倒退]]></value>
+</trans>
+<trans>
+<value><![CDATA[后退]]></value>
+</trans>
+<trans>
+<value><![CDATA[支持]]></value>
+</trans>
+<trans>
+<value><![CDATA[援助]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[show up]]></key>
+<key-speech><![CDATA[show+up]]></key-speech>
+<trans>
+<value><![CDATA[显露]]></value>
+</trans>
+<trans>
+<value><![CDATA[来到]]></value>
+</trans>
+<trans>
+<value><![CDATA[出现]]></value>
+</trans>
+<trans>
+<value><![CDATA[露面]]></value>
+</trans>
+</web-translation>
+<web-translation>
+<key><![CDATA[use up]]></key>
+<key-speech><![CDATA[use+up]]></key-speech>
+<trans>
+<value><![CDATA[用完]]></value>
+</trans>
+<trans>
+<value><![CDATA[耗尽]]></value>
+</trans>
+<trans>
+<value><![CDATA[花完]]></value>
+</trans>
+<trans>
+<value><![CDATA[用尽]]></value>
+</trans>
+</web-translation>
+ </yodao-web-dict>
+
+<sentences-result>
+                <example-sentences>
+                                                                    <sentence-pair>
+            <sentence><![CDATA[Up is down and down never happened.]]></sentence>
+                          <sentence-speech><![CDATA[Up+is+down+and+down+never+happened.&le=eng]]></sentence-speech>
+                        <sentence-translation><![CDATA[涨即是跌，而下跌从未发生过。]]></sentence-translation>
+                                         <url><![CDATA[http://news.iciba.com/200910/613616.html]]></url>
+                                    <aligned-words><src><chars id="0" s="1" e="3"><q s="1" e="3"/><aligns><sc id="0"/><tc id="0"/></aligns></chars><chars id="1" s="4" e="6"><aligns><sc id="1"/><tc id="1"/></aligns></chars><chars id="2" s="7" e="11"><aligns><sc id="2"/><tc id="2"/></aligns></chars><chars id="3" s="12" e="15"><aligns><sc id="3"/><tc id="3"/></aligns></chars><chars id="4" s="16" e="20"><aligns><sc id="4"/><tc id="4"/></aligns></chars><chars id="5" s="21" e="26"><aligns><sc id="5"/><tc id="5"/></aligns></chars><chars id="6" s="27" e="35"><aligns><sc id="6"/><tc id="6"/></aligns></chars></src><tran><chars id="0" s="1" e="2"><aligns><sc id="0"/><tc id="0"/></aligns></chars><chars id="1" s="2" e="4"><aligns><sc id="1"/><tc id="1"/></aligns></chars><chars id="2" s="4" e="5"><aligns><sc id="2"/><tc id="2"/></aligns></chars><chars id="3" s="6" e="7"><aligns><sc id="3"/><tc id="3"/></aligns></chars><chars id="4" s="7" e="9"><aligns><sc id="4"/><tc id="4"/></aligns></chars><chars id="5" s="9" e="11"><aligns><sc id="5"/><tc id="5"/></aligns></chars><chars id="6" s="11" e="14"><aligns><sc id="6"/><tc id="6"/></aligns></chars></tran></aligned-words>
+                        </sentence-pair>
+                                           <sentence-pair>
+            <sentence><![CDATA[How does the film end up?]]></sentence>
+                          <sentence-speech><![CDATA[How+does+the+film+end+up%3F&le=eng]]></sentence-speech>
+                        <sentence-translation><![CDATA[这个电影是怎么结尾的?。]]></sentence-translation>
+                                         <url><![CDATA[http://www.hjenglish.com/subject/writing/page/69289/]]></url>
+                                    <aligned-words><src><chars id="0" s="1" e="9"><aligns><sc id="0"/><tc id="2"/></aligns></chars><chars id="1" s="10" e="13"><aligns><sc id="1"/><tc id="0"/></aligns></chars><chars id="2" s="14" e="18"><aligns><sc id="2"/><tc id="1"/></aligns></chars><chars id="3" s="19" e="25"><q s="23" e="25"/><aligns><sc id="3"/><tc id="3"/></aligns></chars></src><tran><chars id="0" s="1" e="3"><aligns><sc id="1"/><tc id="0"/></aligns></chars><chars id="1" s="3" e="5"><aligns><sc id="2"/><tc id="1"/></aligns></chars><chars id="2" s="6" e="8"><aligns><sc id="0"/><tc id="2"/></aligns></chars><chars id="3" s="8" e="10"><aligns><sc id="3"/><tc id="3"/></aligns></chars></tran></aligned-words>
+                        </sentence-pair>
+                                           <sentence-pair>
+            <sentence><![CDATA[These houses stayed up in the quake.]]></sentence>
+                          <sentence-speech><![CDATA[These+houses+stayed+up+in+the+quake.&le=eng]]></sentence-speech>
+                        <sentence-translation><![CDATA[这些房子在地震中没有倒塌。]]></sentence-translation>
+                                         <url><![CDATA[http://dict.veduchina.com/mini/en/w/quake]]></url>
+                                    <aligned-words><src><chars id="0" s="1" e="6"><aligns><sc id="0"/><tc id="0"/></aligns></chars><chars id="1" s="7" e="13"><aligns><sc id="1"/><tc id="1"/></aligns></chars><chars id="2" s="14" e="20"><aligns><sc id="2"/><tc id="5"/></aligns></chars><q s="21" e="23"/><chars id="3" s="24" e="26"><aligns><sc id="3"/><tc id="4"/></aligns></chars><chars id="4" s="27" e="30"><aligns><sc id="4"/><tc id="2"/></aligns></chars><chars id="5" s="31" e="36"><aligns><sc id="5"/><tc id="3"/></aligns></chars></src><tran><chars id="0" s="1" e="3"><aligns><sc id="0"/><tc id="0"/></aligns></chars><chars id="1" s="3" e="5"><aligns><sc id="1"/><tc id="1"/></aligns></chars><chars id="2" s="5" e="6"><aligns><sc id="4"/><tc id="2"/></aligns></chars><chars id="3" s="6" e="8"><aligns><sc id="5"/><tc id="3"/></aligns></chars><chars id="4" s="8" e="9"><aligns><sc id="3"/><tc id="4"/></aligns></chars><chars id="5" s="9" e="13"><aligns><sc id="2"/><tc id="5"/></aligns></chars></tran></aligned-words>
+                        </sentence-pair>
+               <sentence-count>4</sentence-count>
+   </example-sentences>
+
+   <auth-sents>
+            <sent>
+   <foreign><![CDATA[Had he not been diagnosed, Stephen says he could have ended <b>up</b> with colon cancer. ]]></foreign>
+   <speech><![CDATA[Had+he+not+been+diagnosed%2C+Stephen+says+he+could+have+ended+up+with+colon+cancer.+)]]></speech>
+   <source><![CDATA[BBC: <i>NEWS | UK | Northern Ireland | My life with coeliac disease</i>]]></source>
+   <url><![CDATA[http://news.bbc.co.uk/2/hi/uk_news/northern_ireland/3476593.stm]]></url>
+   <score>0.9999971</score>
+   </sent>
+            <sent>
+   <foreign><![CDATA[Ad hoc settlements sprung <b>up</b> around the city, then expanded as the city ballooned. ]]></foreign>
+   <speech><![CDATA[Ad+hoc+settlements+sprung+up+around+the+city%2C+then+expanded+as+the+city+ballooned.+)]]></speech>
+   <source><![CDATA[MSN: <i>S. Sudan prepares to be world's newest country</i>]]></source>
+   <url><![CDATA[http://www.msnbc.msn.com/id/41460171/ns/43160935]]></url>
+   <score>0.9999969</score>
+   </sent>
+            <sent>
+   <foreign><![CDATA[When you use <b>up</b> all your minutes, the phone stops working until you recharge it. ]]></foreign>
+   <speech><![CDATA[When+you+use+up+all+your+minutes%2C+the+phone+stops+working+until+you+recharge+it.+)]]></speech>
+   <source><![CDATA[MSN: <i>Prepaid cell plans may be your best bet</i>]]></source>
+   <url><![CDATA[http://www.msnbc.msn.com/id/29775655/ns/business-consumer_news/42472133]]></url>
+   <score>0.99999547</score>
+   </sent>
+                   <sentence-count>4</sentence-count>
+      </auth-sents>
+
+	    	                <media-sents>
+		  	    	    <sent type="audio">
+	     <eng><![CDATA[I may come <b>up</b> with an idea and it may end <b>up</b> being something in the middle of the piece.]]></eng>
+         	      <snippets>
+   	      	      <snippet>
+	       <source><![CDATA[VOA]]></source>
+		   <streamUrl><![CDATA[http://dict.youdao.com/pureaudio?docid=2682009748082038876]]></streamUrl>
+           <win8><![CDATA[http://dict.youdao.com/pureaudio?docid=2682009748082038876&dist=win8]]></win8>
+		   <name><![CDATA[special.2010.07.12]]></name>
+		   <swf><![CDATA[]]></swf>
+	      </snippet>	
+	      	      </snippets>
+ 	     </sent>
+	         	          	          	              		   	     	     <sent type="video">
+	      <eng><![CDATA[The father yells at them, says, Make that cat shut <b>up</b>, and they can't He says, "Make it shut <b>up</b>. I don't care.<br>]]></eng>
+          	      <chn><![CDATA[但父亲喊道：,“让那猫安静“，可他们无能为力,可父亲又说：“让它安静。<br>]]></chn>
+          	      <snippets>
+   	      		<snippet>
+		  <source><![CDATA[1945年后的美国小说课程节选]]></source>
+		  <sourceUrl><![CDATA[http://v.163.com/special/theamericannovelsince1945/]]></sourceUrl>
+		  <streamUrl><![CDATA[movie=http://dict.youdao.com/purevideo?docid=6920879372767592498&auto=true]]></streamUrl>
+		  <imageUrl><![CDATA[http://dict.youdao.com/pureimage?docid=6920879372767592498]]></imageUrl>
+		  <name><![CDATA[耶鲁公开课]]></name>
+		  <swf><![CDATA[http://shared.ydstatic.com/dict/4.0/simplayer.swf]]></swf>
+		</snippet>	
+	      	      </snippets>
+ 	     </sent>
+		             	     	     <sent type="video">
+	      <eng><![CDATA[Yes, you say that now, but just wait.<br>I would rather give my kids <b>up</b> for adoption Than end <b>up</b> like you.<br>]]></eng>
+          	      <chn><![CDATA[是啊，现在你这么说，等着瞧以后吧。<br>我宁愿把自己的孩子送人领养,也不想变成你这样的母亲。<br>]]></chn>
+          	      <snippets>
+   	      		<snippet>
+		  <source><![CDATA[搜狐视频]]></source>
+		  <sourceUrl><![CDATA[http://tv.sohu.com/20100305/n270614986.shtml]]></sourceUrl>
+		  <streamUrl><![CDATA[]]></streamUrl>
+		  <imageUrl><![CDATA[http://dict.youdao.com/pureimage?docid=-383642867698965160]]></imageUrl>
+		  <name><![CDATA[绯闻女孩第2季第24集]]></name>
+		  <swf><![CDATA[http://share.vrs.sohu.com/60780/v.swf&autoPlay=true&topBar=0&startTime=220&endTime=229&showCtrlBar=0&sogouBtn=0&api_key=f919149426c6afc2bda90b72fb074878&cooperator=youdaoDict]]></swf>
+		</snippet>	
+	      	      </snippets>
+ 	     </sent>
+		             	                  	                              <sentence-count>4</sentence-count>
+        </media-sents>
+</sentences-result>
+
+<baike>
+        <item>
+        <key><![CDATA[UP]]></key>
+        <summary><![CDATA[up 
+adv.
+向上, 到(较高的地方,北方), 起来, 起床
+prep.
+向上, 在上, 沿
+adj.
+向上的, 上行的英英解释:动词up:1. raise形容词up:1. being or moving higher in position or greater in some value; being above a former position or level2. getting h]]></summary>
+            </item>
+        <source>
+        <url><![CDATA[http://www.hudong.com/?hf=youdaocitiao&pf=youdaocitiao]]></url>
+        <name>互动百科</name>                
+        <copyright></copyright>
+    </source>
+</baike>
+
+
+
+<yodao-link><![CDATA[http://dict.youdao.com/search?q=up]]></yodao-link>
+<related-info>
+<item>
+<class><![CDATA[推荐]]></class>
+<title><![CDATA[ 制作你的2011单词卡片，赢限量版卡片扑克！]]></title>
+<url><![CDATA[http://dict.youdao.com/infobarclick?url=http%3A%2F%2Fwww.youdao.com%2F2011card%2F%3Fkeyfrom%3Ddeskdict.inforbar&content=%5B%E6%8E%A8%E8%8D%90%5D+%E5%88%B6%E4%BD%9C%E4%BD%A0%E7%9A%842011%E5%8D%95%E8%AF%8D%E5%8D%A1%E7%89%87%EF%BC%8C%E8%B5%A2%E9%99%90%E9%87%8F%E7%89%88%E5%8D%A1%E7%89%87%E6%89%91%E5%85%8B%EF%BC%81]]></url>
+</item>
+</related-info>
+
+<result-advt-show>1</result-advt-show>
+</yodaodict>
