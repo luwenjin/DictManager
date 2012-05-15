@@ -74,10 +74,10 @@
 
             <div class="controls">
                 <label class="checkbox">
-                {% if token.trash %}
-                <input name="trash" type="checkbox" checked>
+                {% if token.is_trash %}
+                <input name="is_trash" type="checkbox" checked>
                 {% else %}
-                <input name="trash" type="checkbox">
+                <input name="is_trash" type="checkbox">
                 {% endif %}
                     屏蔽
                 </label>

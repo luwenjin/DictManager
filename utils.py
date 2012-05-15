@@ -1,11 +1,10 @@
+#coding: utf-8
 from datetime import datetime
 from functools import wraps
 import simplejson
 
 from flask import current_app, request
 from mongokit import ObjectId
-
-
 
 
 def today():

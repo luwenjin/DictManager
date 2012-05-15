@@ -201,7 +201,7 @@ def import_simple_tokens():
 
 
 def load_stem(overwrite = False):
-    for i, token in enumerate(tokens.Token.find({'trash': False, 'courses': 'IELTS'})):
+    for i, token in enumerate(tokens.Token.find({'is_trash': False, 'courses': 'IELTS'})):
         simple_token = yd_simple_token_coll.YDSimpleToken.find_one({'en': token.en})
 
         if simple_token and simple_token.stem:

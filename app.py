@@ -276,7 +276,7 @@ def save_token():
     exp_core = request.form.get('exp_core')
     courses = [ x.strip() for x in request.form.getlist('course') if x ]
     note = request.form.get('note').strip()
-    trash = request.form.get('trash')
+    is_trash = request.form.get('is_trash')
 
     if token_id:
         token = tokens.Token.find_one(ObjectId(token_id))
@@ -290,7 +290,7 @@ def save_token():
                 token.courses = courses
             token.note = note
             token.exp_core = exp_core
-            token.trash = True if trash else False
+            token.is_trash = True if is_trash else False
             token.last_editor= unicode(session.get('name'))
             token.save()
             print token
