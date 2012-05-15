@@ -1,0 +1,4 @@
+DictManager
+===========
+
+Manage English Dictionary
