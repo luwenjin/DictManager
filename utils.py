@@ -1,7 +1,7 @@
 #coding: utf-8
 from datetime import datetime
-from functools import wraps
-import simplejson
+
+import json as simplejson
 
 from flask import current_app, request
 from mongokit import ObjectId
@@ -41,14 +41,6 @@ class SSBJSONEncoder(simplejson.JSONEncoder):
 
 json_encoder = SSBJSONEncoder()
 
-def tojson(f):
-    @wraps(f)
-    def decorated_function(*args, **kwds):
-        result = f(*args, **kwds)
-        return current_app.response_class(
-            json_encoder.encode(result, indent=None if request.is_xhr else 2),
-            mimetype='application/json'
-        )
-    return decorated_function
+
 
 

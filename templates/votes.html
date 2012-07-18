@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block container %}
+{% from 'macros.html' import references_table, alerts %}
+
+{{ alerts() }}
+
+<div id="vote-page" class="row">
+    <div id="editor" class="span4">
+        <form method="post" action="/votes/save">
+            <h1>{{token.en}}</h1>
+            <input type="hidden" name="_id" value="{{token._id}}">
+            <input type="text" name="exp" class="input-xlarge" value="{{token.exp_core}}">
+            <input type="submit" value="保存" class="btn-primary btn">
+        </form>
+    </div>
+
+    <div id="references" class="span8">
+        <ul class="nav nav-tabs" id="resource_tabs">
+            <li class="active"><a>含意参考</a></li>
+        </ul>
+        {{ references_table(reference_tokens) }}
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/js/votes.js"></script>
+{% endblock %}

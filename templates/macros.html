@@ -9,3 +9,34 @@
     </ul>
 </div>
 {% endmacro %}
+
+{% macro references_table(reference_tokens) %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>meaning</th>
+        <th>source</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ref in reference_tokens %}
+    <tr>
+        <td>{{ref.exp|safe}}</td>
+        <td>{{ref.src|safe}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}
+
+{% macro alerts() %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    {% for alert_class, message in messages %}
+    <div class="alert {{alert_class}}">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% endmacro %}
