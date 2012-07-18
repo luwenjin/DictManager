@@ -1,16 +1,17 @@
 # coding: utf-8
-""" Views 中用得到的内容函数 """
+""" Views 中用得到的内容函数 和一些 view decorators """
 import math
+from functools import wraps
 
-from flask import session
+from flask import session, current_app, request, redirect
 
-from models import tokens, wn_token_coll, dc_token_coll, yd_simple_token_coll, qj_token_coll
-from settings import COURSE_LIST, FLAW_LIST, EDITOR_LIST
+from models import Token, wn_token_coll, dc_token_coll, yd_simple_token_coll, qj_token_coll, User
+from settings import COURSE_LIST, FLAW_LIST
+from utils import json_encoder
 
-def make_sidebar_info(request):
+def query_info(request):
     course = request.args.get('course', 'ALL')
     flaw = request.args.get('flaw', 'ALL')
-    editor = request.args.get('editor')
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 15))
     search_word = request.args.get('search_word', '')
@@ -29,23 +30,15 @@ def make_sidebar_info(request):
     elif flaw == 'IS_MARKED':
         query['mark'] = True
 
-    if editor:
-        query['last_editor'] = editor
-
     if search_word:
-        query['low'] = unicode(search_word.lower())
+        query['hash'] = Token.make_hash(search_word)
 
-    if session['role'] == u'editor':
-        query['_id'] = {}
-        query['_id']['$gte'], query['_id']['$lte'] = session['token_range']
-        query['courses'] = 'IELTS'
-
-    total_count = tokens.Token.find(query).count()
+    total_count = Token.query(query).count()
     skip = min(
         max( (page - 1) * count, 0),
         max( total_count - 1, 0)
     )
-    token_list = list(tokens.Token.find(query, sort=[('low',1)]).limit(count).skip(skip))
+    token_list = list(Token.query(query, sort=[('low',1)]).limit(count).skip(skip))
 
     total_page = int(math.ceil(total_count/ count))
 
@@ -57,7 +50,6 @@ def make_sidebar_info(request):
     return {
         'course_list': COURSE_LIST,
         'flaw_list': FLAW_LIST,
-        'editor_list': EDITOR_LIST,
         'token_list': token_list,
         'pager': pager,
         'search_word': search_word,
@@ -102,3 +94,39 @@ def get_reference_tokens(en):
             'exp': exp,
             })
     return results
+
+def get_current_user():
+    user_name = session.get('name')
+    user = User.one(name=user_name)
+    return user
+
+def to_json(f):
+    @wraps(f)
+    def decorated_function(*args, **kwds):
+        result = f(*args, **kwds)
+        return current_app.response_class(
+            json_encoder.encode(result, indent=None if request.is_xhr else 2),
+            mimetype='application/json'
+        )
+    return decorated_function
+
+def require_login(fn):
+    @wraps(fn)
+    def decorated_function(*args, **kwargs):
+        user = get_current_user()
+        if user:
+            return fn(*args, **kwargs)
+        else:
+            return redirect('/login')
+
+    return decorated_function
+
+def require_admin(fn):
+    @wraps(fn)
+    def decorated_function(*args, **kwargs):
+        user = get_current_user()
+        if user and user.role == u'admin':
+            return fn(*args, **kwargs)
+        else:
+            return redirect('/login')
+    return decorated_function

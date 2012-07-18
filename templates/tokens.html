@@ -6,15 +6,8 @@
     <!--<li {%if channel=='sentence'%}class="active"{%endif%}><a href="javascript:change_path('sentences')">例句</a></li>-->
     <!--<li {%if channel=='difference'%}class="active"{%endif%}><a href="javascript:change_path('differences')">辨析</a></li>-->
 </ul>
-{% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        {% for alert_class, message in messages %}
-        <div class="alert {{alert_class}}">
-            {{message}}
-        </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+{% from 'macros.html' import alerts %}
+{{ alerts() }}
 <form id="token_detail" class="form-horizontal" method="POST" action="/tokens">
     <fieldset>
         <input type="hidden" name="id" value="{{token._id}}">
@@ -38,9 +31,7 @@
             <div class="controls">
                 <input type='text' name="exp_core" value="{{token.exp_core}}" class="input-xxlarge">
                 <small style="color: grey;">要求：最核心最精简的词性和含义</small>
-                {% if session.role == 'admin' %}
-                <small style="color: grey;">editor: {{token.last_editor}}</small>
-                {% endif %}
+
             </div>
         </div>
 

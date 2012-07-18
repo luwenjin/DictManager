@@ -2,97 +2,108 @@
 import sys
 import os
 from pprint import pprint
-parent_path = os.path.split(os.path.split(os.path.abspath('.'))[0])[0]
-print parent_path
+
+parent_path = os.path.split(os.path.dirname(__file__))[0]
 sys.path.append(parent_path)
 #------------------------------------------------------
 
 import sqlite3
 
-from models import db, Sentence, Token, tokens, \
+from models import db, Sentence, Token, tokens,\
     qj_course_coll, QJCourse, qj_token_coll, QJToken, qj_sentence_coll, QJSentence
-from lang_utils import extract_meaning_objects
 
-sql_conn = sqlite3.connect('../../resources/dicts/words.sqlite')
+
+sql_conn = sqlite3.connect('data/words.sqlite')
 sql_conn.row_factory = sqlite3.Row
 
-
-QJ_COURSES = [
-    ( 197, 'CET4', '《新大学英语教学大纲》四级' ),
-    ( 198, 'CET6', '《新大学英语教学大纲》六级' ),
-    ( 203, 'CET4', '《四级考试词汇必备》' ),
-    ( 209, 'YJS', '《2006研究生入学考试大纲》' ),
-    ( 210, 'GMAT', '《GMAT600分词汇》' ),
-    ( 211, 'GMAT', '《GMAT600分词组》' ),
-    ( 212, 'GMAT', '《GMAT800分常考词汇》' ),
-    ( 213, 'GMAT', '《GMAT800分商业管理词汇》' ),
-    ( 214, 'GRE', '《GRE字汇进阶》(上)' ),
-    ( 215, 'GRE', '《GRE字汇进阶》(下)' ),
-    ( 216, 'GRE', '《太傻单词》' ),
-    ( 217, 'GRE', '《最新GRE词汇》' ),
-    ( 218, 'TOEFL', '《TOEFL阅读词汇笔记》(一)' ),
-    ( 219, 'TOEFL', '《TOEFL阅读词汇笔记》(二)' ),
-    ( 220, 'TOEFL', '《TOEFL阅读词汇笔记》(三)' ),
-    ( 221, 'TOEFL', '《托福600分单字》(牢记)' ),
-    ( 222, 'TOEFL', '《托福600分单字》(其他)' ),
-    ( 223, 'TOEFL', '《新版TOEFL词汇精选》' ),
-    ( 224, 'TOEFL', '《最新TOEFL词汇》' ),
-    ( 225, 'TOEFL', '《最新TOEFL词组》' ),
-    ( 233, 'TOEIC', '《TOEIC托业单词》' ),
-    ( 313, 'YJS', '《2010年考研英语大纲》' ),
-    ( 316, 'IELTS', '《最新雅思考试词汇必备2009年更新》' ),
-    ( 317, 'GK', '《高考英语考试大纲词汇表2009》' ),
-    ( 319, 'IELTS', '《2009雅思考试核心词汇》' ),
-    ( 320, 'IELTS', '《2009雅思考试词汇必备》' ),
-    ( 322, 'CET4', '《2009大学英语四级教学大纲》' ),
-    ( 323, 'CET6', '《2009大学英语六级教学大纲》' ),
+COURSES = [
+    ( 197, u'CET4', u'《新大学英语教学大纲》四级' ),
+    ( 198, u'CET6', u'《新大学英语教学大纲》六级' ),
+    ( 203, u'CET4', u'《四级考试词汇必备》' ),
+    ( 209, u'YJS', u'《2006研究生入学考试大纲》' ),
+    ( 210, u'GMAT', u'《GMAT600分词汇》' ),
+    ( 211, u'GMAT', u'《GMAT600分词组》' ),
+    ( 212, u'GMAT', u'《GMAT800分常考词汇》' ),
+    ( 213, u'GMAT', u'《GMAT800分商业管理词汇》' ),
+    ( 214, u'GRE', u'《GRE字汇进阶》(上)' ),
+    ( 215, u'GRE', u'《GRE字汇进阶》(下)' ),
+    ( 216, u'GRE', u'《太傻单词》' ),
+    ( 217, u'GRE', u'《最新GRE词汇》' ),
+    ( 218, u'TOEFL', u'《TOEFL阅读词汇笔记》(一)' ),
+    ( 219, u'TOEFL', u'《TOEFL阅读词汇笔记》(二)' ),
+    ( 220, u'TOEFL', u'《TOEFL阅读词汇笔记》(三)' ),
+    ( 221, u'TOEFL', u'《托福600分单字》(牢记)' ),
+    ( 222, u'TOEFL', u'《托福600分单字》(其他)' ),
+    ( 223, u'TOEFL', u'《新版TOEFL词汇精选》' ),
+    ( 224, u'TOEFL', u'《最新TOEFL词汇》' ),
+    ( 225, u'TOEFL', u'《最新TOEFL词组》' ),
+    ( 233, u'TOEIC', u'《TOEIC托业单词》' ),
+    ( 313, u'YJS', u'《2010年考研英语大纲》' ),
+    ( 316, u'IELTS', u'《最新雅思考试词汇必备2009年更新》' ),
+    ( 317, u'GK', u'《高考英语考试大纲词汇表2009》' ),
+    ( 319, u'IELTS', u'《2009雅思考试核心词汇》' ),
+    ( 320, u'IELTS', u'《2009雅思考试词汇必备》' ),
+    ( 322, u'CET4', u'《2009大学英语四级教学大纲》' ),
+    ( 323, u'CET6', u'《2009大学英语六级教学大纲》' ),
 ]
 
-course_map = {}
-c = sql_conn.cursor()
-c.execute("select course_id, category_id, course_name from course")
-for i, row in enumerate(c.fetchall()):
-    course_id, category_id, book_name = row
-    course_map[course_id] = {
-        'category_id': category_id,
-        'book_name': book_name
-    }
+#def make_COURSE_MAP():
+#    c = sql_conn.cursor()
+#    c.execute("select course_id, category_id, course_name from course")
+#    # course_id: 课程id, category_id：分类id, course_name: 课程名（中文）
+#    for i, row in enumerate(c.fetchall()):
+#        course_id, category_id, book_name = row
+#        COURSE_MAP[course_id] = {
+#            'category_id': category_id,
+#            'book_name': book_name
+#        }
+#COURSE_MAP = make_COURSE_MAP()
 
-def get_course_name(course_id):
-    for li in QJ_COURSES:
-        if li[0] == course_id:
-            return unicode(li[1])
-    return None
-
-def get_category(category_id):
-    cur = sql_conn.cursor()
-    cur.execute("select name from categoryinfo where id=?", (category_id,))
-    row = cur.fetchone()
-    category = row[0]
-    return category
+# category(小学/初中/高中） is useless here
+#def get_category(category_id):
+#    cur = sql_conn.cursor()
+#    cur.execute("select name from categoryinfo where id=?", (category_id,))
+#    row = cur.fetchone()
+#    category = row[0]
+#    return category
 
 
-def import_courses():
+def make_COURSE_MAP():
+    doc = {}
+    for id, name, label in COURSES:
+        doc[id] = {
+            'name': name,
+            'label': label
+        }
+    return doc
+COURSE_MAP = make_COURSE_MAP()
+
+
+def get_ssb_course_name(course_id):
+    doc = COURSE_MAP.get(course_id)
+    if doc:
+        return doc['name']
+    else:
+        return None
+
+
+def save_courses():
     qj_course_coll.drop()
 
     cur = sql_conn.cursor()
-    cur.execute("select course_id, category_id, course_name as book from course")
+    cur.execute("select course_id, course_name as label from course")
 
     for i, row in enumerate(cur.fetchall()):
-        course_id, category_id, book = row
-        category = get_category(category_id)
-        course_name = get_course_name(course_id)
+        course_id, label = row
 
-        doc = qj_course_coll.QJCourse()
-        doc.id = course_id
-        doc.name = course_name
-        doc.category = category
-        doc.book = book
-        doc.save()
-        print i, doc
+        doc = {
+            'id': course_id,
+            'name': get_ssb_course_name(course_id),
+            'label': label
+        }
+        qj_course_coll.save(doc)
 
-
-def import_tokens():
+def save_tokens():
     qj_token_coll.drop()
 
     cur = sql_conn.cursor()
@@ -107,60 +118,23 @@ def import_tokens():
     from wordinfo
     ''')
     for i, row in enumerate(cur.fetchall()):
-        doc = qj_token_coll.QJToken()
-        doc.en, \
-        doc.exp, \
-        doc.ph_en, \
-        doc.ph_us,\
-        doc.dict_word_id, \
-        doc.word_id, \
-        doc.course_id = row
-        doc.save()
-        print i, doc.en
-
-def load_tokens(course_name=None):
-    '''全部导入正式库， 本库同一个dict_word_id不会对应2个拼写不同的单词，本函数目前只能用作初次导入'''
-    qj_course_coll.ensure_index('id')
-    if course_name:
-        course_ids = [x.get('id') for x in qj_course_coll.QJCourse.find({'name': course_name})]
-    else:
-        course_ids = qj_course_coll.distinct('id')
-
-    qj_token_coll.ensure_index('course_id')
-    qj_token_coll.ensure_index('en')
-
-#    print list(qj_course_coll.find())
-#    print course_ids
-    en_list = qj_token_coll.find({'course_id': {'$in': course_ids}}).distinct('en')
-    for i, en in enumerate(en_list):
-        qj_token_list = list(qj_token_coll.QJToken.find({'en': en}))
-        token = Token.get_token(en)
-#        print token
-        if not token:
-            token = db.tokens.Token()
-            token.en = en
-            token.ph_us = max([x.get('ph_us') for x in qj_token_list])
-            token.ph_en = max([x.get('ph_en') for x in qj_token_list])
-
-            course_ids = [x.get('course_id') for x in qj_token_list]
-            course_names = set([get_course_name(x) for x in course_ids])
-            token.courses = [x for x in  course_names if x]
-            token.src = u'qiji'
-
-            token.save()
-            print i, en
+        d = dict()
+        d['en'], d['exp'], d['ph_en'], d['ph_us'], d['dict_word_id'], d['word_id'], d['course_id'] = row
+        qj_token_coll.save(d)
+        print i, d['en']
 
 
-def import_sentences():
+def save_sentences():
     qj_sentence_coll.drop()
 
-    print 'Preparing word_map...'
-    word_map = {}
-    word_cursor = sql_conn.cursor()
-    word_cursor.execute('select english, dict_word_id from wordinfo')
-    for row in word_cursor.fetchall():
+    print 'Preparing dict_word_id->en map...',
+    id_en_map = {}
+    cur = sql_conn.cursor()
+    cur.execute('select english, dict_word_id from wordinfo')
+    for row in cur.fetchall():
         en, id = row
-        word_map[id] = en
+        id_en_map[id] = en
+    print 'done'
 
     cur = sql_conn.cursor()
     cur.execute("select "
@@ -169,45 +143,25 @@ def import_sentences():
                 "chinese as cn "
                 "from sentence")
     for i, row in enumerate(cur.fetchall()):
-        doc = qj_sentence_coll.QJSentence()
-        doc.id, \
-        doc.en, \
-        doc.cn = row
+        doc = dict()
+        doc['id'], doc['en'], doc['cn'] = row
 
         cur2 = sql_conn.cursor()
-        cur2.execute("select dict_word_id from word_sentence where sentence_id=?", (doc.id,))
-        dict_word_ids = [ x[0] for x in cur2.fetchall()]
-        en_list= [ word_map[x] for x in dict_word_ids ]
+        cur2.execute("select dict_word_id from word_sentence where sentence_id=?", (doc['id'],))
+        dict_word_ids = [x[0] for x in cur2.fetchall()]
+        en_list = [id_en_map[x] for x in dict_word_ids]
+        doc['include'] = list(set(en_list))
 
-        doc.include = list(set(en_list))
-        doc.save()
+        qj_sentence_coll.save(doc)
 
-        print doc.include
-        print i, doc.en
+        print i, doc['en']
+        print doc['include']
+        print
 
-
-def load_sentences():
-    qj_sentence_list = list(qj_sentence_coll.QJSentence.find())
-    qj_token_coll.ensure_index('dict_word_id')
-    for i, qj_sentence in enumerate(qj_sentence_list):
-        # 对比正式库，是否有同样的句子
-        hash = Sentence.get_hash(qj_sentence.en)
-        sentence = db.sentences.Sentence.find_one({'hash': hash})
-        if not sentence:
-            # 无同样句子则新增
-            sentence = db.sentences.Sentence()
-            sentence.en, sentence.cn = qj_sentence.en, qj_sentence.cn
-        #更新正式库中句子的对应单词列表
-        en_set = set(qj_sentence.include)
-        en_set.update(sentence.include)
-        sentence.include = list(en_set)
-        sentence.save()
-
-        print i, sentence.en
 
 
 def import_differences():
-    # todo: not ready
+# todo: not ready
 #    sample = {
 #        'mutual': unicode,
 #        'dict_word_ids': [int],
@@ -225,7 +179,7 @@ def import_differences():
         group_map[mutual].append({
             'discriminate_id': id,
             'dict_word_id': dict_word_id,
-        })
+            })
 
     c = sql_conn.cursor()
     c.execute("select discriminate_id, Discriminate_details_id from discriminate_relation")
@@ -248,9 +202,9 @@ def import_differences():
 
         discriminate_ids = [item.get('discriminate_id') for item in group_map[mutual]]
         detail_ids_groups = [dr_map[discriminate_id] for discriminate_id in discriminate_ids]
-#        for detail_ids in detail_ids_groups:
-#            if detail_ids != detail_ids_groups[0]:
-#                print detail_ids_groups
+        #        for detail_ids in detail_ids_groups:
+        #            if detail_ids != detail_ids_groups[0]:
+        #                print detail_ids_groups
         differences = []
         for detail_id in detail_ids_groups[0]:
             print detail_id
@@ -267,6 +221,7 @@ def import_differences():
 
         coll.save(doc)
         print doc
+
 
 def match_differences_dict_word_id():
     # todo: not ready
@@ -291,6 +246,7 @@ def match_differences_dict_word_id():
                         print '!!!',
                     print item.get('word'), item.get('meaning')
                 print ids
+
 
 def repair_differences_word_error():
     # todo: not ready
@@ -326,7 +282,7 @@ def repair_differences_word_error():
         'offent': 'offend',
         'transfrom': 'transform',
         'throug': 'throng',
-    }
+        }
     differences = db['resource.qiji.differences']
     differences.ensure_index('differences.word')
     for typo in data:
@@ -337,6 +293,7 @@ def repair_differences_word_error():
                 item['word'] = word
         differences.save(doc)
 
+
 def clear_duplicate_differences():
     # todo: not ready
     differences = db['resource.qiji.differences']
@@ -345,7 +302,6 @@ def clear_duplicate_differences():
     for word in words:
         doc_list = list(differences.find({'differences.word': word}))
         if len(doc_list) > 1:
-
             for doc in doc_list:
                 for doc2 in doc_list:
                     if doc.get('_id') >= doc2.get('_id'):
@@ -363,9 +319,11 @@ def clear_duplicate_differences():
 
 
 if __name__ == '__main__':
-#    import_courses()
-#    import_tokens()
-#    import_sentences()
+
+
+#    save_courses()
+#    save_tokens()
+    save_sentences()
 #
 #    import_differences()
 #    repair_differences_word_error()
