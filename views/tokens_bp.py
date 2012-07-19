@@ -2,15 +2,16 @@
 from flask import Blueprint, session, request, render_template, redirect, flash
 from mongokit import ObjectId
 
-from models import tokens, Sentence
+from models import tokens, Sentence, Token
 from _views import query_info, get_reference_tokens, require_login
 
 bp = Blueprint('tokens', __name__)
 
-@bp.route('/', methods=['GET'])
+@bp.route('', methods=['GET'])
 @require_login
 def view_token():
     page_info = query_info(request)
+    print page_info
     search_word = request.args.get('search_word', '').strip()
     token_id = request.args.get('token_id')
 
@@ -26,7 +27,7 @@ def view_token():
     reference_tokens = get_reference_tokens(token.en)
 
     return render_template(
-        '/tokens.html',
+        'tokens.html',
         channel = 'token',
         page_info = page_info,
         token = token,
@@ -34,7 +35,7 @@ def view_token():
         references_tokens = reference_tokens,
     )
 
-@bp.route('/', methods=['POST'])
+@bp.route('', methods=['POST'])
 def save_token():
     en = request.form.get('en', '').strip()
     token_id = request.form.get('id')
@@ -44,17 +45,14 @@ def save_token():
     is_trash = request.form.get('is_trash')
 
     if token_id:
-        token = tokens.Token.find_one(ObjectId(token_id))
+        token = Token.one(ObjectId(token_id))
         if token:
             if en and token.en != en:
-                result = token.rename(en)
-                if not result:
-                    flash(u'重名：'+en, 'alert-error')
-                    return redirect(request.headers.get('referer'))
+                token.en = en
             if courses:
                 token.courses = courses
             token.note = note
-            token.exp_core = exp_core
+            token.exp.core = exp_core
             token.is_trash = True if is_trash else False
             token.save()
             print token

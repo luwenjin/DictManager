@@ -13,7 +13,7 @@
 </select>
 
 
-<input id="search_word" value="{{search_word}}">
+<input id="search_word" value="{{search_word}}" class="span3">
 
 <ul id="token_list" class="unstyled">
     {% for _token in page_info.token_list %}
@@ -32,5 +32,5 @@
 {% from 'macros.html' import pagination %}
 {{ pagination( page_info.pager.current, page_info.pager.total ) }}
 
-<script type="text/javascript" src="/static/js/sidebar.js"></script>
+
 

@@ -9,6 +9,3 @@ from _colls import users, diffs, sentences, tokens, \
 
 from _models import User, Token, Diff, Sentence
 
-conn.register([
-    User, Token, Sentence, # Diff
-    ])
