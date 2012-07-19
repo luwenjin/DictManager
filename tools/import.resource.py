@@ -66,7 +66,7 @@ def update_qj_token_courses():
         course_ids = list(set([t.get('course_id') for t in qj_tokens]))
         courses = qj_course_coll.find({'id': {'$in':course_ids}})
         course_names = list(set([c.get('name') for c in courses if c.get('name')]))
-        if course_names and not token.courses:
+        if 1:#course_names and not token.courses:
             token.courses = course_names
             token.save()
             print i, token.en, token.courses

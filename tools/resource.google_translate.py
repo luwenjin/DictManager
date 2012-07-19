@@ -93,4 +93,4 @@ if __name__ == '__main__':
 #    li = load_data()
 #    dump_data(li)
 #    export_tokens()
-    load_into_db()
+    update_tokens()

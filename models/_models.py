@@ -6,7 +6,7 @@ from hashlib import md5
 
 from mongokit import Document, ObjectId
 
-from _base import db, DB_NAME
+from _base import db, DB_NAME, conn
 from _colls import tokens, users, diffs, sentences
 
 
@@ -54,7 +54,7 @@ class EasyDocument(Document):
             - Model.one(x = x, y = y), this is a shortcut
         """
         model = cls.coll_model()
-        if d and type(d) == dict:
+        if type(d) in [dict, ObjectId]:
             return model.find_one(d, **kwargs)
         elif kwargs:
             return model.find_one(kwargs)
@@ -69,7 +69,7 @@ class EasyDocument(Document):
             - Model.query(x = x, y = y), this is a shortcut
         """
         model = cls.coll_model()
-        if d and type(d) == dict:
+        if type(d) in [dict, ObjectId]:
             return model.find(d, **kwargs)
         elif kwargs:
             return model.find(kwargs)
@@ -137,10 +137,10 @@ class Token(EasyDocument):
 
     def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
         self.hash = Token.make_hash(self.en)
-        self.is_phrase = False
+        self.type = u'word'
         for x in ['.', ' ', '/']:
             if x in self.en:
-                self.is_phrase = True
+                self.type = u'phrase'
                 break
 
         self.modify_time = datetime.now()
@@ -240,3 +240,12 @@ class Diff(EasyDocument):
     @property
     def word_list(self):
         return [x['word'] for x in self.diff_meanings]
+
+
+conn.register([
+    User, Token, Sentence, # Diff
+])
+
+if __name__ == '__main__':
+    li =  Token.query({}, sort=[('hash', 1)]).limit(10).skip(0)
+    print list(li)

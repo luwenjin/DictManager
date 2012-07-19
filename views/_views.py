@@ -22,13 +22,11 @@ def query_info(request):
         query['courses'] = course
 
     if flaw == 'NO_EXPLAIN':
-        query['exps_cn'] = []
+        query['exp.cn'] = []
     elif flaw=='NO_CORE':
-        query['exp_core'] = {'$in':[None, u'']}
+        query['exp.core'] = {'$in':[None, u'']}
     elif flaw == 'NOT_PHRASE':
-        query['is_phrase'] = False
-    elif flaw == 'IS_MARKED':
-        query['mark'] = True
+        query['type'] = u'phrase'
 
     if search_word:
         query['hash'] = Token.make_hash(search_word)
@@ -38,7 +36,8 @@ def query_info(request):
         max( (page - 1) * count, 0),
         max( total_count - 1, 0)
     )
-    token_list = list(Token.query(query, sort=[('low',1)]).limit(count).skip(skip))
+    print query, count, skip
+    token_list = list(Token.query(query, sort=[('hash',1)]).limit(count).skip(skip))
 
     total_page = int(math.ceil(total_count/ count))
 
