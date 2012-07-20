@@ -49,8 +49,8 @@ def save_token():
         if token:
             if en and token.en != en:
                 token.en = en
-            if courses:
-                token.courses = courses
+
+            token.courses = courses
             token.note = note
             token.exp.core = exp_core
             token.is_trash = True if is_trash else False

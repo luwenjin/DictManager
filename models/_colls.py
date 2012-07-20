@@ -10,15 +10,18 @@ users = db['users']
 tokens = db['tokens']
 tokens.ensure_index('en')
 
-# 编辑对于词组含义的录入
-votes = db['votes']
-
 # 例句库
 sentences = db['sentences']
 sentences.ensure_index('include')
 
 # 辨析库
 diffs = db['diffs']
+
+# 核心解释收集库
+core_exp = db['core_exp']
+core_exp.ensure_index('en')
+core_exp.ensure_index('supporters')
+core_exp.ensure_index('objectors')
 
 
 # 资源库 =====================================================
@@ -72,7 +75,7 @@ yd_21yh_page_coll = db['resource.youdao.21yh_pages']
 
 yd_simple_token_coll = db['resource.youdao.simple_tokens']
 # en, return_en, phs, speech, exps_cn, forms->[{type:, text:}], stem, rels->[{POS:, words->[{en:,cn:}]}]
-
+yd_simple_token_coll.ensure_index('en')
 
 # collins ---------------------------------
 cl_page_coll = db['resource.collins.pages']
