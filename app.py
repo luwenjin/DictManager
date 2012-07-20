@@ -12,12 +12,13 @@ from flask import Flask, request, redirect, render_template, session, flash
 from flask.ext.assets import Environment
 
 from models import User
-from views import tokens_blueprints, require_login
+from views import require_login, tokens_blueprints, coreexp_blueprints
 
 app = Flask(__name__)
 app.config.from_object('settings')
 
 app.register_blueprint(tokens_blueprints, url_prefix='/tokens')
+app.register_blueprint(coreexp_blueprints, url_prefix='/coreexp')
 
 app.jinja_env.filters['max'] = max
 app.jinja_env.filters['min'] = min

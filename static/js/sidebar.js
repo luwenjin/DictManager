@@ -8,7 +8,7 @@ function init_sidebar_components() {
     $("#course_select").val( url.param('course') );
     $('#flaw_select').val( url.param('flaw') );
     $('#editor_select').val( url.param('editor') );
-    $('#search_word').val( url.param('search_word') );
+    $('#search_word').val( decodeURIComponent(url.param('search_word')) );
 }
 
 function bind_sidebar_events() {

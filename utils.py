@@ -35,7 +35,7 @@ class SSBJSONEncoder(simplejson.JSONEncoder):
 
     def encode(self, o, indent=None):
         if indent:
-            self.indent = ' ' * indent
+            self.indent = indent
         return simplejson.JSONEncoder.encode(self, o)
 
 

@@ -23,8 +23,8 @@ def query_info(request):
 
     if flaw == 'NO_EXPLAIN':
         query['exp.cn'] = []
-    elif flaw=='NO_CORE':
-        query['exp.core'] = {'$in':[None, u'']}
+    elif flaw == 'NO_CORE':
+        query['exp.core'] = {'$in': [None, u'']}
     elif flaw == 'NOT_PHRASE':
         query['type'] = u'phrase'
 
@@ -33,13 +33,13 @@ def query_info(request):
 
     total_count = Token.query(query).count()
     skip = min(
-        max( (page - 1) * count, 0),
-        max( total_count - 1, 0)
+        max((page - 1) * count, 0),
+        max(total_count - 1, 0)
     )
     print query, count, skip
-    token_list = list(Token.query(query, sort=[('hash',1)]).limit(count).skip(skip))
+    token_list = list(Token.query(query, sort=[('hash', 1)]).limit(count).skip(skip))
 
-    total_page = int(math.ceil(total_count/ count))
+    total_page = int(math.ceil(total_count / count))
 
     pager = {
         'current': page,
@@ -57,35 +57,40 @@ def query_info(request):
 
 def get_reference_tokens(en):
     results = []
-    # wordnet
-    wn_token = wn_token_coll.WNToken.find_one({'en': en})
-    if wn_token:
-        results.append({
-            'src': 'wn',
-            'exp': u'<br/>'.join([u'[%(count)s:%(synset_token)s] %(POS)s. %(text)s' % x for x in wn_token.exps ])
-        })
     # dict.cn
-    dc_token = dc_token_coll.DCToken.find_one({'en': en})
+    dc_token = dc_token_coll.find_one({'en': en})
     if dc_token:
         results.append({
             'src': 'dc',
-            'exp': '<br/>'.join([x.get('exp','') for x in dc_token.exp_sentences])
+            'exp': '<br/>'.join(
+                [x.get('exp', '') for x in dc_token.get('exp_sentences', [])]
+            )
         })
-        #        print results
-        print dc_token.exp_sentences
+
     # youdao
-    yd_token = yd_simple_token_coll.YDSimpleToken.find_one({'en': en})
+    yd_token = yd_simple_token_coll.find_one({'en': en})
     if yd_token:
         results.append({
             'src': 'yd',
-            'exp': '<br/>'.join(yd_token.exps_cn)
+            'exp': '<br/>'.join(yd_token.get('exps_cn', []))
         })
+
+    # wordnet
+    wn_token = wn_token_coll.find_one({'en': en})
+    if wn_token:
+        results.append({
+            'src': 'wn',
+            'exp': u'<br/>'.join(
+                [u'[%(count)s:%(synset_token)s] %(POS)s. %(text)s' % x for x in wn_token.get('exps', [])]
+            )
+        })
+
     # qiji
-    qj_tokens = qj_token_coll.QJToken.find({'en':en})
+    qj_tokens = qj_token_coll.find({'en': en})
     exp_map = {}
     for qj_token in qj_tokens:
-        exp_map.setdefault(qj_token.exp, [])
-        exp_map[qj_token.exp].append('q:'+unicode(qj_token.book()))
+        exp_map.setdefault(qj_token['exp'], [])
+        exp_map[qj_token['exp']].append('q: %s' %  qj_token.get('course_id'))
     for exp in exp_map:
         src_li = exp_map[exp]
         results.append({
@@ -94,10 +99,12 @@ def get_reference_tokens(en):
             })
     return results
 
+
 def get_current_user():
     user_name = session.get('name')
     user = User.one(name=user_name)
     return user
+
 
 def to_json(f):
     @wraps(f)
@@ -107,7 +114,9 @@ def to_json(f):
             json_encoder.encode(result, indent=None if request.is_xhr else 2),
             mimetype='application/json'
         )
+
     return decorated_function
+
 
 def require_login(fn):
     @wraps(fn)
@@ -120,6 +129,7 @@ def require_login(fn):
 
     return decorated_function
 
+
 def require_admin(fn):
     @wraps(fn)
     def decorated_function(*args, **kwargs):
@@ -128,4 +138,5 @@ def require_admin(fn):
             return fn(*args, **kwargs)
         else:
             return redirect('/login')
+
     return decorated_function

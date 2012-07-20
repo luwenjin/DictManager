@@ -5,11 +5,10 @@ $(document).ready(function(){
 function bind_tokens_events() {
     $('#add_foreign_link').on('click', on_add_foreign_link_click);
     $('ul.chinese').on('focus', 'input[name]', on_chinese_input_focus);
-    $('#delete_link').on('click', on_delete_link_click);
 
     $('#resource_tabs').on('click', on_resource_tabs_click);
-    $('#resource_tabs a[data-target=#freq_ngram_pane]').on('shown', on_freq_ngram_pane_shown);
-    $('#resource_tabs a[data-target=#freq_20k_pane]').on('shown', on_freq_20k_pane_shown);
+//    $('#resource_tabs a[data-target=#freq_ngram_pane]').on('shown', on_freq_ngram_pane_shown);
+//    $('#resource_tabs a[data-target=#freq_20k_pane]').on('shown', on_freq_20k_pane_shown);
 
     $('#freq_ngram_pane #lemmas_input').on('keyup', on_lemmas_input_keyup);
     $('#freq_ngram_pane table').on('change', 'input[type=checkbox]', on_freq_result_toggle);
@@ -39,9 +38,7 @@ function on_chinese_input_focus(event) {
     }
 }
 
-function on_delete_link_click(event) {
-    // todo : delete this token
-}
+
 
 function on_resource_tabs_click(event) {
     $(event.target).tab('show');

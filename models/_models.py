@@ -7,7 +7,7 @@ from hashlib import md5
 from mongokit import Document, ObjectId
 
 from _base import db, DB_NAME, conn
-from _colls import tokens, users, diffs, sentences
+from _colls import *
 
 
 class EasyDocument(Document):
@@ -86,6 +86,12 @@ class EasyDocument(Document):
         cur = cls.query(d, **kwargs)
         return list(cur)
 
+    def before_update(self):
+        pass
+
+    def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
+        Document.save(self, uuid, validate, safe, *args, **kwargs)
+
 
 class Token(EasyDocument):
     __database__ = DB_NAME
@@ -135,18 +141,16 @@ class Token(EasyDocument):
     def make_hash(cls, en):
         return en.strip().lower()
 
-    def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
+    def before_update(self):
         self.hash = Token.make_hash(self.en)
         self.type = u'word'
         for x in ['.', ' ', '/']:
             if x in self.en:
                 self.type = u'phrase'
                 break
-
         self.modify_time = datetime.now()
         if not self.get('_id'):
             self.create_time = datetime.now()
-        Document.save(self, uuid, validate, safe, *args, **kwargs)
 
 
 class User(EasyDocument):
@@ -170,10 +174,9 @@ class User(EasyDocument):
     ]
     use_dot_notation = True
 
-    def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
+    def before_update(self):
         if not self.get('_id'):
             self.created_at = datetime.now()
-        Document.save(self, uuid, validate, safe, *args, **kwargs)
 
 
 class Sentence(EasyDocument):
@@ -217,12 +220,11 @@ class Sentence(EasyDocument):
         self.include = list(set(self.include + include))
         return self.include
 
-    def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
+    def before_update(self):
         self.hash = Sentence.make_hash(self.en)
         self.modify_time = datetime.now()
         if not self.get('_id'):
             self.create_time = datetime.now()
-        Document.save(self, uuid, validate, safe, *args, **kwargs)
 
 
 class Diff(EasyDocument):
@@ -242,10 +244,108 @@ class Diff(EasyDocument):
         return [x['word'] for x in self.diff_meanings]
 
 
+class CoreExp(EasyDocument):
+    __database__ = DB_NAME
+    __collection__ = core_exp.name
+    structure = {
+        'en': unicode,
+        'cn': unicode,
+        'editions': dict, # cn: [user_names]
+        'objections': dict, #reason: [user_names]
+
+        'editors': [unicode],
+        'editors_count': int,
+
+        'supporters': [unicode],
+        'supporters_count': int,
+
+        'objectors': [unicode],
+        'objectors_count': int,
+
+        'actions_count': int,
+        'tags': [unicode],
+    }
+    required_fields = ['en', 'cn']
+    default_values = {
+        'supporters': [],
+        'objectors': [],
+        'editors': [],
+        'editions': {},
+        'objections': {},
+    }
+    indexes = [
+        {'fields': ['editors']},
+        {'fields': ['supporters']},
+        {'fields': ['objectors']},
+
+        {'fields': ['supporters_count']},
+        {'fields': ['objectors_count']},
+        {'fields': ['editors_count']},
+        {'fields': ['actions_count']},
+
+        {'fields': ['tags']},
+    ]
+    use_dot_notation = True
+
+    def before_update(self):
+        self.supporters_count = len(self.backers)
+        self.objectors_count = len(self.objectors)
+        self.editors_count = len(self.editors)
+        self.actions_count = self.supporters_count + self.objectors_count + self.editors_count
+
+    def remove_user(self, name):
+        if name in self.supporters:
+            self.supporters.remove(name)
+        if name in self.editors:
+            self.editors.remove(name)
+            for cn in self.editions:
+                names = self.editions[cn]
+                if name in names:
+                    names.remove(name)
+
+        if name in self.objectors:
+            self.objectors.remove(name)
+            for reason in self.objections:
+                names = self.objections[reason]
+                if name in names:
+                    names.remove(name)
+
+    def add_supporter(self, name):
+        self.remove_user(name)
+        self.supporters.append(name)
+
+    def add_objector(self, name, reason):
+        self.remove_user(name)
+        self.objectors.append(name)
+        self.objections.setdefault(reason, [])
+        self.objections[reason].append(name)
+
+    def add_editor(self, name, cn):
+        self.remove_user(name)
+        self.editors.append(name)
+        self.editions.setdefault(cn, [])
+        self.editions[cn].append(name)
+
+
 conn.register([
-    User, Token, Sentence, # Diff
+    User, Token, Sentence, Diff, CoreExp
 ])
 
+def fill_load_exp(course_name):
+    for i, token in enumerate(Token.query(courses=course_name)):
+        if i % 92 != 0:
+            continue
+        gt_token = gt_token_coll.find_one({'en': token.en})
+        core_exp = CoreExp.one(en=token.en)
+        if gt_token and not core_exp:
+            core_exp = CoreExp.insert(
+                en = token.en,
+                cn = gt_token['cn']
+            )
+            print core_exp.en
+
+
+
 if __name__ == '__main__':
-    li =  Token.query({}, sort=[('hash', 1)]).limit(10).skip(0)
-    print list(li)
+    core_exp.drop()
+    fill_load_exp('IELTS')

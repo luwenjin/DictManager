@@ -64,16 +64,16 @@ def update_tokens():
         print doc.get('en'), '->', doc.get('cn')
     dump_data(li)
 
-def load_into_db():
+def save_all():
     li = load_data()
     for doc in li:
 
         en = doc.get('en')
         cn = doc.get('cn')
         if type(en) == str:
-            en = unicode(en)
+            en = en.decode('utf-8')
         if type(cn) == str:
-            cn = unicode(cn)
+            cn = cn.decode('utf-8')
         if en.lower() == cn.lower():
             continue
 
@@ -89,8 +89,4 @@ def load_into_db():
 
 
 if __name__ == '__main__':
-#    cn =  fetch_cn('...sexual intercourse')
-#    li = load_data()
-#    dump_data(li)
-#    export_tokens()
-    update_tokens()
+   save_all()
