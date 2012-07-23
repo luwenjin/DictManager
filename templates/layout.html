@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/img/icons/favicon.ico">
 
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <style> body { padding-top: 60px; } </style>
@@ -38,7 +39,7 @@
             <div class="nav-collapse">
                 <ul class="nav pull-right">
                     <li></li>
-                    <li><a href="/tokens">单词列表</a></li>
+                    {% if session.role == 'admin' %}<li><a href="/tokens">单词列表</a></li>{% endif %}
                     <li><a href="/coreexp">核心含义</a></li>
                     <!--<li><a href="#">词库管理</a></li>-->
                     <!--<li><a href="#">数据统计</a></li>-->

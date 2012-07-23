@@ -20,8 +20,10 @@ diffs = db['diffs']
 # 核心解释收集库
 core_exp = db['core_exp']
 core_exp.ensure_index('en')
-core_exp.ensure_index('supporters')
-core_exp.ensure_index('objectors')
+core_exp.ensure_index('options.editor')
+core_exp.ensure_index('options.voters')
+core_exp.ensure_index('actions_count')
+core_exp.ensure_index('tags')
 
 
 # 资源库 =====================================================
@@ -43,7 +45,7 @@ qj_sentence_coll = db['resource.qiji.sentences']
 # 海词讲解：词源解说、词义辨析、词语用法
 # 英英解释（来自WordNet）
 dc_page_coll = db['resource.dictcn.pages']
-# en, content, saved
+# en, content
 
 dc_token_coll = db['resource.dictcn.tokens']
 # en, seg（en的分段情况）, level（常见程度，5最高，1最低）， phs（音标列表）

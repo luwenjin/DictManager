@@ -43,22 +43,31 @@ def update_qj_token_en(course_name=None):
 
 def update_qj_token_ph(course_name=None):
     qj_token_coll.ensure_index('en')
-    qj_token_coll.ensure_index('en')
 
     qj_token_en_list = _qj_token_en_list(course_name)
     for i, en in enumerate(qj_token_en_list):
         token = Token.one(en=en)
         if not token:
             raise Exception('token not found: %s' % token.en)
-        en_token = qj_token_coll.find_one({'en': en, 'ph_en':{'$exists':True}})
-        us_token = qj_token_coll.find_one({'en': en, 'ph_us':{'$exists':True}})
 
+
+        flag = False
         if not token.ph.en:
-            token.ph.en = en_token['ph_en']
+            flag = True
+            en_token = qj_token_coll.find_one({'en': en, 'ph_en':{'$ne':u''}})
+            if en_token:
+                token.ph.en = en_token['ph_en']
+                token.save()
+
         if not token.ph.us:
-            token.ph.us = us_token['ph_us']
-        token.save()
-        print i, token.en, token.ph.en, token.ph.us
+            flag = True
+            us_token = qj_token_coll.find_one({'en': en, 'ph_us':{'$ne':u''}})
+            if us_token:
+                token.ph.us = us_token['ph_us']
+                token.save()
+
+        if flag and token.type == 'word':
+            print i, token.en, token.ph.en, token.ph.us
 
 def update_qj_token_courses():
     for i, token in enumerate(Token.query()):
@@ -97,4 +106,4 @@ def update_qj_sentences():
 
 if __name__ == '__main__':
 #    Sentence.coll().drop()
-    update_qj_token_courses()
+    update_qj_token_ph()

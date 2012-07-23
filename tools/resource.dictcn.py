@@ -6,125 +6,90 @@ parent_path = os.path.split(os.path.split(os.path.abspath('.'))[0])[0]
 print parent_path
 sys.path.append(parent_path)
 #------------------------------------------------------
-from models import db, tokens, dc_page_coll, dc_token_coll
-from pymongo.objectid import ObjectId
+import re
+from urllib import quote
+
+from ghost import Ghost
 from pyquery import PyQuery as pq
 
-def init_pages_collection():
+from models import db, tokens, dc_page_coll, dc_token_coll, Token
+
+
+
+def save_pages():
     dc_page_coll.ensure_index('en')
-    for i, token in enumerate(tokens.Token.find()):
+    ghost = Ghost(cache_dir='d:/temp')
+    for i, token in enumerate(Token.query()):
         en = token.en
-        page = dc_page_coll.DCPage.find_one({'en': token.en})
-        if not page:
-            page = dc_page_coll.DCPage()
-            page.en = en
-            page.save()
-            print i, 'save', en
+        page_doc = dc_page_coll.find_one({'en': en})
+        if not page_doc:
+            url = 'http://dict.cn/%s' % quote(en)
+            try:
+                ghost.open(url)
+            except:
+                ghost.open(url)
+            content = ghost.content
+            doc = pq(content)
+            html = unicode(doc('#cy'))
+            page_doc = {
+                'en': en,
+                'content': html
+            }
+            dc_page_coll.save(page_doc)
+            print html
+            print i, 'saved', en
         else:
-            print i, 'skip', en
+            print i, 'skipped', en
+
+
+
 
 def parse_page(html):
     d = pq(html)
-    token = d('#word-key').text()
+    doc = dict()
+    # en
+    doc['en'] = d('#word-key').text()
 
-    token_seg = d('#word-key').attr('seg')
-
-    phonetics = None
-    phonetic_text = d('div.h2-titles .yinbiao').text()
-    if phonetic_text:
-        phonetics = [ unicode(x.strip()) for x in phonetic_text.replace('[','').replace(']','').split(';')]
-
-    level = None
-    level_text = d('#word-level').attr('level')
-    if level_text:
-        pos = level_text.index(u'星')
-        level = int(level_text[pos-1:pos])
-
-    transforms = {}
-    change_li = d('#word-transform a')
-    for change_el in change_li:
-        desc = pq(change_el).attr('desc')
-        foreign = pq(change_el).text()
-        transforms[desc] = unicode(foreign)
-
-    explains = []
-    current_explain = None
-    for node in d('#exp-block li,#exp-block div.exp'):
-        if node.tag == 'li':
-            current_explain = pq(node).text()
-            explains.append({
-                'exp': unicode(current_explain),
-                'sentences': []
-            })
+    #phonetics
+    texts = d('.yinbiao').text()
+    p = re.compile('\[(.*?)\]')
+    li = p.findall(texts)
+    ph_en, ph_us = None, None
+    if len(li) == 2:
+        ph_en, ph_us = li
+    elif len(li) == 1:
+        if u'英' in texts:
+            ph_en = li[0]
         else:
-            doc = [ x for x in explains if x.get('exp') == current_explain ][0]
-            en = unicode(pq('.one-en', node).text())
-            cn = unicode(pq('.one-ch', node).text())
-            doc['sentences'].append({'en':en, 'cn':cn})
+            ph_us = li[0]
+    doc['ph_en'] = ph_en
+    doc['ph_us'] = ph_us
 
-    result = {
-        'en': unicode(token),
-        'level': level,
-        'seg': token_seg,
-        'phs': phonetics,
-        'forms': transforms,
-        'exp_sentences': explains
-    }
-#    pprint(result)
-    return result
+    # exps : {POS:, cn:}
+    p_li = d('div.shiyi p')
+    for p in p_li:
+        p = pq(p)
+        POS = p('strong').text()
+        cn = p.text().replace(POS, '').strip()
+        doc.setdefault('exps', [])
+        doc['exps'].append({'POS': POS, 'cn': cn})
 
-def update_tokens():
-    '''将抓取的页面进行分析，取出token保存'''
-    dc_token_coll.ensure_index('en')
-    dc_page_coll.ensure_index('en')
-    for i, dc_page in enumerate(dc_page_coll.DCPage.find()):
-        en = dc_page.en
-        dc_token = dc_token_coll.DCToken.find_one({'en': en})
-
-        if not dc_token:
-            dc_token = dc_token_coll.DCToken()
-            page_info = parse_page(dc_page.content)
-            if page_info.get('en'):
-                dc_token.update(page_info)
-                dc_token.save()
-                print i, 'saved', en
-            else:
-                print i, '!!!!!error', en
-        else:
-            print i, 'skip', en
+    pprint(doc)
 
 
 
-#            if page_info.get('en'):
-#                dc_token_coll.save(token_doc)
-#                print i, 'saved', token
-#            else:
-#                print i, 'error!!!!!', token
-#        else:
-#            print i, 'skipped'
 
-def test_page(token):
-    coll = db['resource.dictcn.pages']
-    coll.ensure_index('token')
-    doc = coll.find_one({'token': token})
-    print doc.get('html')
 
-def test():
-    coll = db['resource.dictcn.pages']
-    for i, token in enumerate(tokens.Token.find({'courses': 'IELTS'})):
-        page = coll.find_one({'token': token.foreign})
 
-        html = page.get('html')
-        result = parse_page(html)
-        if not result.get('token'):
-            print i, page.get('token')
-            page.pop('saved')
-            coll.save(page)
 
 
 if __name__ == '__main__':
 #    init_pages_collection()
 #    dc_token_coll.drop()
 #    update_tokens()
-    page = dc_page_coll.Page.find_one({'en': u'apply'})
-    print page.content
+#    dc_page_coll.drop()
+#    doc = dc_page_coll.find_one()
+#    parse_page(doc['content'])
+#    save_pages()
+    db['core_exp'].drop()
+    db['users'].drop()

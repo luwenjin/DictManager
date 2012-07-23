@@ -1,7 +1,8 @@
 # coding: utf-8
 """ all data models """
-from datetime import datetime
 import re
+import random
+from datetime import datetime
 from hashlib import md5
 
 from mongokit import Document, ObjectId
@@ -249,103 +250,121 @@ class CoreExp(EasyDocument):
     __collection__ = core_exp.name
     structure = {
         'en': unicode,
-        'cn': unicode,
-        'editions': dict, # cn: [user_names]
-        'objections': dict, #reason: [user_names]
-
-        'editors': [unicode],
-        'editors_count': int,
-
-        'supporters': [unicode],
-        'supporters_count': int,
-
-        'objectors': [unicode],
-        'objectors_count': int,
-
+        'options': [{
+            'cn': unicode,
+            'editor': unicode,
+            'voters': [unicode],
+            'tag': unicode,
+        }],
         'actions_count': int,
         'tags': [unicode],
     }
-    required_fields = ['en', 'cn']
+    required_fields = ['en', 'options']
     default_values = {
-        'supporters': [],
-        'objectors': [],
-        'editors': [],
-        'editions': {},
-        'objections': {},
+        'options': [],
+        'tags': [],
     }
     indexes = [
-        {'fields': ['editors']},
-        {'fields': ['supporters']},
-        {'fields': ['objectors']},
-
-        {'fields': ['supporters_count']},
-        {'fields': ['objectors_count']},
-        {'fields': ['editors_count']},
+        {'fields': ['en']},
+        {'fields': ['options.editor'], 'check': False},
+        {'fields': ['options.voters'], 'check': False},
+        {'fields': ['options.tag'], 'check': False},
         {'fields': ['actions_count']},
-
         {'fields': ['tags']},
     ]
     use_dot_notation = True
 
+    @property
+    def ordered_options(self):
+        return sorted(self.options, key=lambda x:len(x['voters']), reverse=True)
+
+    @property
+    def best_option(self):
+        best_option_voters = max([len(option['voters']) for option in self.options])
+        best_options = [option for option in self.options if len(option['voters']) == best_option_voters]
+        return random.choice(best_options)
+
     def before_update(self):
-        self.supporters_count = len(self.backers)
-        self.objectors_count = len(self.objectors)
-        self.editors_count = len(self.editors)
-        self.actions_count = self.supporters_count + self.objectors_count + self.editors_count
+        self.actions_count = 0
+        for option in self.options:
+            self.actions_count += len(option.voters)
+        self.action_count += len(self.skippers)
 
     def remove_user(self, name):
-        if name in self.supporters:
-            self.supporters.remove(name)
-        if name in self.editors:
-            self.editors.remove(name)
-            for cn in self.editions:
-                names = self.editions[cn]
-                if name in names:
-                    names.remove(name)
+        remove_index = -1
+        for i, option in enumerate(self.options):
+            if option['editor'] == name:
+                option['editor'] = None
+                del option['voters'][0]
+                if option['voters']:
+                    option['editor'] = option['voters'][0]
+                else:
+                    remove_index = i
+            elif name in option['voters']:
+                option['voters'].remove(name)
+        if remove_index >= 0:
+            del self.options[remove_index]
 
-        if name in self.objectors:
-            self.objectors.remove(name)
-            for reason in self.objections:
-                names = self.objections[reason]
-                if name in names:
-                    names.remove(name)
+    def add_option(self, cn, user_name):
+        self.remove_user(user_name)
+        option_found = False
+        for i, option in enumerate(self.options):
+            if option['cn'] == cn:
+                option['voters'].append(user_name)
+                option_found = True
+                break
+        if not option_found:
+            option = {
+                'cn': cn,
+                'editor': user_name,
+                'voters': [user_name],
+                'tag': None,
+            }
+            self.options.append(option)
 
-    def add_supporter(self, name):
-        self.remove_user(name)
-        self.supporters.append(name)
+    def tag_option(self, cn, tag):
+        for i, option in enumerate(self.options):
+            if option['cn'] == cn:
+                option['tag'] = tag
+                self.save()
+                return True
+        return False
 
-    def add_objector(self, name, reason):
-        self.remove_user(name)
-        self.objectors.append(name)
-        self.objections.setdefault(reason, [])
-        self.objections[reason].append(name)
-
-    def add_editor(self, name, cn):
-        self.remove_user(name)
-        self.editors.append(name)
-        self.editions.setdefault(cn, [])
-        self.editions[cn].append(name)
 
 
 conn.register([
     User, Token, Sentence, Diff, CoreExp
 ])
 
+
 def fill_load_exp(course_name):
     for i, token in enumerate(Token.query(courses=course_name)):
-        if i % 92 != 0:
+        if i % 46 != 0:
             continue
         gt_token = gt_token_coll.find_one({'en': token.en})
         core_exp = CoreExp.one(en=token.en)
         if gt_token and not core_exp:
             core_exp = CoreExp.insert(
                 en = token.en,
-                cn = gt_token['cn']
+                options = [{
+                    'cn': gt_token['cn'],
+                    'editor': u'SYS',
+                    'voters': [u'SYS'],
+                }]
             )
             print core_exp.en
 
-
+def migrate_core_exp():
+    for doc in core_exp.find():
+        print doc
+        if doc.has_key('skippers'):
+            doc.pop('skippers')
+        for option in doc['options']:
+            option['tag'] = None
+        core_exp.save(doc)
 
 if __name__ == '__main__':
-    core_exp.drop()
-    fill_load_exp('IELTS')
+#    core_exp.drop()
+#    fill_load_exp('IELTS')
+#    print CoreExp.one({'options.editor': u'SYS'})
+    migrate_core_exp()
