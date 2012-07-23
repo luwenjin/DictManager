@@ -3,12 +3,12 @@ from flask import Blueprint, session, request, render_template, redirect, flash
 from mongokit import ObjectId
 
 from models import tokens, Sentence, Token
-from _views import query_info, get_reference_tokens, require_login
+from _views import query_info, get_reference_tokens, require_login, require_admin
 
 bp = Blueprint('tokens', __name__)
 
 @bp.route('', methods=['GET'])
-@require_login
+@require_admin
 def view_token():
     page_info = query_info(request)
     print page_info
@@ -36,6 +36,7 @@ def view_token():
     )
 
 @bp.route('', methods=['POST'])
+@require_admin
 def save_token():
     en = request.form.get('en', '').strip()
     token_id = request.form.get('id')

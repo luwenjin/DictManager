@@ -8,45 +8,33 @@
         <div class="wrap">
             <input type="hidden" id="_id" name="_id" value="{{ce._id}}">
             <div class="progress">
-                {% set progress = '%0.2f' % (100.0 * (support_count+object_count) / total) %}
-                <span class="numbers">{{progress}}% ( {{support_count}}+{{object_count}} of {{total}} )</span>
+                {% set progress = '%0.2f' % (100.0 * (edit_count+vote_count) / total) %}
+                <span class="numbers">{{progress}}% ( {{vote_count}}+{{edit_count}} of {{total}} )</span>
                 <div class="bar" style="width:{{progress}}%"></div>
             </div>
 
-            <p>如果</p>
+            <span class="phonetic">[ {{token.ph.en}} ] [ {{token.ph.us}} ]</span>
             <h1 class='en'>{{ce.en}}</h1>
-            <p>只能挑选1个最有代表性的解释，我觉得</p>
 
-            <div id="select-view">
-                <h2 class='cn'>“{{ce.cn}}”</h2>
-                <p>这个解释</p>
-
-                <div id="opinions" class="buttons">
-                    <a id="support-button" href="javascript:" class='btn btn-large btn-success'>
-                        好
-                    </a>
-                    <a id="object-button" href="javascript:" class='btn btn-large btn-danger'>
-                        不好
-                        <!--<span class="caret"></span>-->
-                    </a>
-                </div>
-                <div id="object-reasons" style="display:none">
-                    <a class="btn btn-large btn-warning reason" data="NON_CORE">不是最有代表性的含义</a>
-                    <a class="btn btn-large btn-warning reason" data="INACCURATE">不够准确/简练/容易混淆</a>
-                    <input class="reason" name="reason" class="large" value="" data-helptext="其他原因请输入，回车提交">
-                    <a id="return-button" class="btn btn-large">返回</a>
-                </div>
+            <div id="good-bad-box">
+                {% set best_option = ce.best_option %}
+                <p>如果只选1个最有代表性的解释，那么</p>
+                <h2 class='cn'>“{{best_option.cn}}”</h2>
+                <a id="good-button" class='btn btn-large btn-success' href="javascript:" data-option="{{best_option.cn}}">很好</a>
+                <a id="bad-button" class='btn btn-large btn-danger' href="javascript:">不够好</a>
             </div>
 
-            <div id="edit-view" style="display:none">
-                <input class="cn" type="text" name="cn" value="">
-                <div class="buttons">
-                    <a id="submit-button" href="javascript:" class="btn btn-primary">提交</a>
-                    <a id="cancel-button" href="javascript:" class="btn">取消</a>
-                </div>
-
+            <div id="vote-box" style="display:none">
+                <p>你觉得什么解释最简练/有代表性：</p>
+                {% for option in ce.options %}
+                <a href="javascript:" class='btn btn-large option'
+                   data-option="{{option.cn}}">{{option.cn}}</a>
+                {% endfor %}
+                <input class="option" type="text" name="option" value=""
+                       data-helptext="没好答案就自己输入吧（限1个解释）">
+                <a id="submit-button" href="javascript:" class="btn btn-large btn-primary">确认</a>
+                <a id="cancel-button" href="javascript:" class="btn btn-large btn-inverse">返回</a>
             </div>
-
 
         </div>
     </div>

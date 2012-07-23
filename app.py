@@ -35,7 +35,7 @@ def test(path):
 @app.route('/', methods=['GET'])
 @require_login
 def index():
-    return redirect('/tokens')
+    return redirect('/coreexp')
 
 @app.route('/login', methods=['GET'])
 def login():
@@ -44,8 +44,8 @@ def login():
 
 @app.route('/login', methods=['POST'])
 def login_or_register():
-    name = request.form.get('name')
-    password = request.form.get('password')
+    name = request.form.get('name', '').strip()
+    password = request.form.get('password', '').strip()
     user = User.one(name=name)
     if user:
         if user.password != password:
@@ -62,4 +62,4 @@ def login_or_register():
     session['role'] = user.role
     user.last_login = datetime.now()
     user.save()
-    return redirect('/tokens')
+    return redirect('/')

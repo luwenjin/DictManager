@@ -3,7 +3,7 @@ html, body{
     font-family: "Microsoft Yahei";
 }
 
-.btn {
+.btn, input {
     font-family: "Microsoft Yahei";
 }
 
@@ -98,6 +98,10 @@ span.user-name{
         }
 
 
+        .phonetic{
+            display: block;
+            text-align:center;
+        }
         h1{
             text-align:center;
             font-weight: normal;
@@ -108,96 +112,95 @@ span.user-name{
             font-size: 28px;
         }
 
-        p {
-            text-align:center;
-            margin: 5px auto;
-            span.en{
-                display:block;
+
+        #good-bad-box {
+            p {
+                text-align:center;
+                margin-bottom: 0px;
+                margin-top: 5px;
+                color: #ccc;
             }
-            color: #bbb;
-        }
-
-        h2.cn:hover {
-//            cursor: text;
-//            background: #eee;
-        }
-
-        .cn {
+            h2.cn {
+                text-align:center;
+                font-weight: normal;
+                margin: 0 auto 10px auto;
+                padding: 0px;
+                width: 90%;
+            }
             text-align:center;
-            font-weight: normal;
-            margin: 0 auto;
-            padding: 0px;
-            line-height:28px;
-            height:28px;
-            font-size: 28px;
-            display: block;
-            width: 90%;
-        }
-
-        .buttons {
-            text-align:center;
-            margin-top: 20px;
-
             .btn {
-                width: 40%;
+                width: 35%;
+            }
+        }
+
+        #vote-box {
+            text-align: center;
+            p {
+                text-align:center;
+                margin-bottom: 0px;
+                margin-top: 5px;
+                color: black;
+                margin-bottom: 10px;
+            }
+            .option{
+                width: 80%;
                 padding-left: 8px;
                 padding-right: 8px;
+                margin-bottom: 5px;
+                font-size: 16px;
             }
-        }
-
-        #object-reasons {
-            text-align:center;
-            .btn, input {
-                width: 80%;
-                margin-top: 10px;
-                padding-left: 0px;
-                padding-right: 0px;
-            }
-            input {
+            input.option{
                 height: 30px;
-                line-height: 28px;
                 text-align:center;
-                margin-bottom:0px;
+            }
+             #cancel-button, #submit-button {
+                margin-top: 10px;
+                width: 35%;
             }
         }
 
 
-        #select-view {
-
-        }
-        #edit-view{
-        }
-
     }
 
 }
 
+#coreexp-list-page{
+    p.answer{
+        display: inline-block;
+        line-height:20px;
+        color: black;
+        font-size: 14px;
 
-#freq_modal{
-    #freq_list{
-        height:250px;
-        overflow-y: scroll;
-        li{
-            list-style:none;
-            .freq{
-                display:inline-block;
-                width:100px;
+        a {
+            font-size: 12px;
+            margin-left: 10px;
+            padding: 0 5px;
+
+            &.tagged{
+                background-color: #08c;
+                color: white;
             }
         }
     }
-}
+    .label{
+        width: 30px;
+        display:inline-block;
+        text-align:center;
 
-#freq_20k_pane table {
-    td.freq{
-        width: 100px;
-    }
-}
-
-#sentences_form {
-    table {
-        tr.banned td {
-            color: #ccc;
+        &.best{
+            background-color:green;
+        }
+        &.bad{
+            background-color: grey;
         }
     }
-}
+    p.editor{
+        font-size: 9px;
+        color: #444;
+    }
+    p.voters{
+        font-size: 9px;
+        color: #888;
+    }
 
+}
