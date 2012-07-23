@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div id="coreexp-list-page" class="container ">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:150px">单词</th>
+                <th>结果</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ce in ce_list %}
+            <tr>
+                <td>{{ce.en}}</td>
+                <td>
+                    <ul class="unstyled">
+                    {% for option in ce.ordered_options %}
+                        <li>
+                            <span class="label label-warning {{option.tag}}">{{option.voters | length }}</span>
+                            <p class="answer">
+                                {{option.cn}}
+                                <a href="javascript:" {% if option.tag == 'best' %} class="tagged" {% endif %}
+                                   data-option="{{option.cn}}" data-tag="best" data-id="{{ce._id}}">最佳</a>
+                                <a href="javascript:" {% if option.tag == 'bad' %} class="tagged" {% endif %}
+                                   data-option="{{option.cn}}" data-tag="bad" data-id="{{ce._id}}">最差</a>
+                                <a href="javascript:"
+                                data-option="{{option.cn}}" data-tag="" data-id="{{ce._id}}">None</a>
+                            </p><br/>
+                            <p class="voters">【{{option.editor}}】{{option.voters | join(', ')}}</p>
+
+
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <p class="skippers">{{ce.skippers | join(', ')}}</p>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div><!--/.container-->
+
+{% endblock %}
+
+
+{% block bottom %}
+<script type="text/javascript" src="/static/js/coreexp-list.js"></script>
+{% endblock %}
