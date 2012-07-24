@@ -74,8 +74,6 @@ def save_submit():
         if option:
             option = option.strip()
             ce.add_option(option, user.name)
-        elif skip:
-            ce.add_skip(user.name)
         ce.save()
 
     next_ce = suggest_next(user.name)

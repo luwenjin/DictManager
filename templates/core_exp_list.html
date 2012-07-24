@@ -38,7 +38,7 @@
             {% for ce in ce_list %}
             <tr>
                 <td class="en">
-                    <h3>{{ce.en}}</h3>
+                    <h3 title="{{ce.log_html}}">{{ce.en}}</h3>
                     <span class="label {% if 'closed' in ce.tags %}label-success{% endif %}"
                           data-id="{{ce._id}}"
                           data-tag="closed"
