@@ -5,7 +5,7 @@ from flask import Blueprint, session, request, render_template, redirect, flash,
 from mongokit import ObjectId
 
 from models import tokens, Sentence, Token, CoreExp
-from _views import to_json, get_reference_tokens, require_login, get_current_user, require_admin
+from _views import to_json, get_reference_tokens, require_login, get_current_user, require_admin, query_page
 
 bp = Blueprint('coreexp', __name__)
 
@@ -91,11 +91,16 @@ def save_submit():
 @bp.route('/list', methods=['GET'])
 @require_admin
 def list_core_exp():
-    ce_list = CoreExp.query({}, sort=[('_id',1)])
-    print ce_list
+    page = int(request.args.get('page', 1))
+    count = int(request.args.get('count', 20))
+
+    ce_list, pager = query_page(CoreExp, {}, [('_id',1)], page, count)
+
     return render_template('core_exp_list.html',
-        ce_list = ce_list
+        ce_list = ce_list,
+        pager = pager
     )
+
 
 @bp.route('/option/tag', methods=['GET', 'POST'])
 @require_admin

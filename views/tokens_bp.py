@@ -1,9 +1,9 @@
 #coding:utf-8
-from flask import Blueprint, session, request, render_template, redirect, flash
+from flask import Blueprint, request, render_template, redirect, flash
 from mongokit import ObjectId
 
 from models import tokens, Sentence, Token
-from _views import query_info, get_reference_tokens, require_login, require_admin
+from _views import query_info, get_reference_tokens, require_admin
 
 bp = Blueprint('tokens', __name__)
 

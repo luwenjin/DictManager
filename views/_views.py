@@ -1,6 +1,7 @@
 # coding: utf-8
 """ Views 中用得到的内容函数 和一些 view decorators """
 import math
+from pymongo.collection import Collection
 from functools import wraps
 
 from flask import session, current_app, request, redirect
@@ -8,6 +9,27 @@ from flask import session, current_app, request, redirect
 from models import Token, wn_token_coll, dc_token_coll, yd_simple_token_coll, qj_token_coll, User
 from settings import COURSE_LIST, FLAW_LIST
 from utils import json_encoder
+
+
+def query_page(coll_or_model, query, sort=None, page=1, count=20):
+    if type(coll_or_model) == Collection:
+        finder = coll_or_model.find
+    else:
+        finder = coll_or_model.coll_model().find
+
+    total_count = finder(query).count()
+    skip = min(
+        max((page - 1) * count, 0),
+        max(total_count - 1, 0)
+    )
+    docs = finder(query, sort=sort).limit(count).skip(skip)
+    total_page = int(math.ceil(total_count / count))
+    pager = {
+        'current': page,
+        'total': total_page,
+    }
+    return list(docs), pager
+
 
 def query_info(request):
     course = request.args.get('course', 'ALL')
@@ -31,20 +53,7 @@ def query_info(request):
     if search_word:
         query['hash'] = Token.make_hash(search_word)
 
-    total_count = Token.query(query).count()
-    skip = min(
-        max((page - 1) * count, 0),
-        max(total_count - 1, 0)
-    )
-    print query, count, skip
-    token_list = list(Token.query(query, sort=[('hash', 1)]).limit(count).skip(skip))
-
-    total_page = int(math.ceil(total_count / count))
-
-    pager = {
-        'current': page,
-        'total': total_page
-    }
+    token_list, pager = query_page(Token, query, [('hash', 1)], page, count)
 
     return {
         'course_list': COURSE_LIST,
@@ -90,7 +99,7 @@ def get_reference_tokens(en):
     exp_map = {}
     for qj_token in qj_tokens:
         exp_map.setdefault(qj_token['exp'], [])
-        exp_map[qj_token['exp']].append('q: %s' %  qj_token.get('course_id'))
+        exp_map[qj_token['exp']].append('q: %s' % qj_token.get('course_id'))
     for exp in exp_map:
         src_li = exp_map[exp]
         results.append({
