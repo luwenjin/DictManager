@@ -26,7 +26,7 @@
 
             <div id="vote-box" style="display:none">
                 <p>你觉得什么解释最简练/有代表性：</p>
-                {% for option in ce.options %}
+                {% for option in ce.shuffled_options %}
                 <a href="javascript:" class='btn btn-large option'
                    data-option="{{option.cn}}">{{option.cn}}</a>
                 {% endfor %}
