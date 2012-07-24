@@ -4,8 +4,20 @@
 
 {% from 'macros.html' import pagination %}
 
-
 <div id="coreexp-list-page" class="container ">
+
+    <ul class="nav nav-pills pull-left">
+        <li {% if request.args.channel == 'open' %}class="active"{% endif %}>
+            <a href="javascript:change_param('channel', 'open')">开放</a>
+        </li>
+        <li {% if request.args.channel == 'closed' %}class="active"{% endif %}>
+            <a href="javascript:change_param('channel', 'closed')">已关闭</a>
+        </li>
+        <li {% if request.args.channel == 'all' or not request.args.channel %}class="active"{% endif %}>
+            <a href="javascript:change_param('channel', 'all')">全部</a>
+        </li>
+    </ul>
+
     <div class="pull-right">{{ pagination( pager.current, pager.total ) }}</div>
     <table class="table">
         <thead>
@@ -17,9 +29,14 @@
         <tbody>
             {% for ce in ce_list %}
             <tr>
-                <td>
-                    {{ce.en}}<br/>
-                    {{ce.actions_count}}
+                <td class="en">
+                    <h3>{{ce.en}}</h3><br/>
+                    <a href="javascript:"
+                       data-id="{{ce._id}}"
+                       data-tag="{% if 'closed' in ce.tags %}closed{% endif %}"
+                       class="btn open">
+                        {% if 'closed' in ce.tags %}已关闭{% else %}开放中{% endif %}
+                    </a>
                 </td>
                 <td>
                     <ul class="unstyled">
@@ -36,8 +53,6 @@
                                 data-option="{{option.cn}}" data-tag="" data-id="{{ce._id}}">None</a>
                             </p><br/>
                             <p class="voters">【{{option.editor}}】{{option.voters | join(', ')}}</p>
-
-
                         </li>
                     {% endfor %}
                     </ul>

@@ -93,8 +93,15 @@ def save_submit():
 def list_core_exp():
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 20))
+    channel = request.args.get('channel', 'all')
 
-    ce_list, pager = query_page(CoreExp, {}, [('_id',1)], page, count)
+    query = {}
+    if channel == 'open':
+        query['tags'] = {'$ne': u'closed'}
+    elif channel == 'closed':
+        query['tags'] = u'closed'
+
+    ce_list, pager = query_page(CoreExp, query, [('_id',1)], page, count)
 
     return render_template('core_exp_list.html',
         ce_list = ce_list,
@@ -124,3 +131,23 @@ def tag_option():
             return {'status': 'ok'}
 
     return {'status': 'error', 'message': 'option not found'}
+
+
+@bp.route('/tag', methods=['GET', 'POST'])
+@require_admin
+@to_json
+def tag_ce():
+    _id = request.values.get('_id')
+    tag = request.values.get('tag')
+    action = request.values.get('action')
+
+    ce = CoreExp.one(ObjectId(_id))
+    if not ce:
+        return {'status': 'error', 'message': 'not found'}
+
+    if action == 'replace':
+        ce.tags = [tag]
+        ce.save()
+        return {'status': 'ok'}
+    else:
+        return {'status': 'error', 'message': 'invalid action'}

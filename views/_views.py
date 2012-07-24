@@ -23,9 +23,9 @@ def query_page(coll_or_model, query, sort=None, page=1, count=20):
         max(total_count - 1, 0)
     )
     docs = finder(query, sort=sort).limit(count).skip(skip)
-    total_page = int(math.ceil(total_count / count))
+    total_page = int(math.floor(total_count / count)) + 1
     pager = {
-        'current': page,
+        'current': min(page, total_page),
         'total': total_page,
     }
     return list(docs), pager
