@@ -87,10 +87,11 @@ class EasyDocument(Document):
         cur = cls.query(d, **kwargs)
         return list(cur)
 
-    def before_update(self):
+    def before_save(self):
         pass
 
     def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
+        self.before_save()
         Document.save(self, uuid, validate, safe, *args, **kwargs)
 
 
@@ -142,7 +143,7 @@ class Token(EasyDocument):
     def make_hash(cls, en):
         return en.strip().lower()
 
-    def before_update(self):
+    def before_save(self):
         self.hash = Token.make_hash(self.en)
         self.type = u'word'
         for x in ['.', ' ', '/']:
@@ -175,7 +176,7 @@ class User(EasyDocument):
     ]
     use_dot_notation = True
 
-    def before_update(self):
+    def before_save(self):
         if not self.get('_id'):
             self.created_at = datetime.now()
 
@@ -221,7 +222,7 @@ class Sentence(EasyDocument):
         self.include = list(set(self.include + include))
         return self.include
 
-    def before_update(self):
+    def before_save(self):
         self.hash = Sentence.make_hash(self.en)
         self.modify_time = datetime.now()
         if not self.get('_id'):
@@ -284,11 +285,10 @@ class CoreExp(EasyDocument):
         best_options = [option for option in self.options if len(option['voters']) == best_option_voters]
         return random.choice(best_options)
 
-    def before_update(self):
+    def before_save(self):
         self.actions_count = 0
         for option in self.options:
-            self.actions_count += len(option.voters)
-        self.action_count += len(self.skippers)
+            self.actions_count += len(option['voters'])
 
     def remove_user(self, name):
         remove_index = -1
@@ -355,13 +355,18 @@ def fill_load_exp(course_name):
             print core_exp.en
 
 def migrate_core_exp():
-    for doc in core_exp.find():
-        print doc
-        if doc.has_key('skippers'):
-            doc.pop('skippers')
-        for option in doc['options']:
-            option['tag'] = None
-        core_exp.save(doc)
+    for ce in core_exp.find():
+        if ce.has_key('skippers'):
+            ce.pop('skippers')
+        for option in ce['options']:
+            if not option.has_key('tag'):
+                option['tag'] = None
+        core_exp.save(ce)
+    for ce in CoreExp.all():
+        ce.save()
+
+
+
 
 if __name__ == '__main__':
 #    core_exp.drop()

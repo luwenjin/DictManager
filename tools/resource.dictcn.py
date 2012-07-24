@@ -90,6 +90,5 @@ if __name__ == '__main__':
 #    dc_page_coll.drop()
 #    doc = dc_page_coll.find_one()
 #    parse_page(doc['content'])
-#    save_pages()
-    db['core_exp'].drop()
-    db['users'].drop()
+    save_pages()
+

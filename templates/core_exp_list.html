@@ -13,7 +13,10 @@
         <tbody>
             {% for ce in ce_list %}
             <tr>
-                <td>{{ce.en}}</td>
+                <td>
+                    {{ce.en}}<br/>
+                    {{ce.actions_count}}
+                </td>
                 <td>
                     <ul class="unstyled">
                     {% for option in ce.ordered_options %}
