@@ -2,7 +2,11 @@
 
 {% block main %}
 
+{% from 'macros.html' import pagination %}
+
+
 <div id="coreexp-list-page" class="container ">
+    <div class="pull-right">{{ pagination( pager.current, pager.total ) }}</div>
     <table class="table">
         <thead>
             <tr>
@@ -43,6 +47,8 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <div class="pull-right">{{ pagination( pager.current, pager.total ) }}</div>
 
 </div><!--/.container-->
 
