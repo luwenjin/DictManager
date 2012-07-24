@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    $('.answer').on('click', 'a', on_click_tag_link);
-    $('td.en').on('click', 'a', on_click_close_button);
+    $('.answer').on('click', 'a', on_click_option_tag_link);
+    $('td.en').on('click', 'span.label', on_click_ce_tag_label);
 });
 
-function on_click_tag_link(e) {
+function on_click_option_tag_link(e) {
     var el = $(e.currentTarget);
     var option = el.attr('data-option');
     var tag = el.attr('data-tag');
@@ -27,37 +27,30 @@ function on_click_tag_link(e) {
     });
 }
 
-function on_click_close_button(e) {
+function on_click_ce_tag_label(e) {
     var el = $(e.currentTarget);
     var id = el.attr('data-id');
-    var current_tag = el.attr('data-tag');
+    var tag = el.attr('data-tag');
 
     var url = '/coreexp/tag';
-    var params = {'_id': id, 'action': 'replace'};
-    if (current_tag != 'closed')
-    {
-        params['tag'] = 'closed';
-    }
-    else
-    {
-        params['tag'] = null;
+    var params = {'_id': id, 'tag': tag};
+    if ( el.hasClass('label-success')) {
+        params['action'] = 'del';
+    } else {
+        params['action'] = 'add';
     }
 
-    el.attr('disabled', true);
     $.post(url, params, function(data)
     {
         if (data.status == 'ok'){
-            el.attr('data-tag', params['tag']);
-            if (params['tag']){
-                el.text('已关闭')
+            if (params['action'] == 'del'){
+                el.removeClass('label-success');
             } else {
-                el.text('开放中')
+                el.addClass('label-success');
             }
-
         } else {
             alert(data.message);
         }
-        el.removeAttr('disabled')
     });
 
 
