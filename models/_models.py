@@ -258,12 +258,17 @@ class CoreExp(EasyDocument):
             'tag': unicode,
         }],
         'actions_count': int,
+        'logs': [{'time': datetime, 'event': unicode, 'user': unicode}],
         'tags': [unicode],
+        'create_time': datetime,
+        'modify_time': datetime,
+
     }
     required_fields = ['en', 'options']
     default_values = {
         'options': [],
         'tags': [],
+        'logs': [],
     }
     indexes = [
         {'fields': ['en']},
@@ -272,6 +277,8 @@ class CoreExp(EasyDocument):
         {'fields': ['options.tag'], 'check': False},
         {'fields': ['actions_count']},
         {'fields': ['tags']},
+        {'fields': ['create_time']},
+        {'fields': ['modify_time']},
     ]
     use_dot_notation = True
 
@@ -290,10 +297,21 @@ class CoreExp(EasyDocument):
         best_options = [option for option in self.options if len(option['voters']) == best_option_voters]
         return random.choice(best_options)
 
-    def before_save(self):
-        self.actions_count = 0
-        for option in self.options:
-            self.actions_count += len(option['voters'])
+    def add_log(self, event, user_name):
+        log = {
+            'time': datetime.now(),
+            'event': event,
+            'user': user_name
+        }
+        self.logs.append(log)
+
+    @property
+    def log_html(self):
+        li = []
+        for log in self.logs:
+            line = '%(time)s>>[%(user)s]%(event)s' % log
+            li.append(line)
+        return '<br/>'.join(li)
 
     def remove_user(self, name):
         remove_index = -1
@@ -312,6 +330,7 @@ class CoreExp(EasyDocument):
 
     def add_option(self, cn, user_name):
         self.remove_user(user_name)
+        self.add_log('add_option:%s' % cn, user_name)
         option_found = False
         for i, option in enumerate(self.options):
             if option['cn'] == cn:
@@ -334,6 +353,14 @@ class CoreExp(EasyDocument):
                 self.save()
                 return True
         return False
+
+    def before_save(self):
+        self.modify_time = datetime.now()
+        if not self.get('_id'):
+            self.create_time = datetime.now()
+        self.actions_count = 0
+        for option in self.options:
+            self.actions_count += len(option['voters'])
 
 
 
@@ -361,14 +388,13 @@ def fill_load_exp(course_name):
 
 def migrate_core_exp():
     for ce in core_exp.find():
-        if ce.has_key('skippers'):
-            ce.pop('skippers')
-        for option in ce['options']:
-            if not option.has_key('tag'):
-                option['tag'] = None
+        if not ce.has_key('modify_time'):
+            ce['modify_time'] = datetime.now()
+        if not ce.has_key('create_time'):
+            ce['create_time'] = datetime.now()
+        if not ce.has_key('logs'):
+            ce['logs'] = []
         core_exp.save(ce)
-    for ce in CoreExp.all():
-        ce.save()
 
 
 
