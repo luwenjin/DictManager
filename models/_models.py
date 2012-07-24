@@ -280,6 +280,11 @@ class CoreExp(EasyDocument):
         return sorted(self.options, key=lambda x:len(x['voters']), reverse=True)
 
     @property
+    def shuffled_options(self):
+        random.shuffle(self.options)
+        return self.options
+
+    @property
     def best_option(self):
         best_option_voters = max([len(option['voters']) for option in self.options])
         best_options = [option for option in self.options if len(option['voters']) == best_option_voters]
