@@ -90,7 +90,7 @@ def save_submit():
 
 @bp.route('/list', methods=['GET'])
 @require_admin
-def list_core_exp():
+def ce_list():
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 20))
     channel = request.args.get('channel', 'all')
@@ -100,6 +100,12 @@ def list_core_exp():
         query['tags'] = {'$ne': u'closed'}
     elif channel == 'closed':
         query['tags'] = u'closed'
+    elif channel == 'auto_close':
+        query = {
+            'tags': {'$ne': 'closed'},
+            'options': {'$size': 1},
+            'actions_count': {'$gt': 10}
+        }
 
     ce_list, pager = query_page(CoreExp, query, [('_id',1)], page, count)
 
@@ -145,9 +151,40 @@ def tag_ce():
     if not ce:
         return {'status': 'error', 'message': 'not found'}
 
-    if action == 'replace':
-        ce.tags = [tag]
-        ce.save()
+    if action == 'add':
+        if tag not in ce.tags:
+            ce.tags.append(tag)
+            ce.save()
+        return {'status': 'ok'}
+    elif action == 'del':
+        if tag in ce.tags:
+            ce.tags.remove(tag)
+            ce.save()
         return {'status': 'ok'}
     else:
         return {'status': 'error', 'message': 'invalid action'}
+
+@bp.route('/list/auto_close')
+@require_admin
+def auto_close():
+    # 只有1个答案的
+    query = {
+        'tags': {'$ne': u'closed'},
+        'options': {'$size': 1},
+        'actions_count': {'$gt': 10}
+    }
+    for ce in CoreExp.all(query):
+        ce.tags.append(u'closed')
+        ce.save()
+
+    # 最佳答案占了70%以上的
+    query = {
+        'tags': {'$ne': u'closed'},
+        'actions_count': {'$gt': 15}
+    }
+    for ce in CoreExp.query(query):
+        if len(ce.best_option['voters']) > ce.actions_count * 0.7:
+            ce.tags.append(u'closed')
+            ce.save()
+
+    return redirect(url_for('.ce_list'))
