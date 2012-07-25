@@ -40,7 +40,7 @@ function submit(params, callback) {
                 location.href = data['next_url'];
             } else {
                 unfreeze();
-                alert('提交失败');
+                alert(data.message);
             }
         }
     }
