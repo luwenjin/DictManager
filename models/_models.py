@@ -405,10 +405,27 @@ conn.register([
 ])
 
 
-def fill_load_exp(course_name):
-    for i, token in enumerate(Token.query(courses=course_name)):
-        if i % 46 != 0:
-            continue
+def fill_coreexp_task(course_name, filled_amount):
+    old_amount = CoreExp.query().count()
+    new_amount = filled_amount - old_amount
+
+    if new_amount <= 0:
+        return
+
+    valid_tokens = Token.all(courses=course_name)
+    token_map = {}
+    for token in valid_tokens:
+        token_map[token.en] = token
+    for ce in CoreExp.query():
+        if token_map.has_key(ce.en):
+            token_map.pop(ce.en)
+    valid_tokens = token_map.values()
+
+    for i in xrange(new_amount):
+        n = random.randint(0, len(valid_tokens)-1)
+        token = valid_tokens[n]
+        del valid_tokens[n]
+
         gt_token = gt_token_coll.find_one({'en': token.en})
         core_exp = CoreExp.one(en=token.en)
         if gt_token and not core_exp:
@@ -418,35 +435,14 @@ def fill_load_exp(course_name):
                     'cn': gt_token['cn'],
                     'editor': u'SYS',
                     'voters': [u'SYS'],
+                    'tag': None
                 }]
             )
             print core_exp.en
-
-def migrate_core_exp():
-    for ce in core_exp.find():
-        if not ce.has_key('modify_time'):
-            ce['modify_time'] = datetime.now()
-        if not ce.has_key('create_time'):
-            ce['create_time'] = datetime.now()
-        if not ce.has_key('logs'):
-            ce['logs'] = []
-        if ce.has_key('skippers'):
-            ce.pop('skippers')
-        for option in ce['options']:
-            if not option.has_key('tag'):
-                option['tag'] = None
-
-        core_exp.save(ce)
-
-    for ce in CoreExp.query():
-        ce.save()
-
-
-
 
 
 if __name__ == '__main__':
 #    core_exp.drop()
 #    fill_load_exp('IELTS')
 #    print CoreExp.one({'options.editor': u'SYS'})
-    migrate_core_exp()
+    fill_coreexp_task('IELTS', 1300)

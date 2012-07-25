@@ -40,6 +40,8 @@
                 <ul class="nav pull-right">
                     <li></li>
                     {% if session.role == 'admin' %}<li><a href="/tokens">单词列表</a></li>{% endif %}
+                    {% if session.role == 'admin' %}<li><a href="/coreexp/list">含义列表</a></li>{% endif %}
+                    {% if session.role == 'admin' %}<li><a href="/coreexp/scores/refresh">用户分数刷新</a></li>{% endif %}
                     <li><a href="/coreexp">核心含义</a></li>
                     <!--<li><a href="#">词库管理</a></li>-->
                     <!--<li><a href="#">数据统计</a></li>-->
