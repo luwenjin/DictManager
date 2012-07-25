@@ -30,8 +30,9 @@
                 <div class="control-group">
                     <label class="control-label">核心解释</label>
                     <div class="controls">
-                        <input type='text' name="exp_core" value="{{token.exp_core}}" class="input-xlarge">
-                        <small style="color: grey;">要求：最核心最精简的词性和含义</small>
+                        <input type='text' name="exp_core" value="{{token.exp_core}}" class="input-xlarge"
+                               placeholder="要求：最核心最精简的词性和含义">
+                        <small style="color: grey;"></small>
                     </div>
                 </div>
 
@@ -134,8 +135,8 @@
 
 <script type="text/html" id="_chinese_li">
     <li>
-        <input name="chinese.POSs" value="" class="input-small" data-helptext="词性（空）">
-        <input name="chinese.text" value="" class="input-xlarge" data-helptext="含义（空）">
+        <input name="chinese.POSs" value="" class="input-small" placeholder="词性（空）">
+        <input name="chinese.text" value="" class="input-xlarge" placeholder="含义（空）">
     </li>
 </script>
 

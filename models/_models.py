@@ -293,6 +293,10 @@ class CoreExp(EasyDocument):
 
     @property
     def best_option(self):
+        best_option = [option for option in self.options if option['tag'] == u'best']
+        if best_option:
+            return best_option[0]
+
         best_option_voters = max([len(option['voters']) for option in self.options])
         best_options = [option for option in self.options if len(option['voters']) == best_option_voters]
         return random.choice(best_options)
@@ -363,9 +367,41 @@ class CoreExp(EasyDocument):
             self.actions_count += len(option['voters'])
 
 
+class Score(EasyDocument):
+    __database__ = DB_NAME
+    __collection__ = scores.name
+    structure = {
+        'user': unicode,
+        'project': unicode,
+        'score': int,
+        'details': dict,
+
+        'create_time': datetime,
+        'modify_time': datetime,
+        }
+    required_fields = ['user', 'project', 'score']
+    default_values = {
+        'score': 0,
+        'details': {},
+        }
+    indexes = [
+            {'fields': ['user']},
+            {'fields': ['project']},
+            {'fields': ['score']},
+            {'fields': ['create_time']},
+            {'fields': ['modify_time']},
+    ]
+    use_dot_notation = True
+
+    def before_save(self):
+        self.modify_time = datetime.now()
+        if not self.get('_id'):
+            self.create_time = datetime.now()
+
+
 
 conn.register([
-    User, Token, Sentence, Diff, CoreExp
+    User, Token, Sentence, Diff, CoreExp, Score
 ])
 
 
@@ -394,7 +430,17 @@ def migrate_core_exp():
             ce['create_time'] = datetime.now()
         if not ce.has_key('logs'):
             ce['logs'] = []
+        if ce.has_key('skippers'):
+            ce.pop('skippers')
+        for option in ce['options']:
+            if not option.has_key('tag'):
+                option['tag'] = None
+
         core_exp.save(ce)
+
+    for ce in CoreExp.query():
+        ce.save()
+
 
 
 

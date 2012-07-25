@@ -25,6 +25,9 @@ core_exp.ensure_index('options.voters')
 core_exp.ensure_index('actions_count')
 core_exp.ensure_index('tags')
 
+# 分数库（记录核心解释的分数）
+scores = db['scores']
+
 
 # 资源库 =====================================================
 # 奇迹 ---------------------------------

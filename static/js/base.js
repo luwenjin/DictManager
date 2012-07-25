@@ -1,3 +1,3 @@
 $(document).ready(function(e){
-    $('input, textarea').helptext();
+    $('input, textarea').placeholder();
 });

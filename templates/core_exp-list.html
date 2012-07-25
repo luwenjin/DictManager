@@ -7,13 +7,13 @@
 <div id="coreexp-list-page" class="container ">
 
     <ul class="nav nav-pills pull-left">
-        <li {% if request.args.channel == 'open' %}class="active"{% endif %}>
+        <li {% if request.args.channel == 'open' or not request.args.channel %}class="active"{% endif %}>
             <a href="javascript:change_param('channel', 'open')">开放</a>
         </li>
         <li {% if request.args.channel == 'closed' %}class="active"{% endif %}>
             <a href="javascript:change_param('channel', 'closed')">已关闭</a>
         </li>
-        <li {% if request.args.channel == 'all' or not request.args.channel %}class="active"{% endif %}>
+        <li {% if request.args.channel == 'all' %}class="active"{% endif %}>
             <a href="javascript:change_param('channel', 'all')">全部</a>
         </li>
         <!--li {% if request.args.channel == 'auto_close' %}class="active"{% endif %}>
@@ -63,7 +63,6 @@
                         </li>
                     {% endfor %}
                     </ul>
-                    <p class="skippers">{{ce.skippers | join(', ')}}</p>
                 </td>
             </tr>
             {% endfor %}
