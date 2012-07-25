@@ -11,14 +11,26 @@ from _views import to_json, get_reference_tokens, require_login, get_current_use
 
 bp = Blueprint('coreexp', __name__)
 
+TASK_COUNT = 300
+
+def user_done_count(user_name):
+    count = CoreExp.query({
+        'options.voters': user_name,
+        'tags': {'$nin': [u'closed', u'hidden']},
+        }).count()
+    return count
 
 def suggest_next(user_name):
-    ce = CoreExp.one({
-        'options.voters': {'$ne': user_name},
-        'tags': {'$ne': u'closed'},
-    })
-    return ce
-
+    done_count = user_done_count(user_name)
+    if done_count >= TASK_COUNT:
+        return None
+    else:
+        ce = CoreExp.one({
+            'options.voters': {'$ne': user_name},
+            'tags': {'$nin': [u'closed', u'hidden']},
+        }, sort=[('actions.count', 1)])
+        print ce
+        return ce
 
 @bp.route('', methods=['GET'])
 @require_login
@@ -36,7 +48,7 @@ def redirect_next():
 def show(en):
     user = get_current_user()
     ce = CoreExp.one(en=en)
-    total = CoreExp.query({'tags': {'$ne': u'closed'}}).count()
+    total = TASK_COUNT
     edit_count = CoreExp.query({'options.editor': user.name}).count()
     vote_count = CoreExp.query({'options.voters': user.name}).count() - edit_count
     refs = get_reference_tokens(ce.en)
@@ -95,25 +107,23 @@ def add_option():
     return {'status': 'ok', 'next_url': url}
 
 
-
 @bp.route('/list', methods=['GET'])
 @require_admin
 def ce_list():
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 20))
-    channel = request.args.get('channel', 'open')
+    channels = request.args.get('channels', 'open').split(',')
 
-    query = {}
-    if channel == 'open':
-        query['tags'] = {'$ne': u'closed'}
-    elif channel == 'closed':
-        query['tags'] = u'closed'
-    elif channel == 'auto_close':
-        query = {
-            'tags': {'$ne': 'closed'},
-            'options': {'$size': 1},
-            'actions_count': {'$gt': 10}
-        }
+    query = {'$and': []}
+    for channel in channels:
+        if channel == 'all':
+            query = {}
+            break
+        elif channel[0] == '-':
+            channel = channel[1:]
+            query['$and'].append({'tags': {'$ne': channel}})
+        else:
+            query['$and'].append({'tags': channel})
 
     ce_list, pager = query_page(CoreExp, query, [('_id',1)], page, count)
 
@@ -206,6 +216,23 @@ def auto_close():
 
     return redirect(url_for('.ce_list'))
 
+@bp.route('/list/auto_hide')
+@require_admin
+def auto_hide():
+    # 隐藏所有 closed 的 ce
+    auto_close()
+    query = {
+        '$and': [
+            {'tags': u'closed'},
+            {'tags': {'$ne': u'hidden'}},
+        ]
+    }
+    for ce in CoreExp.query(query):
+        ce.tags.append(u'hidden')
+        ce.save()
+
+    return redirect(url_for('.ce_list'))
+
 
 @bp.route('/scores/refresh')
 @require_admin
@@ -221,7 +248,7 @@ def refresh_scores():
 #        }
     }
     Score.coll().drop()
-    for ce in CoreExp.query():
+    for ce in CoreExp.query({'tags': {'$ne', u'closed'}}):
 
         best_option = None
         if u'closed' in ce.tags:

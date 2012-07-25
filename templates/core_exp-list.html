@@ -7,14 +7,20 @@
 <div id="coreexp-list-page" class="container ">
 
     <ul class="nav nav-pills pull-left">
-        <li {% if request.args.channel == 'open' or not request.args.channel %}class="active"{% endif %}>
-            <a href="javascript:change_param('channel', 'open')">开放</a>
+        <li {% if request.args.channels == '-closed,-hidden' or not request.args.channels %}class="active"{% endif %}>
+            <a href="javascript:change_param('channels', '-closed,-hidden')">开放（未隐藏）</a>
         </li>
-        <li {% if request.args.channel == 'closed' %}class="active"{% endif %}>
-            <a href="javascript:change_param('channel', 'closed')">已关闭</a>
+        <li {% if request.args.channels == 'closed,-hidden' %}class="active"{% endif %}>
+            <a href="javascript:change_param('channels', 'closed,-hidden')">已关闭（未隐藏）</a>
         </li>
-        <li {% if request.args.channel == 'all' %}class="active"{% endif %}>
-            <a href="javascript:change_param('channel', 'all')">全部</a>
+        <li {% if request.args.channels == '-hidden' %}class="active"{% endif %}>
+        <a href="javascript:change_param('channels', '-hidden')">未隐藏</a>
+        </li>
+        <li {% if request.args.channels == 'hidden' %}class="active"{% endif %}>
+            <a href="javascript:change_param('channels', 'hidden')">已隐藏</a>
+        </li>
+        <li {% if request.args.channels == 'all' %}class="active"{% endif %}>
+            <a href="javascript:change_param('channels', 'all')">全部</a>
         </li>
         <!--li {% if request.args.channel == 'auto_close' %}class="active"{% endif %}>
         <a href="javascript:change_param('channel', 'auto_close')">自动关闭候选</a>
@@ -25,12 +31,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th>
+                <th style="width: 180px;">
                     单词
                 </th>
                 <th>
                     结果
-                    <a id="auto-close-button" href="{{url_for('.auto_close')}}" class="pull-right">自动关闭</a>
+                    <a id="auto-close-button" href="{{url_for('.auto_hide')}}" class="pull-right">自动隐藏</a>
+                    <a id="auto-hide-button" href="{{url_for('.auto_close')}}" class="pull-right">自动关闭</a>
                 </th>
             </tr>
         </thead>
