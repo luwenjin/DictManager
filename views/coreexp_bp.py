@@ -28,7 +28,7 @@ def suggest_next(user_name):
         ce = CoreExp.one({
             'options.voters': {'$ne': user_name},
             'tags': {'$nin': [u'closed', u'hidden']},
-        }, sort=[('actions.count', 1)])
+        }, sort=[('actions_count', 1)])
         print ce
         return ce
 
@@ -112,7 +112,8 @@ def add_option():
 def ce_list():
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 20))
-    channels = request.args.get('channels', 'open').split(',')
+    channels = request.args.get('channels', '-closed,-hidden').split(',')
+    print 'channels', channels
 
     query = {'$and': []}
     for channel in channels:
@@ -248,7 +249,7 @@ def refresh_scores():
 #        }
     }
     Score.coll().drop()
-    for ce in CoreExp.query({'tags': {'$ne', u'closed'}}):
+    for ce in CoreExp.query({'tags': {'$ne': u'hidden'}}):
 
         best_option = None
         if u'closed' in ce.tags:
