@@ -11,7 +11,6 @@ bp = Blueprint('tokens', __name__)
 @require_admin
 def view_token():
     page_info = query_info(request)
-    print page_info
     search_word = request.args.get('search_word', '').strip()
     token_id = request.args.get('token_id')
 
@@ -56,6 +55,5 @@ def save_token():
             token.exp.core = exp_core
             token.is_trash = True if is_trash else False
             token.save()
-            print token
     flash(u'已成功保存', 'alert-success')
     return redirect(request.headers.get('referer'))

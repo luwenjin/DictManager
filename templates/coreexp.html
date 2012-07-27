@@ -8,8 +8,8 @@
         <div class="wrap">
             <input type="hidden" id="_id" name="_id" value="{{ce._id}}">
             <div class="progress">
-                {% set progress = '%0.2f' % (100.0 * (edit_count+vote_count) / total) %}
-                <span class="numbers">{{progress}}% ( {{vote_count}}+{{edit_count}} of {{total}} )</span>
+                {% set progress = '%0.2f' % (100.0 * vote_count / total) %}
+                <span class="numbers">{{progress}}% ( {{vote_count}} of {{total}} )</span>
                 <div class="bar" style="width:{{progress}}%"></div>
             </div>
 
@@ -25,15 +25,17 @@
             </div>
 
             <div id="vote-box" style="display:none">
-                <p>你觉得什么解释最简练/有代表性（选项为乱序）：</p>
+                <p>你觉得什么解释最简练/有代表性：</p>
                 {% for option in ce.shuffled_options %}
+                    {%  if option.voters|length >= 3 %}
                 <a href="javascript:" class='btn btn-large option'
                    data-option="{{option.cn}}">{{option.cn}}</a>
+                    {% endif %}
                 {% endfor %}
                 <input class="option" type="text" name="option" value=""
                        placeholder="没好答案就自己输入吧（限1个解释）">
                 <a id="submit-button" href="javascript:" class="btn btn-large btn-primary">确认</a>
-                <a id="cancel-button" href="javascript:" class="btn btn-large btn-inverse">返回</a>
+                <a id="cancel-button" href="javascript:" class="btn btn-large">返回</a>
             </div>
 
         </div>

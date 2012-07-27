@@ -11,26 +11,31 @@ from _views import to_json, get_reference_tokens, require_login, get_current_use
 
 bp = Blueprint('coreexp', __name__)
 
-TASK_COUNT = 300
+MAX_TASKS = 300
+MAX_OPTIONS = 20
+
 
 def user_done_count(user_name):
     count = CoreExp.query({
         'options.voters': user_name,
-        'tags': {'$nin': [u'closed', u'hidden']},
+        'tags': {'$ne': u'hidden'},
         }).count()
     return count
 
+
 def suggest_next(user_name):
+    t = time.time()
     done_count = user_done_count(user_name)
-    if done_count >= TASK_COUNT:
+    if done_count >= MAX_TASKS:
         return None
     else:
+        print 'suggest_next:', time.time()-t
         ce = CoreExp.one({
             'options.voters': {'$ne': user_name},
             'tags': {'$nin': [u'closed', u'hidden']},
-        }, sort=[('actions_count', 1)])
-        print ce
+        }, sort=[('_id', 1)])
         return ce
+
 
 @bp.route('', methods=['GET'])
 @require_login
@@ -48,9 +53,8 @@ def redirect_next():
 def show(en):
     user = get_current_user()
     ce = CoreExp.one(en=en)
-    total = TASK_COUNT
-    edit_count = CoreExp.query({'options.editor': user.name}).count()
-    vote_count = CoreExp.query({'options.voters': user.name}).count() - edit_count
+    total = MAX_TASKS
+    vote_count = user_done_count(user.name)
     refs = get_reference_tokens(ce.en)
     token = Token.one(en=en)
 
@@ -58,7 +62,6 @@ def show(en):
         ce = ce,
         token = token,
         refs = refs,
-        edit_count = edit_count,
         vote_count = vote_count,
         total = total
     )
@@ -69,7 +72,7 @@ def show(en):
 def finish():
     user = get_current_user()
     return u'<h1 style="display:block;text-align:center;font-size:72px; margin: 0px;padding:0px;">' \
-           u'搞定</h1><p style="display:block;text-align:center;">Thanks, %s' \
+           u'.搞定.</h1><p style="display:block;text-align:center;">Thanks, %s' \
            u'<br/> %s' \
            u'</p>' % (user.name, user._id)
 
@@ -84,9 +87,11 @@ def add_option():
 
     ce = CoreExp.one(ObjectId(_id))
     if ce:
-        option_cn = re.sub('\s+', '', option_cn)
+        option_cn = re.sub(u'\s+', u'', option_cn)
+        option_cn = re.sub(u'…+', u'…', option_cn)
 
-        if u',' in option_cn or u'，' in option_cn:
+        seps = [ u',', u'，', u'.', u';', u'；', u'、' ]
+        if any([c in option_cn for c in seps]):
             return {'status': 'error', 'message': '仅限提交1个最核心的解释（注意是1个）'}
 
         if not option_cn:
@@ -94,7 +99,9 @@ def add_option():
 
         ce.add_option(option_cn, user.name)
         ce.save()
-
+        if ce.actions_count >= MAX_OPTIONS and u'closed' not in ce.tags:
+            ce.tags.append(u'closed')
+            ce.save()
     else:
         return {'status': 'error', 'message': '没找到这个单词'}
 
@@ -113,7 +120,6 @@ def ce_list():
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 20))
     channels = request.args.get('channels', '-closed,-hidden').split(',')
-    print 'channels', channels
 
     query = {'$and': []}
     for channel in channels:
@@ -258,27 +264,22 @@ def refresh_scores():
         for option in ce.options:
             voters = option['voters']
             for voter in voters:
-                d.setdefault(voter, {'score': 0, 'edit': 0, 'vote': 0, 'punish': 0, 'action': 0, 'valid': 0, 'total': 0})
+                d.setdefault(voter, {'score': 0, 'edit': 0, 'vote': 0, 'punish': 0, 'total': 0})
                 d[voter]['total'] += 1
 
-            editor = option['editor']
-            voters.remove(editor)
-
             if option['tag'] == 'bad':
-                d[editor]['score'] -= 2
-                d[editor]['punish'] += 1
                 for voter in voters:
-                    d[voter]['score'] -= 2
+                    d[voter]['score'] -= 10
                     d[voter]['punish'] += 1
 
             if best_option and option['cn'] == best_option['cn']:
-                d[editor]['score'] += 3
-                d[editor]['edit'] += 1
-                d[editor]['valid'] += 1
-                for voter in voters:
-                    d[voter]['score'] += 1
-                    d[voter]['vote'] += 1
-                    d[voter]['valid'] += 1
+                for i, voter in enumerate(voters):
+                    if voters[0] != u'SYS' and i < 3:
+                        d[voter]['score'] += 5
+                        d[voter]['edit'] += 1
+                    else:
+                        d[voter]['score'] += 1
+                        d[voter]['vote'] += 1
 
     for user_name in d:
         score = Score.one(user=user_name, project=u'coreexp')

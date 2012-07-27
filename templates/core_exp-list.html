@@ -36,7 +36,7 @@
                 </th>
                 <th>
                     结果
-                    <a id="auto-close-button" href="{{url_for('.auto_hide')}}" class="pull-right">自动隐藏</a>
+                    <a id="auto-close-button" href="{{url_for('.auto_hide')}}" class="pull-right">隐藏所有已关闭的</a>
                     <a id="auto-hide-button" href="{{url_for('.auto_close')}}" class="pull-right">自动关闭</a>
                 </th>
             </tr>
@@ -45,15 +45,14 @@
             {% for ce in ce_list %}
             <tr>
                 <td class="en">
-                    <h3 title="{{ce.log_html}}">
-                        <a href="{{url_for('.show', en=ce.en)}}" target="_blank">{{ce.en}}</a>
-                    </h3>
+                    <h3><a href="{{url_for('.show', en=ce.en)}}" target="_blank">{{ce.en}}</a></h3>
                     <span class="label {% if 'closed' in ce.tags %}label-success{% endif %}"
                           data-id="{{ce._id}}"
                           data-tag="closed"
                     >关闭</span>
                 </td>
                 <td class="answer">
+                    <a class="logs-link" href="javascript:" title="{{ ce.log_html }}">logs</a>
                     <ul>
                     {% for option in ce.ordered_options %}
                         <li>

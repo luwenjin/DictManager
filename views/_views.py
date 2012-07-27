@@ -1,6 +1,7 @@
 # coding: utf-8
 """ Views 中用得到的内容函数 和一些 view decorators """
 import math
+import time
 from pymongo.collection import Collection
 from functools import wraps
 
@@ -66,7 +67,20 @@ def query_info(request):
 
 def get_reference_tokens(en):
     results = []
+    t = time.time()
+    # wordnet
+    wn_token_coll.ensure_index('en')
+    wn_token = wn_token_coll.find_one({'en': en})
+    if wn_token:
+        results.append({
+            'src': 'wn',
+            'exp': u'<br/>'.join(
+                [u'[常见度%(count)s: %(synset_token)s] %(POS)s. %(text)s' % x for x in wn_token.get('exps', [])]
+            )
+        })
+
     # dict.cn
+    dc_token_coll.ensure_index('en')
     dc_token = dc_token_coll.find_one({'en': en})
     if dc_token:
         results.append({
@@ -77,6 +91,7 @@ def get_reference_tokens(en):
         })
 
     # youdao
+    yd_simple_token_coll.ensure_index('en')
     yd_token = yd_simple_token_coll.find_one({'en': en})
     if yd_token:
         results.append({
@@ -84,17 +99,8 @@ def get_reference_tokens(en):
             'exp': '<br/>'.join(yd_token.get('exps_cn', []))
         })
 
-    # wordnet
-    wn_token = wn_token_coll.find_one({'en': en})
-    if wn_token:
-        results.append({
-            'src': 'wn',
-            'exp': u'<br/>'.join(
-                [u'[%(count)s:%(synset_token)s] %(POS)s. %(text)s' % x for x in wn_token.get('exps', [])]
-            )
-        })
-
     # qiji
+    qj_token_coll.ensure_index('en')
     qj_tokens = qj_token_coll.find({'en': en})
     exp_map = {}
     for qj_token in qj_tokens:
@@ -106,6 +112,7 @@ def get_reference_tokens(en):
             'src': '<br/>'.join(src_li),
             'exp': exp,
             })
+    print 'get_reference_tokens:', time.time()-t
     return results
 
 
