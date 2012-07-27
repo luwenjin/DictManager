@@ -46,6 +46,10 @@ def login():
 def login_or_register():
     name = request.form.get('name', '').strip()
     password = request.form.get('password', '').strip()
+
+    if not name or not password:
+        return redirect('/login?error=%s' % urllib.quote('请输入账号密码'))
+
     user = User.one(name=name)
     if user:
         if user.password != password:

@@ -253,7 +253,6 @@ class CoreExp(EasyDocument):
         'en': unicode,
         'options': [{
             'cn': unicode,
-            'editor': unicode,
             'voters': [unicode],
             'tag': unicode,
         }],
@@ -272,7 +271,6 @@ class CoreExp(EasyDocument):
     }
     indexes = [
         {'fields': ['en']},
-        {'fields': ['options.editor'], 'check': False},
         {'fields': ['options.voters'], 'check': False},
         {'fields': ['options.tag'], 'check': False},
         {'fields': ['actions_count']},
@@ -288,8 +286,9 @@ class CoreExp(EasyDocument):
 
     @property
     def shuffled_options(self):
-        random.shuffle(self.options)
-        return self.options
+        options = self.options[:]
+        random.shuffle(options)
+        return options
 
     @property
     def best_option(self):
@@ -297,8 +296,8 @@ class CoreExp(EasyDocument):
         if best_option:
             return best_option[0]
 
-        best_option_voters = max([len(option['voters']) for option in self.options])
-        best_options = [option for option in self.options if len(option['voters']) == best_option_voters]
+        best_option_voters_count = max([len(option['voters']) for option in self.options])
+        best_options = [option for option in self.options if len(option['voters']) == best_option_voters_count]
         return random.choice(best_options)
 
     def add_log(self, event, user_name):
@@ -318,33 +317,30 @@ class CoreExp(EasyDocument):
         return '<br/>'.join(li)
 
     def remove_user(self, name):
-        remove_index = -1
+        remove_option_index = -1
         for i, option in enumerate(self.options):
-            if option['editor'] == name:
-                option['editor'] = None
-                del option['voters'][0]
-                if option['voters']:
-                    option['editor'] = option['voters'][0]
-                else:
-                    remove_index = i
-            elif name in option['voters']:
+            if name in option['voters']:
                 option['voters'].remove(name)
-        if remove_index >= 0:
-            del self.options[remove_index]
+                if not option['voters']:
+                    remove_option_index = i
+                break
+        if remove_option_index >= 0:
+            del self.options[remove_option_index]
 
     def add_option(self, cn, user_name):
         self.remove_user(user_name)
         self.add_log('add_option:%s' % cn, user_name)
+
         option_found = False
         for i, option in enumerate(self.options):
             if option['cn'] == cn:
                 option['voters'].append(user_name)
                 option_found = True
                 break
+
         if not option_found:
             option = {
                 'cn': cn,
-                'editor': user_name,
                 'voters': [user_name],
                 'tag': None,
             }
@@ -433,7 +429,6 @@ def fill_coreexp_task(course_name, filled_amount):
                 en = token.en,
                 options = [{
                     'cn': gt_token['cn'],
-                    'editor': u'SYS',
                     'voters': [u'SYS'],
                     'tag': None
                 }]
@@ -441,8 +436,23 @@ def fill_coreexp_task(course_name, filled_amount):
             print core_exp.en
 
 
+def repair():
+    for ce in core_exp.find():
+        modified = False
+        for option in ce['options']:
+            if option.has_key('editor'):
+                option.pop('editor')
+                modified = True
+        if modified:
+            core_exp.save(ce)
+
+
+
+
 if __name__ == '__main__':
 #    core_exp.drop()
 #    fill_load_exp('IELTS')
 #    print CoreExp.one({'options.editor': u'SYS'})
-    fill_coreexp_task('IELTS', 1300)
+    repair()
+    fill_coreexp_task(u'IELTS', 3000)
+    pass

@@ -42,8 +42,6 @@ def save_pages():
             print i, 'skipped', en
 
 
-
-
 def parse_page(html):
     d = pq(html)
     doc = dict()

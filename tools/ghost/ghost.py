@@ -138,12 +138,12 @@ class HttpResource(object):
     """
     def __init__(self, reply, cache):
         self.url = reply.url().toString()
-#        buffer = cache.data(self.url)
-#        self.content = None
-#        if buffer is not None:
-#            bytes = buffer.readAll()
-#            self.content = bytes
-#            buffer.close()
+        buffer = cache.data(self.url)
+        self.content = None
+        if buffer is not None:
+            bytes = buffer.readAll()
+            self.content = bytes
+            buffer.close()
         self.http_status = reply.attribute(
             QNetworkRequest.HttpStatusCodeAttribute)
         Logger.log("Resource loaded: %s %s" % (self.url, self.http_status))
