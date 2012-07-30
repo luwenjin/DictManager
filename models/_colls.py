@@ -98,5 +98,5 @@ wn_token_coll = db['resource.wordnet.tokens']
 
 # google translate# wordnet ---------------------------------
 gt_token_coll = db['resource.google_translate.tokens']
-# {en:, cn:}
+# {en:, cns:[], poss:{'verb':[], 'noun':[]}, py:}
 gt_token_coll.ensure_index('en')

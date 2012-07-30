@@ -18,10 +18,22 @@
 
             <div id="good-bad-box">
                 {% set best_option = ce.best_option %}
-                <p>如果只选1个最有代表性的解释，那么</p>
-                <h2 class='cn'>“{{best_option.cn}}”</h2>
+                <!--p>如果只选1个最有代表性的解释，那么</p>
+
+                <h2 class='cn'>“{{ce.random_option.cn}}”</h2>
                 <a id="good-button" class='btn btn-large btn-success' href="javascript:" data-option="{{best_option.cn}}">很好</a>
-                <a id="bad-button" class='btn btn-large btn-danger' href="javascript:">不够好</a>
+                <a id="bad-button" class='btn btn-large btn-danger' href="javascript:">不够好</a-->
+
+                <p>的最佳解释是？</p>
+                {% for option in ce.shuffled_options %}
+                    {% if option.cn %}
+                        <a class='btn btn-large option' href="javascript:" data-option="{{option.cn}}">
+                            {{ option.cn }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                <a class='btn btn-large btn-inverse option' href="javascript:" data-option="">没有好的答案</a>
+
             </div>
 
             <div id="vote-box" style="display:none">

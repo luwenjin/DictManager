@@ -4,6 +4,8 @@ import os, sys
 parent_path = os.path.split(os.path.dirname(__file__))[0]
 sys.path.append(parent_path)
 #-------------------------------------------------
+import re
+
 from models import qj_course_coll, qj_token_coll, qj_sentence_coll, dc_token_coll
 from models import Token, tokens, Sentence
 
@@ -34,12 +36,16 @@ def _qj_token_en_list(course_name=None):
 def update_qj_token_en(course_name=None):
     token_en_list = _qj_token_en_list(course_name)
     for i, en in enumerate(token_en_list):
+
         token = Token.one(en=en)
         if not token:
-            Token.insert(en=en)
+            token = Token.insert(en=en)
+#            if en != token.en:
+#                print i, 'norm:', en, '->', token.en
             print i, 'new:', en
         else:
             print i, 'old', en
+            pass
 
 def update_qj_token_ph(course_name=None):
     qj_token_coll.ensure_index('en')
@@ -66,8 +72,9 @@ def update_qj_token_ph(course_name=None):
                 token.ph.us = us_token['ph_us']
                 token.save()
 
-        if flag and token.type == 'word':
+        if flag and u'word' in token.tags:
             print i, token.en, token.ph.en, token.ph.us
+
 
 def update_qj_token_courses():
     for i, token in enumerate(Token.query()):
@@ -104,6 +111,17 @@ def update_qj_sentences():
 
 
 
+
 if __name__ == '__main__':
 #    Sentence.coll().drop()
-    update_qj_token_ph()
+#    for en in bad_token_ens:
+#        new_en = repair_en(en)
+#        print en, '->', new_en
+    pass
+#    tokens.drop()
+#    tokens.ensure_index('en')
+#    update_qj_token_en()
+#    print '----'
+#    update_qj_token_ph()
+#    update_qj_token_courses()
+
