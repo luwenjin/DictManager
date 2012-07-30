@@ -59,6 +59,8 @@ function on_keypress_option_input(e) {
 
 $(document).ready(function () {
     // good-bad-box
+    $('#good-bad-box .btn.option').on('click', on_click_option_button);
+
     $('#good-button').on('click', on_click_option_button);
 
     $('#bad-button').on('click', function () {

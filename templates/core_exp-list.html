@@ -52,7 +52,9 @@
                     >关闭</span>
                 </td>
                 <td class="answer">
-                    <a class="logs-link" href="javascript:" title="{{ ce.log_html }}">logs</a>
+                    <a class="logs-link" rel="tooltip" href="javascript:"
+                       data-title="logs" data-placement="left"
+                       data-content="{{ ce.log_text }}">logs</a>
                     <ul>
                     {% for option in ce.ordered_options %}
                         <li>
@@ -67,7 +69,7 @@
                                 data-option="{{option.cn}}" data-tag="" data-id="{{ce._id}}">None</a>
                             </p><br/>
                             <span class="label label-warning {{option.tag}}" style="width:{{option.voters|length * 10}}px">{{option.voters | length }}</span>
-                            <p class="voters">【{{option.editor}}】{{option.voters | join(', ')}}</p>
+                            <p class="voters">{{option.voters | join(', ')}}</p>
                         </li>
                     {% endfor %}
                     </ul>

@@ -102,16 +102,14 @@ class Token(EasyDocument):
         'hash': unicode, # lower case 'en', auto modify on save
         'en': unicode,
         'ph': {'en': unicode, 'us': unicode},
-        'type': unicode, #word/phrase
         'exp':{
             'core': unicode,
             'cn': [{'pos': [unicode], 'text': unicode}],
             },
         'courses': [unicode], # course names
 
-        'tags': [unicode],
+        'tags': [unicode], # trash, word/phrase
         'note': unicode, # 备注字段
-        'is_trash': bool, # 对于某些垃圾词，为防止重复导入，不物理删除，但打上标记
 
         'modify_time': datetime, #auto modify on save
         'create_time': datetime, #auto modify on save
@@ -121,18 +119,16 @@ class Token(EasyDocument):
         'ph.us': u'',
         'exp.cn': [],
         'exp.core': u'',
-        'is_trash': False,
         'courses': [],
         'note': u'',
         }
     indexes = [
             {'fields': ['en']},
             {'fields': ['hash']},
-            {'fields': ['type']},
             {'fields': ['courses']},
-            {'fields': ['is_trash']},
     ]
     use_dot_notation = True
+    schemeless = True
 
     @staticmethod
     def get_token(en):
@@ -143,13 +139,45 @@ class Token(EasyDocument):
     def make_hash(cls, en):
         return en.strip().lower()
 
+    def add_tag(self, tag):
+        if tag in self.tags:
+            return False
+        else:
+            self.tags.append(tag)
+            return True
+
+    def remove_tag(self, tag):
+        if tag in self.tags:
+            self.tags.remove(tag)
+            return True
+        else:
+            return False
+
+    def trash(self, flag):
+        if flag:
+            self.add_tag(u'trash')
+        else:
+            self.remove_tag(u'trash')
+
     def before_save(self):
+#        en = ' '+self.en+' '
+#        en = re.sub('\.{3,10}', ' ... ', en)
+#        en = re.sub('(\W)sb\.?(\W)', r'\1sb.\2', en)
+#        en = re.sub('(\W)sth\.?(\W)', r'\1sth.\2', en)
+#        en = re.sub('\s+', ' ', en)
+#
+#        self.en = en.strip()
         self.hash = Token.make_hash(self.en)
-        self.type = u'word'
+        self.remove_tag(u'word')
+        self.remove_tag(u'phrase')
+
+        type = u'word'
         for x in ['.', ' ', '/']:
             if x in self.en:
-                self.type = u'phrase'
+                type = u'phrase'
                 break
+
+        self.add_tag(type)
         self.modify_time = datetime.now()
         if not self.get('_id'):
             self.create_time = datetime.now()
@@ -300,6 +328,10 @@ class CoreExp(EasyDocument):
         best_options = [option for option in self.options if len(option['voters']) == best_option_voters_count]
         return random.choice(best_options)
 
+    @property
+    def random_option(self):
+        return random.choice(self.options)
+
     def add_log(self, event, user_name):
         log = {
             'time': datetime.now(),
@@ -309,9 +341,10 @@ class CoreExp(EasyDocument):
         self.logs.append(log)
 
     @property
-    def log_html(self):
+    def log_text(self):
         li = []
         for log in self.logs:
+            log['time'] = log['time'].strftime('%m-%d %H:%M')
             line = '%(time)s>>[%(user)s]%(event)s' % log
             li.append(line)
         return '<br/>'.join(li)
@@ -326,6 +359,19 @@ class CoreExp(EasyDocument):
                 break
         if remove_option_index >= 0:
             del self.options[remove_option_index]
+
+    def add_tag(self, tag):
+        if tag in self.tags:
+            return False
+        else:
+            self.tags.append(tag)
+            return True
+
+    def remove_tag(self, tag):
+        if tag in self.tags:
+            self.tags.remove(tag)
+            return True
+        return False
 
     def add_option(self, cn, user_name):
         self.remove_user(user_name)
@@ -423,36 +469,80 @@ def fill_coreexp_task(course_name, filled_amount):
         del valid_tokens[n]
 
         gt_token = gt_token_coll.find_one({'en': token.en})
-        core_exp = CoreExp.one(en=token.en)
-        if gt_token and not core_exp:
-            core_exp = CoreExp.insert(
-                en = token.en,
-                options = [{
-                    'cn': gt_token['cn'],
+        ce = CoreExp.one(en=token.en)
+        if gt_token and not ce:
+            ce = CoreExp.new()
+            ce.en = token.en
+            for cn in gt_token['cns']:
+                ce.options.append({
+                    'cn': cn,
                     'voters': [u'SYS'],
                     'tag': None
-                }]
-            )
-            print core_exp.en
+                })
 
+            if gt_token['cns']:
+                ce.save()
+            print ce.en
+
+        if len(valid_tokens) <= 0:
+            break
 
 def repair():
-    for ce in core_exp.find():
-        modified = False
-        for option in ce['options']:
-            if option.has_key('editor'):
-                option.pop('editor')
-                modified = True
-        if modified:
-            core_exp.save(ce)
+#    for token in tokens.find():
+#        if token.has_key('type'):
+#            token.pop('type')
+#        if token.has_key('is_trash'):
+#            token.pop('is_trash')
+#            token.setdefault('tags', [])
+#            if u'trash' not in token['tags']:
+#                token['tags'].append(u'trash')
+#        tokens.save(token)
+    for token in Token.query():
+        token.save()
+
+
+def stat():
+    user_logs = {}
+    user_times = {}
+    for ce in CoreExp.query({'tags': {'$ne': u'hidden'}}):
+        for log in ce.logs:
+            user_name = log['user']
+            user_logs.setdefault(user_name, [])
+            user_logs[user_name].append(log)
+
+    for user_name in user_logs:
+        logs = user_logs[user_name]
+        logs.sort(key=lambda x:x.get('time'))
+
+        user_times.setdefault(user_name, [])
+        for i, log in enumerate(logs):
+            seconds = (log['time'] - logs[i-1]['time']).seconds
+            if seconds <= 240:
+                user_times[user_name].append(seconds)
+            else:
+                user_times[user_name].append(0)
+
+    for i in range(300):
+        t_li = []
+        for user_name in user_times:
+            logs = user_logs[user_name]
+            if len(logs) <300:
+                break
+            else:
+                t_li.append(user_times[user_name][i])
+        print '%s\t%0.2f' % (i, 1.0*sum(t_li) / len(t_li))
+
+
+
 
 
 
 
 if __name__ == '__main__':
-#    core_exp.drop()
-#    fill_load_exp('IELTS')
+
 #    print CoreExp.one({'options.editor': u'SYS'})
-    repair()
-    fill_coreexp_task(u'IELTS', 3000)
-    pass
+    core_exp.drop()
+    core_exp.ensure_index('en')
+    fill_coreexp_task('IELTS', 99999)
+#    fill_coreexp_task(u'IELTS', 3000)
+#    pass

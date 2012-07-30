@@ -55,6 +55,7 @@ function on_click_ce_tag_label(e) {
 $(document).ready(function () {
     $('.answer').on('click', 'a', on_click_option_tag_link);
     $('td.en').on('click', 'span.label', on_click_ce_tag_label);
+    $('a[rel=tooltip]').popover();
 });
 
 
