@@ -48,14 +48,44 @@ function on_click_ce_tag_label(e) {
             alert(data.message);
         }
     });
+}
 
+function init_nav_link_class() {
+    var url = new URL(location.href),
+        tags = url.param('tags');
 
+    if (!tags) {
+        tags = 'all';
+    }
+
+    $('ul.nav a[data-tags]').parent().removeClass('active');
+
+    $('ul.nav a[data-tags]').each(function (idx, el) {
+        var $el = $(el),
+            data = $el.data('tags');
+        if (data === tags) {
+            $el.parent().addClass('active');
+        }
+
+    });
+}
+
+function on_click_nav_link(e) {
+    var $a = $(e.target),
+        tags = $a.data('tags');
+
+    change_param('tags', tags);
 }
 
 $(document).ready(function () {
+    init_nav_link_class();
+
+    $('.nav a[data-tags]').click(on_click_nav_link);
     $('.answer').on('click', 'a', on_click_option_tag_link);
     $('td.en').on('click', 'span.label', on_click_ce_tag_label);
     $('a[rel=tooltip]').popover();
+
+
 });
 
 

@@ -12,7 +12,7 @@ from _views import to_json, get_reference_tokens, require_login, get_current_use
 bp = Blueprint('coreexp', __name__)
 
 MAX_TASKS = 200
-MAX_VOTES = 10
+MIN_VOTES = 7
 
 
 def user_done_count(user_name):
@@ -32,7 +32,7 @@ def suggest_next(user_name):
         print 'suggest_next:', time.time() - t
         ce = CoreExp.one({
             'options.voters': {'$ne': user_name},
-            'tags': {'$nin': [u'closed', u'hidden', u'full']},
+            'tags': {'$nin': [u'hidden', u'full']},
             }, sort=[('_id', 1)])
         return ce
 
@@ -95,20 +95,11 @@ def add_option():
 
     ce = CoreExp.one(ObjectId(_id))
     if ce:
-        option_cn = re.sub(u'\s+', u'', option_cn)
-        option_cn = re.sub(u'…+', u'…', option_cn)
-
-        seps = [u',', u'，', u'.', u';', u'；', u'、']
-        if any([c in option_cn for c in seps]):
-            return {'status': 'error', 'message': '仅限提交1个最核心的解释（注意是1个）'}
-
-#        if not option_cn:
-#            return {'status': 'error', 'message': '请输入答案'}
-
         ce.add_option(option_cn, user.name)
 
-        if ce.actions_count > MAX_VOTES:
-            ce.add_tag(u'full')
+        if ce.actions_count >= MIN_VOTES:
+            if len(ce.best_option['voters']) >= ce.actions_count * 0.6:
+                ce.add_tag(u'full')
         ce.save()
     else:
         return {'status': 'error', 'message': '没找到这个单词'}
@@ -119,7 +110,7 @@ def add_option():
     else:
         url = url_for('.finish')
 
-    print 'add_option', time.time()-t
+    print 'add_option', time.time() - t
     return {'status': 'ok', 'next_url': url}
 
 
@@ -128,25 +119,26 @@ def add_option():
 def ce_list():
     page = int(request.args.get('page', 1))
     count = int(request.args.get('count', 20))
-    channels = request.args.get('channels', '-closed,-hidden').split(',')
     user_name = request.args.get('user')
+    tags = request.args.get('tags', 'all').split(',')
 
     query = {'$and': []}
-    for channel in channels:
-        if channel == 'all':
+    for tag in tags:
+        if not tag:
+            continue
+        elif tag == u'all':
             query = {}
             break
-        elif channel[0] == '-':
-            channel = channel[1:]
-            query['$and'].append({'tags': {'$ne': channel}})
+
+        if tag[0] == '-':
+            tag = tag[1:]
+            query['$and'].append({'tags': {'$ne': tag}})
         else:
-            query['$and'].append({'tags': channel})
+            query['$and'].append({'tags': tag})
 
     if user_name:
         query.setdefault('$and', [])
         query['$and'].append({'options.voters': user_name})
-
-    print query
 
     ce_list, pager = query_page(CoreExp, query, [('_id', 1)], page, count)
 
@@ -206,77 +198,13 @@ def tag_ce():
         return {'status': 'error', 'message': 'invalid action'}
 
 
-@bp.route('/list/auto_close')
-@require_admin
-def auto_close():
-    # 只有1个答案的
-    query = {
-        'tags': {'$ne': u'closed'},
-        'options': {'$size': 1},
-        'actions_count': {'$gte': MAX_VOTES}
-    }
-    for ce in CoreExp.query(query):
-        ce.tags.append(u'closed')
-        ce.save()
-
-#    # 最佳答案占了70%以上的
-#    query = {
-#        'tags': {'$ne': u'closed'},
-#        'actions_count': {'$gt': MAX_ACTIONS_MULTIPLE}
-#    }
-#    for ce in CoreExp.query(query):
-#        if len(ce.best_option['voters']) > ce.actions_count * 0.7:
-#            ce.tags.append(u'closed')
-#            ce.save()
-
-    # 已经选出最佳答案的
-    query = {
-        'tags': {'$ne': u'closed'},
-        'options.tag': u'best',
-        }
-    for ce in CoreExp.query(query):
-        ce.tags.append(u'closed')
-        ce.save()
-
-    return redirect(url_for('.ce_list'))
-
-
-@bp.route('/list/auto_hide')
-@require_admin
-def auto_hide():
-    # 隐藏所有 closed 的 ce
-    auto_close()
-    query = {
-        '$and': [
-                {'tags': u'closed'},
-                {'tags': {'$ne': u'hidden'}},
-        ]
-    }
-    for ce in CoreExp.query(query):
-        ce.tags.append(u'hidden')
-        ce.save()
-
-    return redirect(url_for('.ce_list'))
-
-
 @bp.route('/scores/refresh')
 @require_admin
 def refresh_scores():
-    d = {
-        #        'user': {
-        #            'score': 0,
-        #            'edit': 0,
-        #            'vote': 0,
-        #            'punish': 0,
-        #            'valid': 0,
-        #            'total': 0,
-        #        }
-    }
+    d = {}
     user_logs = {}
     Score.coll().drop()
     for ce in CoreExp.query({'tags': {'$ne': u'hidden'}}):
-#        best_option = None
-#        if u'closed' in ce.tags:
         best_option = ce.best_option
 
         for log in ce.get('logs', []):
@@ -287,24 +215,14 @@ def refresh_scores():
         for option in ce.options:
             voters = option['voters']
             for voter in voters:
-                d.setdefault(voter, {'score': 0, 'edit': 0, 'vote': 0, 'punish': 0, 'total': 0, 'seconds': 0})
+                d.setdefault(voter, {'score': 0, 'vote': 0, 'total': 0, 'seconds': 0})
                 d[voter]['total'] += 1
-
-            if option['tag'] == u'bad':
-                for voter in voters:
-                    d[voter]['score'] -= 10
-                    d[voter]['punish'] += 1
 
             if best_option and option['cn'] == best_option['cn']:
                 for i, voter in enumerate(voters):
-                    if voters[0] != u'SYS' and i < 3:
-                        d[voter]['score'] += 5
-                        d[voter]['edit'] += 1
-                    else:
-                        d[voter]['score'] += 1
-                        d[voter]['vote'] += 1
+                    d[voter]['score'] += 1
+                    d[voter]['vote'] += 1
 
-#    pprint(user_logs)
     for user_name in d:
         if user_name == u'SYS':
             continue
@@ -316,7 +234,7 @@ def refresh_scores():
         for i, log in enumerate(logs):
             if not i:
                 continue
-            seconds = (log['time'] - logs[i-1]['time']).seconds
+            seconds = (log['time'] - logs[i - 1]['time']).seconds
             if seconds <= 240:
                 d[user_name]['seconds'] += seconds
             else:
