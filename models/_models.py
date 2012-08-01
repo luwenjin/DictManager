@@ -286,7 +286,7 @@ class CoreExp(EasyDocument):
         }],
         'actions_count': int,
         'logs': [{'time': datetime, 'event': unicode, 'user': unicode}],
-        'tags': [unicode],
+        'tags': [unicode], #full:收集到足够答案，#hidden:暂时隐藏
         'create_time': datetime,
         'modify_time': datetime,
 
@@ -407,6 +407,8 @@ class CoreExp(EasyDocument):
         self.actions_count = 0
         for option in self.options:
             self.actions_count += len(option['voters'])
+            if option['voters'] and option['voters'][0] == u'SYS':
+                self.actions_count -= 1
 
 
 class Score(EasyDocument):
@@ -488,17 +490,13 @@ def fill_coreexp_task(course_name, filled_amount):
             break
 
 def repair():
-#    for token in tokens.find():
-#        if token.has_key('type'):
-#            token.pop('type')
-#        if token.has_key('is_trash'):
-#            token.pop('is_trash')
-#            token.setdefault('tags', [])
-#            if u'trash' not in token['tags']:
-#                token['tags'].append(u'trash')
-#        tokens.save(token)
-    for token in Token.query():
-        token.save()
+    for ce in CoreExp.query():
+        for option in ce.options:
+            if u'SYS' in option['voters']:
+                option['voters'].remove(u'SYS')
+        ce.remove_tag(u'closed')
+        ce.remove_tag(u'hidden')
+        ce.save()
 
 
 def stat():
@@ -539,10 +537,4 @@ def stat():
 
 
 if __name__ == '__main__':
-
-#    print CoreExp.one({'options.editor': u'SYS'})
-    core_exp.drop()
-    core_exp.ensure_index('en')
-    fill_coreexp_task('IELTS', 99999)
-#    fill_coreexp_task(u'IELTS', 3000)
-#    pass
+    repair()
