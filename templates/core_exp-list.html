@@ -7,38 +7,18 @@
 <div id="coreexp-list-page" class="container ">
 
     <ul class="nav nav-pills pull-left">
-        <li {% if request.args.channels == '-closed,-hidden' or not request.args.channels %}class="active"{% endif %}>
-            <a href="javascript:change_param('channels', '-closed,-hidden')">开放（未隐藏）</a>
-        </li>
-        <li {% if request.args.channels == 'closed,-hidden' %}class="active"{% endif %}>
-            <a href="javascript:change_param('channels', 'closed,-hidden')">已关闭（未隐藏）</a>
-        </li>
-        <li {% if request.args.channels == '-hidden' %}class="active"{% endif %}>
-        <a href="javascript:change_param('channels', '-hidden')">未隐藏</a>
-        </li>
-        <li {% if request.args.channels == 'hidden' %}class="active"{% endif %}>
-            <a href="javascript:change_param('channels', 'hidden')">已隐藏</a>
-        </li>
-        <li {% if request.args.channels == 'all' %}class="active"{% endif %}>
-            <a href="javascript:change_param('channels', 'all')">全部</a>
-        </li>
-        <!--li {% if request.args.channel == 'auto_close' %}class="active"{% endif %}>
-        <a href="javascript:change_param('channel', 'auto_close')">自动关闭候选</a>
-        </li-->
+        <li><a href="javascript:" data-tags="-full,-hidden">进行中</a></li>
+        <li><a href="javascript:" data-tags="full">已集齐</a></li>
+        <li><a href="javascript:" data-tags="hidden">已隐藏</a></li>
+        <li><a href="javascript:" data-tags="all">全部</a></li>
     </ul>
 
     <div class="pull-right">{{ pagination( pager.current, pager.total ) }}</div>
     <table class="table">
         <thead>
             <tr>
-                <th style="width: 180px;">
-                    单词
-                </th>
-                <th>
-                    结果
-                    <a id="auto-close-button" href="{{url_for('.auto_hide')}}" class="pull-right">隐藏所有已关闭的</a>
-                    <a id="auto-hide-button" href="{{url_for('.auto_close')}}" class="pull-right">自动关闭</a>
-                </th>
+                <th style="width: 180px;">单词</th>
+                <th>结果</th>
             </tr>
         </thead>
         <tbody>
@@ -46,10 +26,10 @@
             <tr>
                 <td class="en">
                     <h3><a href="{{url_for('.show', en=ce.en)}}" target="_blank">{{ce.en}}</a></h3>
-                    <span class="label {% if 'closed' in ce.tags %}label-success{% endif %}"
+                    <span class="label {% if 'hidden' in ce.tags %}label-success{% endif %}"
                           data-id="{{ce._id}}"
-                          data-tag="closed"
-                    >关闭</span>
+                          data-tag="hidden"
+                    >隐藏</span>
                 </td>
                 <td class="answer">
                     <a class="logs-link" rel="tooltip" href="javascript:"
@@ -59,16 +39,27 @@
                     {% for option in ce.ordered_options %}
                         <li>
                             <p>
-                                <span class="cn">{{option.cn}}</span>
+                                <span class="cn">
+                                    {% if option.cn %}
+                                    {{option.cn}}
+                                    {% else %}
+                                    （无答案）
+                                    {% endif %}
+                                </span>
 
                                 <a href="javascript:" {% if option.tag == 'best' %} class="tagged" {% endif %}
                                    data-option="{{option.cn}}" data-tag="best" data-id="{{ce._id}}">最佳</a>
-                                <a href="javascript:" {% if option.tag == 'bad' %} class="tagged" {% endif %}
-                                   data-option="{{option.cn}}" data-tag="bad" data-id="{{ce._id}}">最差</a>
+{#                                <a href="javascript:" {% if option.tag == 'bad' %} class="tagged" {% endif %}#}
+{#                                   data-option="{{option.cn}}" data-tag="bad" data-id="{{ce._id}}">最差</a>#}
                                 <a href="javascript:"
                                 data-option="{{option.cn}}" data-tag="" data-id="{{ce._id}}">None</a>
                             </p><br/>
-                            <span class="label label-warning {{option.tag}}" style="width:{{option.voters|length * 10}}px">{{option.voters | length }}</span>
+
+                            {% set voter_count = option.voters|length %}
+                            <span class="label {% if voter_count>0 %}label-warning{% endif %} {{option.tag}}"
+                                  style="width:{{voter_count * 10 + 8}}px">
+                                {{voter_count }}
+                            </span>
                             <p class="voters">{{option.voters | join(', ')}}</p>
                         </li>
                     {% endfor %}
