@@ -12,7 +12,7 @@ from urllib import quote
 from ghost import Ghost
 from pyquery import PyQuery as pq
 
-from models import db, tokens, dc_page_coll, dc_token_coll, Token
+from models import dc_page_coll, Token
 
 
 

@@ -101,7 +101,9 @@ class Token(EasyDocument):
     structure = {
         'hash': unicode, # lower case 'en', auto modify on save
         'en': unicode,
-        'ph': {'en': unicode, 'us': unicode},
+        'freq': float, # 0.0 - 1.0, -1 for empty
+        'spells': [unicode], # eg: mr mr. Mr Mr.
+        'phs': [unicode],
         'exp':{
             'core': unicode,
             'cn': [{'pos': [unicode], 'text': unicode}],
@@ -115,8 +117,8 @@ class Token(EasyDocument):
         'create_time': datetime, #auto modify on save
     }
     default_values = {
-        'ph.en': u'',
-        'ph.us': u'',
+        'freq': -1,
+        'phs': [],
         'exp.cn': [],
         'exp.core': u'',
         'courses': [],
@@ -160,13 +162,10 @@ class Token(EasyDocument):
             self.remove_tag(u'trash')
 
     def before_save(self):
-#        en = ' '+self.en+' '
-#        en = re.sub('\.{3,10}', ' ... ', en)
-#        en = re.sub('(\W)sb\.?(\W)', r'\1sb.\2', en)
-#        en = re.sub('(\W)sth\.?(\W)', r'\1sth.\2', en)
-#        en = re.sub('\s+', ' ', en)
-#
-#        self.en = en.strip()
+        self.en = self.en.strip()
+        if self.en not in self.spells:
+            self.spells.append(self.en)
+
         self.hash = Token.make_hash(self.en)
         self.remove_tag(u'word')
         self.remove_tag(u'phrase')
@@ -285,7 +284,7 @@ class CoreExp(EasyDocument):
             'tag': unicode,
         }],
         'actions_count': int,
-        'logs': [{'time': datetime, 'event': unicode, 'user': unicode}],
+        'logs': list,
         'tags': [unicode], #full:收集到足够答案，#hidden:暂时隐藏
         'create_time': datetime,
         'modify_time': datetime,
@@ -332,12 +331,11 @@ class CoreExp(EasyDocument):
     def random_option(self):
         return random.choice(self.options)
 
-    def add_log(self, event, user_name):
+    def add_log(self, **kwargs):
         log = {
             'time': datetime.now(),
-            'event': event,
-            'user': user_name
         }
+        log.update(kwargs)
         self.logs.append(log)
 
     @property
@@ -345,7 +343,10 @@ class CoreExp(EasyDocument):
         li = []
         for log in self.logs:
             log['time'] = log['time'].strftime('%m-%d %H:%M')
-            line = '%(time)s>>[%(user)s]%(event)s' % log
+            if log.has_key('event'):
+                line = '%(time)s>>[%(user)s]%(event)s' % log
+            else:
+                line = '%(time)s>>[%(user)s]%(op)s:%(opton)s' % log
             li.append(line)
         return '<br/>'.join(li)
 
@@ -375,7 +376,6 @@ class CoreExp(EasyDocument):
 
     def add_option(self, cn, user_name):
         self.remove_user(user_name)
-        self.add_log('add_option:%s' % cn, user_name)
 
         option_found = False
         for i, option in enumerate(self.options):
@@ -443,98 +443,13 @@ class Score(EasyDocument):
             self.create_time = datetime.now()
 
 
-
 conn.register([
     User, Token, Sentence, Diff, CoreExp, Score
 ])
 
 
-def fill_coreexp_task(course_name, filled_amount):
-    old_amount = CoreExp.query().count()
-    new_amount = filled_amount - old_amount
-
-    if new_amount <= 0:
-        return
-
-    valid_tokens = Token.all(courses=course_name)
-    token_map = {}
-    for token in valid_tokens:
-        token_map[token.en] = token
-    for ce in CoreExp.query():
-        if token_map.has_key(ce.en):
-            token_map.pop(ce.en)
-    valid_tokens = token_map.values()
-
-    for i in xrange(new_amount):
-        n = random.randint(0, len(valid_tokens)-1)
-        token = valid_tokens[n]
-        del valid_tokens[n]
-
-        gt_token = gt_token_coll.find_one({'en': token.en})
-        ce = CoreExp.one(en=token.en)
-        if gt_token and not ce:
-            ce = CoreExp.new()
-            ce.en = token.en
-            for cn in gt_token['cns']:
-                ce.options.append({
-                    'cn': cn,
-                    'voters': [u'SYS'],
-                    'tag': None
-                })
-
-            if gt_token['cns']:
-                ce.save()
-            print ce.en
-
-        if len(valid_tokens) <= 0:
-            break
-
-def repair():
-    for ce in CoreExp.query():
-        for option in ce.options:
-            if u'SYS' in option['voters']:
-                option['voters'].remove(u'SYS')
-        ce.remove_tag(u'closed')
-        ce.remove_tag(u'hidden')
-        ce.save()
-
-
-def stat():
-    user_logs = {}
-    user_times = {}
-    for ce in CoreExp.query({'tags': {'$ne': u'hidden'}}):
-        for log in ce.logs:
-            user_name = log['user']
-            user_logs.setdefault(user_name, [])
-            user_logs[user_name].append(log)
-
-    for user_name in user_logs:
-        logs = user_logs[user_name]
-        logs.sort(key=lambda x:x.get('time'))
-
-        user_times.setdefault(user_name, [])
-        for i, log in enumerate(logs):
-            seconds = (log['time'] - logs[i-1]['time']).seconds
-            if seconds <= 240:
-                user_times[user_name].append(seconds)
-            else:
-                user_times[user_name].append(0)
-
-    for i in range(300):
-        t_li = []
-        for user_name in user_times:
-            logs = user_logs[user_name]
-            if len(logs) <300:
-                break
-            else:
-                t_li.append(user_times[user_name][i])
-        print '%s\t%0.2f' % (i, 1.0*sum(t_li) / len(t_li))
-
-
-
-
-
-
-
 if __name__ == '__main__':
-    repair()
+    for token in tokens.find():
+        token['phs'] = []
+        token.pop('ph')
+        tokens.save(token)

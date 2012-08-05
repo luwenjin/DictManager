@@ -9,9 +9,10 @@ function unfreeze() {
 }
 
 function submit(params, callback) {
-    var url = '/coreexp/save';
+    var url = '/votes/ce/save';
 
     params['_id'] = $('#_id').val();
+    params.time = (new Date()).getTime() - window.start_time;
 
     if (!callback) {
         callback = function (data) {
@@ -84,5 +85,5 @@ $(document).ready(function () {
         $('#vote-box').hide();
     });
 
-
+    window.start_time = (new Date()).getTime();
 });

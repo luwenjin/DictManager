@@ -13,7 +13,7 @@
                 <div class="bar" style="width:{{progress}}%"></div>
             </div>
 
-            <span class="phonetic">[ {{token.ph.en}} ] [ {{token.ph.us}} ]</span>
+            <span class="phonetic">[ {{ token.phs | join(';') }} ]</span>
             <h1 class='en'>{{ce.en}}</h1>
 
             <div id="good-bad-box">
@@ -32,7 +32,9 @@
                         </a>
                     {% endif %}
                 {% endfor %}
-                <a class='btn btn-large btn-inverse option' href="javascript:" data-option="">没有好的答案</a>
+                <a class='btn btn-large btn-inverse option' href="javascript:" data-option="">
+                    没一个答案是好的
+                </a>
 
             </div>
 

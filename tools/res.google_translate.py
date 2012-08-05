@@ -6,7 +6,7 @@ from yaml import CLoader as Loader, CDumper as Dumper
 import requests
 
 sys.path.append(os.path.abspath('../..'))
-from models import db, tokens, Token, gt_token_coll
+from models import tokens, gt_token_coll
 #coll = db['resource.google_translate']
 
 DATA_PATH = 'data/google_translate/tokens.yaml'
@@ -131,9 +131,5 @@ def parse_gt(s):
 
 
 if __name__ == '__main__':
-    from pprint import pprint
-    import json
-    import cPickle
-
     save_all()
 

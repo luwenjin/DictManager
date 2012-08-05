@@ -23,14 +23,14 @@
                     <label class="control-label">英文</label>
                     <div class="controls">
                         <input class="input-xlarge" name="en" value="{{token.en}}">
-                        <small style="color: grey;">{{ token.ph.en }}, {{token.ph.us}}</small>
+                        <small style="color: grey;">{{ token.phs | join(';') }}</small>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">核心解释</label>
                     <div class="controls">
-                        <input type='text' name="exp_core" value="{{token.exp_core}}" class="input-xlarge"
+                        <input type='text' name="exp_core" value="{{token.exp.core}}" class="input-xlarge"
                                placeholder="要求：最核心最精简的词性和含义">
                         <small style="color: grey;"></small>
                     </div>

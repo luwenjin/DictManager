@@ -1,22 +1,14 @@
 #coding:utf-8
 import sys
 import os
-import re
-import urllib
-import time
-from pprint import pprint
 parent_path = os.path.split(os.path.split(os.path.abspath('.'))[0])[0]
 print parent_path
 sys.path.append(parent_path)
 #------------------------------------------------------
 import operator
 
-from models import db, tokens, cl_token_coll, cl_page_coll, Token, wn_token_coll
+from models import tokens, Token, wn_token_coll
 
-from pymongo.objectid import ObjectId
-from pyquery import PyQuery as pq
-import requests
-import json
 from nltk.corpus import wordnet as wn
 from nltk.stem.wordnet import WordNetLemmatizer
 
