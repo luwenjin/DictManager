@@ -88,10 +88,11 @@ cl_page_coll = db['resource.collins.pages']
 # en, content
 
 cl_freq_page_coll = db['resource.collins.freq_pages']
+# from wordbank: en, content
 
 cl_token_coll = db['resource.collins.tokens']
 cl_token_coll.ensure_index('en')
-# en, current, band, hits
+# en, TODO:more
 
 # wordnet ---------------------------------
 wn_token_coll = db['resource.wordnet.tokens']

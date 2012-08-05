@@ -16,25 +16,6 @@ import workerpool
 from models import db, Token, tokens, cl_token_coll, cl_page_coll, cl_freq_page_coll
 
 
-def fetch_commonness_info(en):
-    """seems 404ed"""
-    encoded_en = urllib.quote(en.encode('utf-8'))
-    url = 'http://www.collinsdictionary.com/corpus/english/current/' + encoded_en
-    try:
-        content = requests.get(url).content
-    except:
-        print 'sleep...'
-        time.sleep(10)
-        return fetch_commonness_info(en)
-    try:
-        info = json.loads(content)
-    except:
-        print 'sleep...'
-        time.sleep(10)
-        return fetch_commonness_info(en)
-    return info
-
-
 def fetch_hits_page(en):
     """ http://wordbanks.harpercollins.co.uk/auth/
     Username    : f5dev543
@@ -68,16 +49,10 @@ def fetch_dict_page(en):
 def sync_all_hits_pages():
     cl_freq_page_coll.ensure_index('en')
 
-    cursor = Token.query() #maybe: {'freq': -1}
-    count = cursor.count()
+    en_list = [x.get('en') for x in Token.query()]
+    count = len(en_list)
 
-    en_list = []
-    i_list = []
-    for i, token in enumerate(cursor):
-        i_list.append(i)
-        en_list.append(token.en)
-
-    def fetch_and_store(en, i):
+    def fetch_and_store(en, i=None, count=None):
         freq_page = cl_freq_page_coll.find_one({'en': en})
         if freq_page and '<input type="text" name="user" /' in freq_page['content']:
             cl_freq_page_coll.remove(freq_page)
@@ -107,7 +82,7 @@ def sync_all_hits_pages():
         print i, '/', count, en, 'saved', hits
 
     pool = workerpool.WorkerPool(size=5)
-    pool.map(fetch_and_store, en_list, i_list)
+    pool.map(fetch_and_store, en_list, range(count), [count]*count)
 
     pool.shutdown()
     pool.wait()
@@ -123,80 +98,10 @@ def fill_en_from_tokens():
             print 'add', en
 
 
-def fill_hits_from_freq_pages():
-    for i, cl_token in enumerate(cl_token_coll.find()):
-        en = cl_token['en']
 
-        freq_page_doc = cl_freq_page_coll.find_one({'en': en})
-        if freq_page_doc:
-            d = pq(freq_page_doc['content'])
-            table = d('table').eq(0)
-            hits = pq('b', table).eq(1).text()
-
-            if hits:
-                try:
-                    hits = int(hits)
-                    cl_token['hits'] = hits
-                    cl_token_coll.save(cl_token)
-                    print i, en, hits
-                except:
-                    print '!!!!', i, en, hits
-
-
-def fill_band_from_pages():
-    for i, cl_page in enumerate(cl_page_coll.find()):
-        en = cl_page['en']
-
-        d = pq(cl_page['content'])
-
-        title = d('#usage_level').attr('title')
-        if title:
-            li = title.split('"')
-            if li:
-                band = int(li[1].strip())
-                print en, band
-
-
-
-
-
-def update_commonness():
-    cl_token_coll.ensure_index('en')
-
-    en_list = tokens.find({'is_phrase': False}).distinct('en')
-    for i, en in enumerate(en_list):
-        if i<0:
-            continue
-        cl_token = cl_token_coll.CLToken.find_one({'en': en})
-#        print cl_token
-        if cl_token and cl_token.current:
-            print i, 'skip', en
-        else:
-            print en,
-            info = fetch_commonness_info(en)
-            print info
-            cl_token = cl_token_coll.CLToken()
-            if type(info) == dict and info.get('band'):
-                cl_token.current = info.get('current')
-                cl_token.band = info.get('info')
-                cl_token.en = en
-                cl_token.save()
-                print i, 'saved', en
-            elif type(info) == list:
-                cl_token.current = -1.0
-                cl_token.band = -1
-                cl_token.en = en
-                cl_token.save()
-
-
-
-
-
-def update_pages():
+def sync_all_dict_pages():
     cl_page_coll.ensure_index('en')
-
     en_list = tokens.find().distinct('en')
-
 
     def fetch_and_store_page(en, i=None):
         print i, en
@@ -208,9 +113,6 @@ def update_pages():
         cl_page['en'] = en
         cl_page['content'] = content
         cl_page_coll.save(cl_page)
-
-
-#    fetch_and_store_page(en_list[0])
 
     pool = workerpool.WorkerPool(size=3)
     pool.map(fetch_and_store_page, en_list, range(len(en_list)))

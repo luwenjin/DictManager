@@ -5,11 +5,14 @@ sys.path.append(parent_path)
 # ---------------------------------
 import csv
 import re
-from models import freq_coll, cl_token_coll, Token
+
+from pyquery import PyQuery as pq
+
+from models import freq_coll, cl_token_coll, Token, cl_freq_page_coll
 
 
 # not good for freq
-def import_SUBTLEX():
+def fill_SUBTLEX():
     """
     The word. This starts with a capital when the word more often starts with an uppercase letter than
         with a lowercase letter.
@@ -127,7 +130,7 @@ def sync_en_from_tokens():
             print i, 'skipped', en
 
 
-def update_google_ngram():
+def fill_google_ngram():
     """把google ngram里面的数据同步到数据库里面（前提是数据库里面有相应的en，否则太大）"""
     gn_dict = {}
     for line in open('data/freq/google_ngram_filtered.csv'):
@@ -147,26 +150,45 @@ def update_google_ngram():
         print i, en, count
 
 
-def update_collins_data():
-    """freq, band, hits"""
+def parse_collins_hits(page_html):
+    d = pq(page_html)
+    table = d('table').eq(0)
+    hits = pq('b', table).eq(1).text()
+
+    try:
+        hits = int(hits)
+        return hits
+    except:
+        return None
+
+
+def fill_collins_hits():
+    for i, freq_doc in enumerate(freq_coll.find()):
+        en = freq_doc['en']
+
+        wordbank_page = cl_freq_page_coll.find_one({'en': en})
+        if wordbank_page:
+            hits = parse_collins_hits(wordbank_page['content'])
+            if not hits:
+                hits = -1
+            freq_doc['cl_hits'] = hits
+            cl_token_coll.save(freq_doc)
+            print i, en, hits
+
+
+def fill_collins_current():
     for i, freq_doc in enumerate(freq_coll.find()):
         en = freq_doc['en']
         cl_token = cl_token_coll.find_one({'en': en})
-        current = -1
-        hits = -1
-        if cl_token:
-            if cl_token.get('current') and cl_token['current'] > 0:
-                current = cl_token['current']
 
-            if cl_token.has_key('hits') and cl_token['hits'] > 0:
-                hits = cl_token['hits']
+        if cl_token and cl_token.get('current') and cl_token['current'] > 0:
+            current = cl_token['current']
+        else:
+            current = -1
 
-            # TODO: band
         freq_doc['cl_current'] = current
-        freq_doc['cl_hits'] = hits
         freq_coll.save(freq_doc)
         print i, en, current, hits
-
 
 
 def export_freq_csv():
@@ -186,7 +208,8 @@ def export_freq_csv():
         print i, line
     f.close()
 
+
 if __name__ == '__main__':
-    update_collins_data()
+    fill_collins_current()
 
 
