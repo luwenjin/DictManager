@@ -21,7 +21,6 @@ diffs = db['diffs']
 core_exp = db['core_exp']
 core_exp.ensure_index('en')
 core_exp.ensure_index('options.editor')
-core_exp.ensure_index('options.voters')
 core_exp.ensure_index('actions_count')
 core_exp.ensure_index('tags')
 
@@ -56,7 +55,6 @@ dc_token_coll = db['resource.dictcn.tokens']
 
 
 
-
 # 有道 ---------------------------------
 # yd_detail_page_coll 来自网页抓取，包含
 # 英英解释（WordNet)；
@@ -71,6 +69,9 @@ dc_token_coll = db['resource.dictcn.tokens']
 # 有道网络词典
 # 例句+翻译+来源URL,包括普通例句、发表物例句、多媒体例句
 yd_detail_page_coll = db['resource.youdao.detail_pages']
+yd_simple_page_coll = db['resource.youdao.simple_pages']
+yd_detail_page_coll.ensure_index('en')
+yd_simple_page_coll.ensure_index('en')
 # en, content
 
 yd_21yh_page_coll = db['resource.youdao.21yh_pages']
@@ -89,14 +90,21 @@ cl_page_coll = db['resource.collins.pages']
 cl_freq_page_coll = db['resource.collins.freq_pages']
 
 cl_token_coll = db['resource.collins.tokens']
-# en, current, band
+cl_token_coll.ensure_index('en')
+# en, current, band, hits
 
 # wordnet ---------------------------------
 wn_token_coll = db['resource.wordnet.tokens']
 # en, exps->[{POS, text, synset_token, count}]
 
 
-# google translate# wordnet ---------------------------------
+# google translate ---------------------------------
 gt_token_coll = db['resource.google_translate.tokens']
 # {en:, cns:[], poss:{'verb':[], 'noun':[]}, py:}
 gt_token_coll.ensure_index('en')
+
+
+# all freq data ---------------------------------
+freq_coll = db['resource.freq']
+# { en:, SUBTLWF:, gn_count:, cl_current:, cl_hits: }
+freq_coll.ensure_index('en')

@@ -7,8 +7,8 @@
 <div id="coreexp-list-page" class="container ">
 
     <ul class="nav nav-pills pull-left">
-        <li><a href="javascript:" data-tags="-full,-hidden">进行中</a></li>
-        <li><a href="javascript:" data-tags="full">已集齐</a></li>
+        <li><a href="javascript:" data-tags="-full,-hidden">进行中|未隐藏</a></li>
+        <li><a href="javascript:" data-tags="full,-hidden">已集齐|未隐藏</a></li>
         <li><a href="javascript:" data-tags="hidden">已隐藏</a></li>
         <li><a href="javascript:" data-tags="all">全部</a></li>
     </ul>
@@ -18,7 +18,10 @@
         <thead>
             <tr>
                 <th style="width: 180px;">单词</th>
-                <th>结果</th>
+                <th>
+                    结果
+                    <a href="{{ url_for(".auto_hide") }}" class="pull-right">自动隐藏</a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +63,15 @@
                                   style="width:{{voter_count * 10 + 8}}px">
                                 {{voter_count }}
                             </span>
-                            <p class="voters">{{option.voters | join(', ')}}</p>
+                            <p class="voters">
+                                {% for voter in option.voters %}
+                                    {% if request.args.user and request.args.user == voter %}
+                                        <span style="color:red">{{ voter }}</span>,
+                                    {% else %}
+                                        <span>{{ voter }}</span>,
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
                         </li>
                     {% endfor %}
                     </ul>

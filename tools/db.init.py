@@ -3,12 +3,10 @@ import sqlite3
 import random
 import base64
 
-from models import db, users, courses, sentences, differences
-
+from models import db, users, sentences
 sql_conn = sqlite3.connect('ssb/resources/dicts/words.sqlite')
 
-
-#making user collection
+# making user collection
 def init_users():
     for coll_name in db.collection_names():
         if coll_name.startswith('users'):

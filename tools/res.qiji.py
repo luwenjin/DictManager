@@ -9,8 +9,7 @@ sys.path.append(parent_path)
 
 import sqlite3
 
-from models import db, Sentence, Token, tokens,\
-    qj_course_coll, QJCourse, qj_token_coll, QJToken, qj_sentence_coll, QJSentence
+from models import db, qj_course_coll, qj_token_coll, qj_sentence_coll
 
 
 sql_conn = sqlite3.connect('data/words.sqlite')

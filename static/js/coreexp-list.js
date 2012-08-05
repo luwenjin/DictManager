@@ -5,7 +5,7 @@ function on_click_option_tag_link(e) {
         option = $el.attr('data-option'),
         tag = $el.attr('data-tag'),
         id = $el.attr('data-id'),
-        url = '/coreexp/option/tag';
+        url = '/votes/ce/option/tag';
 
     $.post(url, {'_id': id, 'option': option, 'tag': tag}, function (data) {
         if (data.status === 'ok') {
@@ -28,7 +28,7 @@ function on_click_ce_tag_label(e) {
     var $el = $(e.currentTarget),
         id = $el.attr('data-id'),
         tag = $el.attr('data-tag'),
-        url = '/coreexp/tag',
+        url = '/votes/ce/tag',
         params = {'_id': id, 'tag': tag};
 
     if ($el.hasClass('label-success')) {
@@ -84,8 +84,6 @@ $(document).ready(function () {
     $('.answer').on('click', 'a', on_click_option_tag_link);
     $('td.en').on('click', 'span.label', on_click_ce_tag_label);
     $('a[rel=tooltip]').popover();
-
-
 });
 
 

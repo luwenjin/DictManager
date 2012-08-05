@@ -1,14 +1,8 @@
 #coding:utf-8
-import os
-from pprint import pprint
 from datetime import datetime
-import math
 import urllib
-import random
 
-from furl import furl
-from mongokit import ObjectId
-from flask import Flask, request, redirect, render_template, session, flash
+from flask import Flask, request, redirect, render_template, session, url_for
 from flask.ext.assets import Environment
 
 from models import User
@@ -18,7 +12,7 @@ app = Flask(__name__)
 app.config.from_object('settings')
 
 app.register_blueprint(tokens_blueprints, url_prefix='/tokens')
-app.register_blueprint(coreexp_blueprints, url_prefix='/coreexp')
+app.register_blueprint(coreexp_blueprints, url_prefix='/votes/ce')
 
 app.jinja_env.filters['max'] = max
 app.jinja_env.filters['min'] = min
@@ -35,7 +29,7 @@ def test(path):
 @app.route('/', methods=['GET'])
 @require_login
 def index():
-    return redirect('/coreexp')
+    return redirect(url_for('coreexp.go_next'))
 
 @app.route('/login', methods=['GET'])
 def login():
