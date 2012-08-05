@@ -47,8 +47,6 @@ def fetch_dict_page(en):
 
 
 def sync_all_hits_pages():
-    cl_freq_page_coll.ensure_index('en')
-
     en_list = [x.get('en') for x in Token.query()]
     count = len(en_list)
 
@@ -88,17 +86,6 @@ def sync_all_hits_pages():
     pool.wait()
 
 
-def fill_en_from_tokens():
-    for token in tokens.find():
-        en = token['en']
-        cl_token = cl_token_coll.find_one({'en': en})
-        if not cl_token:
-            cl_token = {'en': en}
-            cl_token_coll.save(cl_token)
-            print 'add', en
-
-
-
 def sync_all_dict_pages():
     cl_page_coll.ensure_index('en')
     en_list = tokens.find().distinct('en')
@@ -119,7 +106,6 @@ def sync_all_dict_pages():
 
     pool.shutdown()
     pool.wait()
-
 
 
 if __name__ == '__main__':
