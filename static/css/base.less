@@ -3,7 +3,7 @@ html, body{
     font-family: "Microsoft Yahei";
 }
 
-.btn, input {
+.btn, input, textarea {
     font-family: "Microsoft Yahei";
 }
 
@@ -20,49 +20,52 @@ span.user-name{
 }
 
 
-.sidebar {
-    .pagination{
-        input{
-            width: 20px;
-        }
-        li{
-            a{
-                padding: 0px 10px 0 10px;
+#tokens-page{
+    .sidebar {
+        .pagination{
+            input{
+                width: 20px;
             }
+            li{
+                a{
+                    padding: 0px 10px 0 10px;
+                }
 
-        }
-    }
-
-    #token_list{
-        li{
-            line-height:25px;
-            font-size:14px;
-            border-bottom: 1px dashed #ddd;
-
-            a{
-                padding-left: 10px;
-                padding-right: 10px;
-                display:block;
-            }
-            a[disabled] {
-                color: grey;
             }
         }
-        li.active, li:hover{
-            background: #0088D3;
 
-            a {
-                color: white;
-                text-decoration:none;
+        #token_list{
+            li{
+                line-height:25px;
+                font-size:14px;
+                border-bottom: 1px dashed #ddd;
+
+                a{
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    display:block;
+                }
+                a[disabled] {
+                    color: grey;
+                }
+            }
+            li.active, li:hover{
+                background: #0088D3;
+
+                a {
+                    color: white;
+                    text-decoration:none;
+                }
+
             }
 
-        }
+            li:hover{
 
-        li:hover{
-
+            }
         }
     }
 }
+
 
 
 #login-page{
@@ -74,188 +77,4 @@ span.user-name{
             }
         }
     }
-}
-
-#tokens-page {
-
-}
-
-#coreexp-page {
-    .left-box .wrap{
-        padding-bottom: 10px;
-        position: relative;
-
-        .progress{
-
-            .numbers{
-                position: absolute;
-                text-align:right;
-                right: 0px;
-                color: black;
-                font-size: 9px;
-                padding-right: 10px;
-            }
-        }
-
-
-        .phonetic{
-            display: block;
-            text-align:center;
-        }
-        h1{
-            text-align:center;
-            font-weight: normal;
-            margin: 0px;
-            padding: 0px;
-            line-height: 28px;
-            height: 28px;
-            font-size: 28px;
-        }
-
-
-        #good-bad-box {
-            p {
-                text-align:center;
-                margin-bottom: 0px;
-                margin-top: 5px;
-                color: #ccc;
-            }
-            h2.cn {
-                text-align:center;
-                font-weight: normal;
-                margin: 0 auto 10px auto;
-                padding: 0px;
-                width: 90%;
-            }
-            text-align:center;
-            .btn {
-                width: 35%;
-            }
-
-            .btn.option{
-                width: 80%;
-                margin-top: 10px;
-            }
-        }
-
-        #vote-box {
-            text-align: center;
-            p {
-                text-align:center;
-                margin-bottom: 0px;
-                margin-top: 5px;
-                color: black;
-                margin-bottom: 10px;
-            }
-            .option{
-                width: 80%;
-                padding-left: 8px;
-                padding-right: 8px;
-                margin-bottom: 5px;
-                font-size: 16px;
-            }
-            input.option{
-                height: 30px;
-                text-align:center;
-            }
-             #cancel-button, #submit-button {
-                margin-top: 10px;
-                width: 35%;
-            }
-        }
-
-
-    }
-
-}
-
-#coreexp-list-page{
-    th{
-        a{
-            margin-left: 20px;
-        }
-    }
-    td.en{
-
-        h3{
-            padding: 0px;
-            margin: 0px;
-        }
-        a {
-            &[data-tag=closed]{
-                background-color: #5BB75B;
-                background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#62C462), to(#51A351));
-                border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-                color: white;
-                text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
-            }
-        }
-        .label {
-            cursor: pointer;
-        }
-    }
-    td.answer{
-        .logs-link{
-            float:right;
-        }
-        ul{
-            margin: 0px;
-            margin-left: 10px;
-            li{
-                margin-bottom: 5px;
-            }
-        }
-        p{
-            display: inline-block;
-            line-height:20px;
-            color: black;
-            font-size: 14px;
-            margin: 0px;
-        }
-
-
-        span.cn{
-            font-size:16px;
-            line-height: 20px;
-            font-weight: bold;
-            display: inline-block;
-            font-family:"Microsoft Yahei";
-        }
-
-        a {
-            font-size: 12px;
-            margin-left: 10px;
-            padding: 0 5px;
-
-            &.tagged{
-                background-color: #08c;
-                color: white;
-            }
-        }
-        .label{
-            width: 30px;
-            display:inline-block;
-            text-align:left;
-            line-height: 12px;
-
-            &.best{
-                background-color:green;
-            }
-            &.bad{
-                background-color: grey;
-            }
-        }
-
-        p.editor{
-            font-size: 9px;
-            color: #444;
-        }
-        p.voters{
-            font-size: 9px;
-            color: #888;
-        }
-    }
-
-
-
 }
