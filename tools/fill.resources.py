@@ -5,6 +5,8 @@ parent_path = os.path.split(os.path.dirname(__file__))[0]
 sys.path.append(parent_path)
 #-------------------------------------------------
 import math
+import re
+
 from collections import Counter
 
 
@@ -173,32 +175,82 @@ def calc_freq(freq_doc):
             norm_val = (log_val-min_val)/(max_val-min_val)
 
             if key == 'cl_hits':
-                return norm_val
+                return norm_val if norm_val else -1
             elif key == 'gn_count':
                 return 0.006 + 0.972 * norm_val
             elif key == 'cl_current':
                 return 0.011 + 0.969 * (0.006 + 0.972 * norm_val)
             else:
                 raise Exception('invalid_key')
-
     return -1
 
 
+def guess_freq(phrase):
+    special_words = {
+        'sb.': 0.5,
+        'sb': 0.5,
+        'sth.': 0.5,
+        'sth': 0.5,
+        'oneself': 0.5,
+        '...': 0.7
+    }
 
-def fill_all_ranks():
+    punctuations = ['!', '.', '?', ',', "'"]
+
+    phrase = re.sub('\(.*?\)', '', phrase)
+    phrase = phrase.replace('...', ' ... ')
+
+    freqs = []
+    words = phrase.split()
+    for word in phrase.split():
+        # numbers
+        if re.match('\d+', word):
+            continue
+
+        # punctuations
+        if word in punctuations:
+            continue
+        if not special_words.has_key(word) and word[-1] in punctuations:
+            word = word[:-1]
+
+        # eg: it's up to you
+        word = word.replace("'s", '')
+
+        freq_doc = freq_coll.find_one({'en': word})
+        if not freq_doc and word != word.lower():
+            freq_doc = freq_coll.find_one({'en': word.lower()})
+
+        if freq_doc:
+            freqs.append(calc_freq(freq_doc))
+        elif special_words.has_key(word):
+            freqs.append(special_words[word])
+        else:
+            print '!!!', word, ':', phrase
+            return -1
+
+    ret = 1
+    for freq in freqs:
+        ret *= freq
+    return ret
+
+
+def fill_all_freqs():
     query = {'freq':-1}
     for i, token in enumerate(tokens.find(query)):
         en = token['en']
         freq_doc = freq_coll.find_one({'en': en})
 
-        freq = calc_freq(freq_doc)
+        if freq_doc:
+            freq = calc_freq(freq_doc)
+        if freq <= 0:
+            freq = guess_freq(en)
+
         print en, freq, token['courses']
         if freq > 0:
             token['freq'] = freq
             tokens.save(token)
 
     print 'left:', tokens.find({'freq': -1}).count()
-
 
 
 def update_qj_sentences():
@@ -209,8 +261,7 @@ def update_qj_sentences():
 
 
 if __name__ == '__main__':
-
-    print tokens.count()
+    fill_all_freqs()
 
 
 

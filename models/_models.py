@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 from hashlib import md5
 
-from mongokit import Document, ObjectId
+from mongokit import Document, ObjectId, Set
 
 from _base import db, DB_NAME, conn
 from _colls import *
@@ -102,15 +102,15 @@ class Token(EasyDocument):
         'hash': unicode, # lower case 'en', auto modify on save
         'en': unicode,
         'freq': float, # 0.0 - 1.0, -1 for empty
-        'spells': [unicode], # eg: mr mr. Mr Mr.
-        'phs': [unicode],
+        'spells': Set(unicode), # eg: mr mr. Mr Mr.
+        'phs': Set(unicode),
         'exp':{
             'core': unicode,
             'cn': [{'pos': [unicode], 'text': unicode}],
             },
-        'courses': [unicode], # course names
+        'courses': Set(unicode), # course names
 
-        'tags': [unicode], # trash, word/phrase
+        'tags': Set(unicode), # trash, word/phrase
         'note': unicode, # 备注字段
 
         'modify_time': datetime, #auto modify on save
@@ -141,25 +141,11 @@ class Token(EasyDocument):
     def make_hash(cls, en):
         return en.strip().lower()
 
-    def add_tag(self, tag):
-        if tag in self.tags:
-            return False
-        else:
-            self.tags.append(tag)
-            return True
-
-    def remove_tag(self, tag):
-        if tag in self.tags:
-            self.tags.remove(tag)
-            return True
-        else:
-            return False
-
     def trash(self, flag):
         if flag:
-            self.add_tag(u'trash')
+            self.tags.add(u'trash')
         else:
-            self.remove_tag(u'trash')
+            self.tags.discard(u'trash')
 
     def before_save(self):
         self.en = self.en.strip()
@@ -167,8 +153,8 @@ class Token(EasyDocument):
             self.spells.append(self.en)
 
         self.hash = Token.make_hash(self.en)
-        self.remove_tag(u'word')
-        self.remove_tag(u'phrase')
+        self.tags.discard(u'word')
+        self.tags.discard(u'phrase')
 
         type = u'word'
         for x in ['.', ' ', '/']:
@@ -176,7 +162,7 @@ class Token(EasyDocument):
                 type = u'phrase'
                 break
 
-        self.add_tag(type)
+        self.tags.add(type)
         self.modify_time = datetime.now()
         if not self.get('_id'):
             self.create_time = datetime.now()
@@ -215,7 +201,7 @@ class Sentence(EasyDocument):
         'hash': unicode, #从en生成
         'en': unicode,
         'cn': unicode,
-        'include': [unicode], # 内含的单词
+        'include': Set(unicode), # 内含的单词
 
         'create_time': datetime,
         'modify_time': datetime,
@@ -280,12 +266,12 @@ class CoreExp(EasyDocument):
         'en': unicode,
         'options': [{
             'cn': unicode,
-            'voters': [unicode],
+            'voters': Set(unicode),
             'tag': unicode,
         }],
         'actions_count': int,
         'logs': list,
-        'tags': [unicode], #full:收集到足够答案，#hidden:暂时隐藏
+        'tags': Set(unicode), #full:收集到足够答案，#hidden:暂时隐藏
         'create_time': datetime,
         'modify_time': datetime,
 
@@ -354,25 +340,13 @@ class CoreExp(EasyDocument):
         remove_option_index = -1
         for i, option in enumerate(self.options):
             if name in option['voters']:
-                option['voters'].remove(name)
+                option['voters'].discard(name)
                 if not option['voters']:
                     remove_option_index = i
                 break
         if remove_option_index >= 0:
             del self.options[remove_option_index]
 
-    def add_tag(self, tag):
-        if tag in self.tags:
-            return False
-        else:
-            self.tags.append(tag)
-            return True
-
-    def remove_tag(self, tag):
-        if tag in self.tags:
-            self.tags.remove(tag)
-            return True
-        return False
 
     def add_option(self, cn, user_name):
         self.remove_user(user_name)
@@ -380,14 +354,14 @@ class CoreExp(EasyDocument):
         option_found = False
         for i, option in enumerate(self.options):
             if option['cn'] == cn:
-                option['voters'].append(user_name)
+                option['voters'].add(user_name)
                 option_found = True
                 break
 
         if not option_found:
             option = {
                 'cn': cn,
-                'voters': [user_name],
+                'voters': set([user_name]),
                 'tag': None,
             }
             self.options.append(option)
@@ -407,7 +381,7 @@ class CoreExp(EasyDocument):
         self.actions_count = 0
         for option in self.options:
             self.actions_count += len(option['voters'])
-            if option['voters'] and option['voters'][0] == u'SYS':
+            if option['voters'] and u'SYS' in option['voters']:
                 self.actions_count -= 1
 
 

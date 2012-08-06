@@ -5,6 +5,7 @@ sys.path.append(parent_path)
 # ---------------------------------
 import csv
 import re
+from collections import OrderedDict
 
 from pyquery import PyQuery as pq
 
@@ -209,7 +210,35 @@ def export_freq_csv():
     f.close()
 
 
+
+
+
+
+def purify_phrase(en):
+    # 去括号
+    en = re.sub('\(.*?\)', '', en)
+    en = re.sub('\s+', ' ', en)
+
+    # 去 "..."
+    return en
+
+
+
+
+def temp_remove_phrase_with_bracket():
+    import re
+    for freq_doc in freq_coll.find():
+        en = freq_doc['en']
+        en2 = re.sub('\(.*?\)', ' ', en)
+        en2 = re.sub('\s+', ' ', en2)
+
+        if en != en2 and freq_doc['cl_hits'] < 0:
+            freq_coll.remove(freq_doc)
+            print 'remove', en
+
+
 if __name__ == '__main__':
-    fill_collins_current()
+    pass
+
 
 

@@ -15,8 +15,6 @@ MIN_VOTES = 7
 MAX_VOTES = 15
 
 
-# todo: 导入其他翻译的前3个解释，每个词性取3个（用;,分割）
-
 
 def user_done_count(user_name):
     count = CoreExp.query({
@@ -92,14 +90,12 @@ def add_option():
             time_cost = time_cost,
             ip = ip,
         )
-        if ip not in ce.voters_ip:
-            ce.voters_ip.append(ip)
 
         if ce.actions_count >= MAX_VOTES:
-            ce.add_tag(u'full')
+            ce.tags.add(u'full')
         elif ce.actions_count >= MIN_VOTES:
             if len(ce.best_option['voters']) >= ce.actions_count * 0.6:
-                ce.add_tag(u'full')
+                ce.tags.add(u'full')
         ce.save()
         print ce
     else:
@@ -206,12 +202,12 @@ def tag_ce():
 
     if action == 'add':
         if tag not in ce.tags:
-            ce.add_tag(tag)
+            ce.tags.add(tag)
             ce.save()
         return {'status': 'ok'}
     elif action == 'del':
         if tag in ce.tags:
-            ce.remove_tag(tag)
+            ce.tags.discard(tag)
             ce.save()
         return {'status': 'ok'}
     else:
@@ -289,6 +285,6 @@ def auto_hide():
             {'tags': u'full'},
     ]}
     for ce in CoreExp.query(query):
-        ce.add_tag(u'hidden')
+        ce.tags.add(u'hidden')
         ce.save()
     return redirect(request.headers.get('referer'))

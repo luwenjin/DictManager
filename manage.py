@@ -36,7 +36,7 @@ def repair_anti_spam():
         ):
             for option in ce.options:
                 if user_name in option['voters']:
-                    option['voters'].remove(user_name)
+                    option['voters'].discard(user_name)
                     print ce.en, 'removed', user_name
             ce.save()
 
@@ -101,7 +101,7 @@ def fill_coreexp_task(course_name, filled_amount):
             for cn in gt_token['cns']:
                 ce.options.append({
                     'cn': cn,
-                    'voters': [u'SYS'],
+                    'voters': set([u'SYS']),
                     'tag': None
                 })
 
