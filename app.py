@@ -6,13 +6,12 @@ from flask import Flask, request, redirect, render_template, session, url_for
 from flask.ext.assets import Environment
 
 from models import User
-from views import require_login, tokens_blueprints, coreexp_blueprints
+from views import require_login, tokens_blueprints
 
 app = Flask(__name__)
 app.config.from_object('settings')
 
 app.register_blueprint(tokens_blueprints, url_prefix='/tokens')
-app.register_blueprint(coreexp_blueprints, url_prefix='/votes/ce')
 
 app.jinja_env.filters['max'] = max
 app.jinja_env.filters['min'] = min
@@ -29,7 +28,8 @@ def test(path):
 @app.route('/', methods=['GET'])
 @require_login
 def index():
-    return redirect(url_for('coreexp.go_next'))
+    return redirect(url_for('tokens.view_token'))
+
 
 @app.route('/login', methods=['GET'])
 def login():

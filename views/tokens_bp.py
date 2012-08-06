@@ -14,7 +14,7 @@ def view_token():
     search_word = request.args.get('search_word', '').strip()
     token_id = request.args.get('token_id')
 
-    if search_word and page_info['pager']['total'] > 0:
+    if search_word and page_info['pager']['total'] > 0 and page_info['token_list']:
         token = page_info['token_list'][0]
     elif token_id and token_id != 'None':
         token = tokens.Token.find_one(ObjectId(token_id))
@@ -33,6 +33,7 @@ def view_token():
         sentence_list = Sentence.get_token_sentences(token),
         references_tokens = reference_tokens,
     )
+
 
 @bp.route('', methods=['POST'])
 @require_admin

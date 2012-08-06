@@ -6,4 +6,3 @@
 
 from _views import *
 from tokens_bp import bp as tokens_blueprints
-from coreexp_bp import bp as coreexp_blueprints
