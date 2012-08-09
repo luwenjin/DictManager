@@ -4,82 +4,56 @@ import os, sys
 parent_path = os.path.split(os.path.dirname(__file__))[0]
 sys.path.append(parent_path)
 #-------------------------------------------------
-import math
-import re
-
 from collections import Counter
 
-
-from models import db, qj_course_coll, qj_token_coll, qj_sentence_coll, \
-    dc_token_coll, yd_simple_token_coll, freq_coll
-from models import Token, tokens, Sentence
-from views._views import get_reference_tokens
-from lang import parse_exp, split_cn
+from models import db, Sentence, qj_sentence_coll, sentences
 
 
+def fill_qiji_sentences():
+    for i, qj_sen in enumerate(qj_sentence_coll.find()):
+        qj_hash = Sentence.make_hash(qj_sen['en'])
+        sen = db.Sentence.find_one({'hash': qj_hash})
+        if not sen:
+            sen = db.Sentence()
+            sen.en = qj_sen['en']
+            sen.cn = qj_sen['cn']
+            print qj_sen['en'], qj_sen['cn']
+            print qj_sen['include']
+        else:
+            print 'skip:', sen.en
+
+        sen.include.update(qj_sen['include'])
+        sen.save()
 
 
-def fill_auto_coreexp():
-    for i, token in enumerate(Token.query()):
-        if token.core.exp:
-            continue
-
-        en = token.en
-
-        counter = Counter()
-        refs = get_reference_tokens(token.en)
-        for ref in refs:
-            if ref['src'] in ['wn']:
-                continue
-
-            lines = ref['exp'].split('<br/>')
-            items = parse_exp(lines)
-
-            for item in items:
-                cn_li = split_cn(item[1])
-                for cn in cn_li:
-                    if cn:
-                        counter[cn] += 1
-
-        for cn, count in counter.most_common(1):
-            tpl = (
-                '%(total)s\n'
-                '%(others)s'
-                )
-
-            total = sum(counter.values())
-            score = 1.0 * count / total
-            others = []
-            for j, (s, n) in enumerate(counter.most_common()):
-                others.append((s,n))
-            others = ','.join([ '%s[%s]' % x for x in others ])
-            d = {
-                'en': en,
-                'cn': cn,
-                'count': count,
-                'total': total,
-                'score': score,
-                'others': others
-            }
-            note = tpl % d
-
-            token.exp.core = cn
-            token.note = note
-            token.save()
-            print i, en, cn
-
-
-
-
-def update_qj_sentences():
-    # todo
+def fill_dictcn_sentences():
     pass
 
 
+def test():
+    f_count = 0
+    nf_count = 0
+    for token in db.Token.find():
+        en = token.en
+        sentences = db.Sentence.find({'include': en})
+        if not sentences:
+            continue
+        found = False
+        for sentence in sentences:
+            if token.exp.core in sentence.cn:
+#                print token.en
+#                print sentence.en
+#                print sentence.cn
+                found = True
+                f_count += 1
+                break
+        if not found:
+            nf_count += 1
+            print en, 'not found'
+    print f_count, nf_count
 
 
 if __name__ == '__main__':
-    fill_all_freqs()
-
+    test()
 
 

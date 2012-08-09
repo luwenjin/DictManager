@@ -4,7 +4,7 @@ import os, sys
 parent_path = os.path.split(os.path.dirname(__file__))[0]
 sys.path.append(parent_path)
 #-------------------------------------------------
-from models import qj_course_coll, qj_token_coll, Token
+from models import db, qj_course_coll, qj_token_coll, Token
 
 
 def _qj_course_ids(course_name=None):
@@ -33,9 +33,11 @@ def _qj_token_en_list(course_name=None):
 def fill_qj_token_en(course_name=None):
     token_en_list = _qj_token_en_list(course_name)
     for i, en in enumerate(token_en_list):
-        token = Token.one(en=en)
+        token = db.Token.find_one(en=en)
         if not token:
-            Token.insert(en=en)
+            token = db.Token()
+            token.en = en
+            token.save()
             print i, 'new:', en
         else:
             print i, 'old', en
@@ -43,13 +45,13 @@ def fill_qj_token_en(course_name=None):
 
 
 def fill_qj_token_courses():
-    for i, token in enumerate(Token.query()):
+    for i, token in enumerate(db.Token.find()):
         qj_tokens = qj_token_coll.find({'en': token.en})
         course_ids = list(set([t.get('course_id') for t in qj_tokens]))
         courses = qj_course_coll.find({'id': {'$in':course_ids}})
         course_names = list(set([c.get('name') for c in courses if c.get('name')]))
         if 1:#course_names and not token.courses:
-            token.courses = course_names
+            token.courses.update(course_names)
             token.save()
             print i, token.en, token.courses
 

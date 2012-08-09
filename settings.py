@@ -19,6 +19,7 @@ COURSE_LIST = [
 FLAW_LIST = [
     'NO_EXPLAIN',
     'NO_CORE',
-    'NOT_PHRASE',
+    'WORD',
+    'PHRASE',
     'IS_MARKED',
     ]

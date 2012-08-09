@@ -9,46 +9,41 @@ sys.path.append(parent_path)
 import re
 from urllib import quote
 
-from ghost import Ghost
 from pyquery import PyQuery as pq
+import workerpool
 
-from models import dc_page_coll, Token
+from models import dc_page_coll, db
+from utils import fetch_url, open_url
 
 
 
-def save_pages():
+def sync_all_pages():
     dc_page_coll.ensure_index('en')
-    ghost = Ghost(cache_dir='d:/temp')
-    for i, token in enumerate(Token.query()):
+
+    for i, token in enumerate(db.Token.find()):
         en = token.en
-        page_doc = dc_page_coll.find_one({'en': en})
-        if not page_doc:
+        if dc_page_coll.find_one({'en': en}):
+            print i, 'skip', en
+        else:
             url = 'http://dict.cn/%s' % quote(en)
-            try:
-                ghost.open(url)
-            except:
-                ghost.open(url)
-            content = ghost.content
+            content = open_url(url)
             doc = pq(content)
             html = unicode(doc('#cy'))
+
             page_doc = {
                 'en': en,
                 'content': html
             }
             dc_page_coll.save(page_doc)
-            print html
+            print content
             print i, 'saved', en
-        else:
-            print i, 'skipped', en
 
 
-def parse_page(html):
-    d = pq(html)
-    doc = dict()
-    # en
-    doc['en'] = d('#word-key').text()
+def parse_en(d):
+    return d('#word-key').text()
 
-    #phonetics
+
+def parse_phs(d):
     texts = d('.yinbiao').text()
     p = re.compile('\[(.*?)\]')
     li = p.findall(texts)
@@ -60,33 +55,55 @@ def parse_page(html):
             ph_en = li[0]
         else:
             ph_us = li[0]
-    doc['ph_en'] = ph_en
-    doc['ph_us'] = ph_us
+    return {
+        'ph_en': ph_en,
+        'ph_us': ph_us
+    }
 
-    # exps : {POS:, cn:}
+
+def parse_exp(d):
+    ret = {'exps': []}
     p_li = d('div.shiyi p')
     for p in p_li:
         p = pq(p)
         POS = p('strong').text()
         cn = p.text().replace(POS, '').strip()
-        doc.setdefault('exps', [])
-        doc['exps'].append({'POS': POS, 'cn': cn})
-
-    pprint(doc)
+        ret['exps'].append({'POS': POS, 'cn': cn})
+    return ret
 
 
 
+def parse_page(html):
+    d = pq(html)
+    doc = dict()
+
+    doc['en'] = parse_en(d)
+    doc.update(parse_phs(d))
+    doc.update(parse_exp(d))
+
+#    print 'en\t', doc['en']
+#    print 'ph_en\t', doc['ph_en']
+#    print 'ph_us\t', doc['ph_us']
+#    print
 
 
+def parse_all_pages():
+    for page in dc_page_coll.find():
+        print page['en']
+        if page['content']:
+            try:
+                doc = parse_page(page['content'])
+            except:
+                dc_page_coll.remove(page)
+        else:
+            pass
+#            dc_page_coll.remove(page)
+#            print '!!! error page delete', page['en']
 
 
 
 if __name__ == '__main__':
-#    init_pages_collection()
-#    dc_token_coll.drop()
-#    update_tokens()
-#    dc_page_coll.drop()
-#    doc = dc_page_coll.find_one()
-#    parse_page(doc['content'])
-    save_pages()
+    sync_all_pages()
+
+
 

@@ -1,109 +1,25 @@
 # coding: utf-8
 """ all data models """
 import re
-import random
 from datetime import datetime
 from hashlib import md5
 
-from mongokit import Document, ObjectId, Set
+from mongokit import ObjectId, Set
 
-from _base import db, DB_NAME, conn
+from _base import db, DB_NAME, conn, Doc
 from _colls import *
 
 
-class EasyDocument(Document):
-    @classmethod
-    def coll(cls):
-        return db[cls.__collection__]
-
-    @classmethod
-    def coll_model(cls):
-        coll = cls.coll()
-        model = getattr(coll, cls.__name__)
-        return model
-
-    @classmethod
-    def new(cls, d=None, **kwargs):
-        """ create new Document Object and return
-        usage:
-            - doc = Model.new({'x':'x','y':'y'})
-            - Model.new(x = x, y = y)
-        """
-        doc = cls.coll_model()()
-        if d and type(d) == dict:
-            doc.update(d)
-        if kwargs:
-            doc.update(kwargs)
-        return doc
-
-    @classmethod
-    def insert(cls, d=None, **kwargs):
-        """ insert doc into collection
-        usage:
-            - doc = Model.insert({'x':'x','y':'y'})
-            - Model.insert(x = x, y = y)
-        """
-        doc = cls.new(d, **kwargs)
-        doc.save()
-        return doc
-
-    @classmethod
-    def one(cls, d=None, **kwargs):
-        """ fetch one doc
-        usage:
-            - Model.one({'x':'x','y':'y'}, sort=[('x',1), ...]), same as pymongo's find_one
-            - Model.one(x = x, y = y), this is a shortcut
-        """
-        model = cls.coll_model()
-        if type(d) in [dict, ObjectId]:
-            return model.find_one(d, **kwargs)
-        elif kwargs:
-            return model.find_one(kwargs)
-        else:
-            return model.find_one()
-
-    @classmethod
-    def query(cls, d=None, **kwargs):
-        """ query docs, return cursor
-        usage:
-            - Model.query({'x':'x','y':'y'}, sort=[('x',1), ...]), same as pymongo's find
-            - Model.query(x = x, y = y), this is a shortcut
-        """
-        model = cls.coll_model()
-        if type(d) in [dict, ObjectId]:
-            return model.find(d, **kwargs)
-        elif kwargs:
-            return model.find(kwargs)
-        else:
-            return model.find()
-
-    @classmethod
-    def all(cls, d=None, **kwargs):
-        """ get docs, return list
-        usage:
-            - Model.all({'x':'x','y':'y'}, sort=[('x',1), ...]), same as pymongo's find
-            - Model.all(x = x, y = y), this is a shortcut
-        """
-        cur = cls.query(d, **kwargs)
-        return list(cur)
-
-    def before_save(self):
-        pass
-
-    def save(self, uuid=False, validate=None, safe=True, *args, **kwargs):
-        self.before_save()
-        Document.save(self, uuid, validate, safe, *args, **kwargs)
-
-
-class Token(EasyDocument):
+@conn.register
+class Token(Doc):
     __database__ = DB_NAME
     __collection__ = tokens.name
     structure = {
         'hash': unicode, # lower case 'en', auto modify on save
-        'en': unicode,
+        'en': unicode, # from qiji
         'freq': float, # 0.0 - 1.0, -1 for empty
         'spells': Set(unicode), # eg: mr mr. Mr Mr.
-        'phs': Set(unicode),
+        'phs': Set(unicode), # from iciba(best)
         'exp':{
             'core': unicode,
             'cn': [{'pos': [unicode], 'text': unicode}],
@@ -117,11 +33,9 @@ class Token(EasyDocument):
         'create_time': datetime, #auto modify on save
     }
     default_values = {
-        'freq': -1,
-        'phs': [],
+        'freq': -1.0,
         'exp.cn': [],
         'exp.core': u'',
-        'courses': [],
         'note': u'',
         }
     indexes = [
@@ -134,7 +48,7 @@ class Token(EasyDocument):
 
     @staticmethod
     def get_token(en):
-        doc = tokens.Token.find_one({'en': unicode(en)})
+        doc = db.Token.find_one({'en': unicode(en)})
         return doc
 
     @classmethod
@@ -149,12 +63,9 @@ class Token(EasyDocument):
 
     def before_save(self):
         self.en = self.en.strip()
-        if self.en not in self.spells:
-            self.spells.append(self.en)
-
+        self.spells.add(self.en)
         self.hash = Token.make_hash(self.en)
-        self.tags.discard(u'word')
-        self.tags.discard(u'phrase')
+        self.freq = float(self.freq)
 
         type = u'word'
         for x in ['.', ' ', '/']:
@@ -162,13 +73,16 @@ class Token(EasyDocument):
                 type = u'phrase'
                 break
 
+        self.tags.difference_update([u'word', u'phrase'])
         self.tags.add(type)
+
         self.modify_time = datetime.now()
         if not self.get('_id'):
             self.create_time = datetime.now()
 
 
-class User(EasyDocument):
+@conn.register
+class User(Doc):
     __database__ = DB_NAME
     __collection__ = users.name
     structure = {
@@ -194,7 +108,8 @@ class User(EasyDocument):
             self.created_at = datetime.now()
 
 
-class Sentence(EasyDocument):
+@conn.register
+class Sentence(Doc):
     __database__ = DB_NAME
     __collection__ = sentences.name
     structure = {
@@ -203,12 +118,13 @@ class Sentence(EasyDocument):
         'cn': unicode,
         'include': Set(unicode), # 内含的单词
 
+        'votes': { unicode: int }, # word: vote
+
         'create_time': datetime,
         'modify_time': datetime,
         }
     required_fields = ['en', 'cn', 'hash']
     default_values = {
-        'include': []
     }
     indexes = [
             {'fields': ['include']},
@@ -226,7 +142,7 @@ class Sentence(EasyDocument):
 
     @staticmethod
     def get_token_sentences(token):
-        cur = sentences.Sentence.find({'include': token.en}, sort=[('_id', 1)])
+        cur = db.Sentence.find({'include': token.en}, sort=[('_id', 1)])
         return list(cur)
 
     def update_include(self, include):
@@ -242,7 +158,8 @@ class Sentence(EasyDocument):
             self.create_time = datetime.now()
 
 
-class Diff(EasyDocument):
+@conn.register
+class Diff(Doc):
     __database__ = DB_NAME
     __collection__ = diffs.name
     structure = {
@@ -259,11 +176,7 @@ class Diff(EasyDocument):
         return [x['word'] for x in self.diff_meanings]
 
 
-
-conn.register([
-    User, Token, Sentence, Diff
-])
-
-
 if __name__ == '__main__':
-    pass
+    sen = db.Sentence.find_one({'include': u'ability'})
+    print sen
+

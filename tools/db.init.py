@@ -14,17 +14,17 @@ def init_users():
         if coll_name.startswith('tasks'):
             db[coll_name].drop()
 
-    u1 = users.User()
+    u1 = db.User()
     u1.sina_id = 1L
     u1.screen_name = u'test1'
     u1.save()
 
-    u2 = users.User()
+    u2 = db.User()
     u2.sina_id = 2L
     u2.screen_name = u'test2'
     u2.save()
 
-    for user in users.find():
+    for user in db.User.find():
         print user
 
 
@@ -108,9 +108,9 @@ def import_barron_3500():
             word.dict_word_id = dict_word_id
             word.save()
 
-            s = sentences.Sentence.find_one({'foreign':sentence})
+            s = db.Sentence.find_one({'foreign':sentence})
             if not s:
-                s = sentences.Sentence()
+                s = db.Sentence()
                 s.foreign = sentence
                 s.chinese = u'- Barron原版例句 -'
             if word.foreign not in s.word_list:
@@ -187,9 +187,9 @@ def import_english_sentences(course_name):
             foreign = unicode(r[0])
             chinese = unicode(r[1])
 
-            sentence = sentences.Sentence.find_one({'foreign':foreign})
+            sentence = db.Sentence.find_one({'foreign':foreign})
             if not sentence:
-                sentence = sentences.Sentence()
+                sentence = db.Sentence()
                 sentence.foreign = foreign
                 sentence.chinese = chinese
             if word.foreign not in sentence.word_list:

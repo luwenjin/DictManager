@@ -1,15 +1,15 @@
 #coding:utf-8
-'''
+"""
 语言相关的 工具函数
-'''
+"""
 import re
 
+
 #pattern_tags = r'[a-zA-Z]+\.'
-pattern_POS = (
-    ur'(?:\b(?:v|vi|n|conj|adv|adj|ad|a|vt|art|pron|num|prep|int|interj|abbr|aux)\.)'
-)
+pattern_POS = ur'(?:\b(?:v|vi|n|conj|adv|adj|ad|a|vt|art|pron|num|prep|int|interj|abbr|aux)\.)'
 pattern_multi_POSs = pattern_POS+ur'+(?:\uff0f|/|&|,)?'+pattern_POS+u'?'
 pattern_meaning_start = r'\(?'+pattern_POS+ur'+(?:\uff0f|/|&|,)?'+pattern_POS+u'?'
+
 
 def unify_ph(ph):
     ph_map = {
@@ -161,7 +161,7 @@ def prepare_data():
     from models import Token
     from views._views import get_reference_tokens
 
-    for i, token in enumerate(Token.query(tags=u'word')):
+    for i, token in enumerate(db.Token.find(tags=u'word')):
         en = token.en
         print
         print i, en

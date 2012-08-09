@@ -13,6 +13,7 @@ tokens.ensure_index('en')
 # 例句库
 sentences = db['sentences']
 sentences.ensure_index('include')
+sentences.ensure_index('hash')
 
 # 辨析库
 diffs = db['diffs']
@@ -53,6 +54,10 @@ dc_token_coll = db['resource.dictcn.tokens']
 # en, seg（en的分段情况）, level（常见程度，5最高，1最低）， phs（音标列表）
 # forms（词性：拼写）， exp_sentences（{exp:, sentences:{en:,cn:}})（解释所对应的例句）
 
+
+# iciba ---------------------------------
+cb_page_coll = db['resource.iciba.pages']
+cb_page_coll.ensure_index('en')
 
 
 # 有道 ---------------------------------

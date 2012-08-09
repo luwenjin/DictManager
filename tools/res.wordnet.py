@@ -22,7 +22,7 @@ def load_lemmas():
         tokens.ensure_index('en')
         token = Token.get_token(lemma)
         if not token:
-            token = tokens.Token()
+            token = db.Token()
             token.en = lemma
             token.save()
 #            print i, 'saved', lemma
@@ -31,7 +31,7 @@ def load_lemmas():
 
 def update_tokens_lemma():
     wnl = WordNetLemmatizer()
-    for i, token in enumerate(tokens.Token.find({"courses": 'IELTS', 'is_trash': False})):
+    for i, token in enumerate(db.Token.find({"courses": 'IELTS', 'is_trash': False})):
         lemma = wnl.lemmatize(token.en)
         if lemma != token.en:
             print token.en, lemma
@@ -47,7 +47,7 @@ def split_synset_name(name):
 def import_tokens():
     wn_token_coll.drop()
     wn_token_coll.ensure_index('en')
-    for i, token in enumerate(tokens.Token.find({"courses": 'IELTS', 'is_trash': False})):
+    for i, token in enumerate(db.Token.find({"courses": 'IELTS', 'is_trash': False})):
         wn_token = wn_token_coll.WNToken()
         wn_token.en = token.en
 

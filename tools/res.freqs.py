@@ -9,7 +9,7 @@ from collections import OrderedDict
 
 from pyquery import PyQuery as pq
 
-from models import freq_coll, cl_token_coll, Token, cl_freq_page_coll
+from models import freq_coll, cl_token_coll, db, cl_freq_page_coll
 
 
 # not good for freq
@@ -120,7 +120,7 @@ def filter_ngram1():
 
 
 def sync_en_from_tokens():
-    for i, token in enumerate(Token.query()):
+    for i, token in enumerate(db.Token.find()):
         en = token.en
         freq_doc = freq_coll.find_one({'en': en})
         if not freq_doc:

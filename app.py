@@ -44,18 +44,17 @@ def login_or_register():
     if not name or not password:
         return redirect('/login?error=%s' % urllib.quote('请输入账号密码'))
 
-    user = User.one(name=name)
+    user = db.User.find_one(name=name)
     if user:
         if user.password != password:
             return redirect('/login?error=%s' % urllib.quote('密码不正确'))
         if user.ban:
             return redirect('/login?error=%s' % urllib.quote('您已经被禁止登录'))
     else:
-        user = User.new(
-            name = name,
-            password = password,
-            role = u'editor',
-        )
+        user = db.User()
+        user.name = name
+        user.password = password
+        user.role = u'editor'
     session['name'] = user.name
     session['role'] = user.role
     user.last_login = datetime.now()
