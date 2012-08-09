@@ -224,9 +224,9 @@ def import_differences():
 
 def match_differences_dict_word_id():
     # todo: not ready
-    '''
+    """
     测试differences中的word和dict_word_id取到的单词能否对应起来
-    '''
+    """
     differences = db['resource.qiji.differences']
     tokens = db['resource.qiji.tokens']
     tokens.ensure_index('dict_word_id')
@@ -237,7 +237,7 @@ def match_differences_dict_word_id():
         meanings = [x.get('meaning') for x in doc.get('differences')]
 
         for word in words:
-            token = tokens.find_one({'foreign': word})
+            token = db.Token.find_one({'foreign': word})
             if not token:
                 print '-----------------------', doc.get("_id")
                 for item in doc.get('differences'):

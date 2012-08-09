@@ -59,7 +59,7 @@
 
                     <div class="controls">
                         <label class="checkbox">
-                            <input name="is_trash" type="checkbox" {% if token.is_trash %}checked{% endif %}>
+                            <input name="is_trash" type="checkbox" {% if 'trash' in token.tags %}checked{% endif %}>
                             垃圾箱
                         </label>
                     </div>

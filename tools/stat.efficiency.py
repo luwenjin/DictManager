@@ -32,7 +32,7 @@ def is_mastered(uw):
         return True
 
 
-for user in users.User.find():
+for user in db.User.find():
     usercourse_list = user.usercourse_list
     for usercourse in usercourse_list:
         uw_coll = usercourse.userwords_collection

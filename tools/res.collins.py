@@ -47,7 +47,7 @@ def fetch_dict_page(en):
 
 
 def sync_all_hits_pages():
-    en_list = [x.get('en') for x in Token.query()]
+    en_list = [x.get('en') for x in db.Token.find()]
     count = len(en_list)
 
     def fetch_and_store(en, i=None, count=None):
