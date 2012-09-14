@@ -17,6 +17,7 @@ class Token(Doc):
     structure = {
         'hash': unicode, # lower case 'en', auto modify on save
         'en': unicode, # from qiji
+        '_en': Set(unicode), # ill formed en, maybe alias,
         'freq': float, # 0.0 - 1.0, -1 for empty
         'spells': Set(unicode), # eg: mr mr. Mr Mr.
         'phs': Set(unicode), # from iciba(best)
@@ -37,6 +38,7 @@ class Token(Doc):
         'exp.cn': [],
         'exp.core': u'',
         'note': u'',
+        '_en': set(),
         }
     indexes = [
             {'fields': ['en']},
@@ -50,6 +52,21 @@ class Token(Doc):
     def get_token(en):
         doc = db.Token.find_one({'en': unicode(en)})
         return doc
+
+    @classmethod
+    def normalize(cls, en):
+        # ... 加上左右空格
+        en = re.sub('\.\.+', ' ... ', en)
+
+        # sb/sb. -> sb.
+        en = re.sub('''(?i)(\W|\A)(sb\.?)(\Z|\W)''', r'\1sb.\3', en)
+
+        # sth/sth. -> sth.
+        en = re.sub('''(?i)(\W|\A)(sth\.?)(\Z|\W)''', r'\1sth.\3', en)
+
+        # 去除多余的连续空格
+        en = re.sub('\s\s+', ' ', en)
+        return en.strip()
 
     @classmethod
     def make_hash(cls, en):
@@ -120,6 +137,7 @@ class Sentence(Doc):
 
         'votes': { unicode: int }, # word: vote
 
+        'sources': Set(unicode), # 来源
         'create_time': datetime,
         'modify_time': datetime,
         }
@@ -177,6 +195,8 @@ class Diff(Doc):
 
 
 if __name__ == '__main__':
-    sen = db.Sentence.find_one({'include': u'ability'})
-    print sen
+    for i, token in enumerate(db.Token.find()):
+        token['_en'] = set()
+        token.save()
+        print token.en
 

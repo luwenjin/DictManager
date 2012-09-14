@@ -5,7 +5,7 @@ import urllib
 from flask import Flask, request, redirect, render_template, session, url_for
 from flask.ext.assets import Environment
 
-from models import User
+from models import db
 from views import require_login, tokens_blueprints
 
 app = Flask(__name__)

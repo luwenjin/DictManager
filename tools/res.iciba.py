@@ -16,38 +16,45 @@ from models import cb_page_coll, db
 from utils import fetch_url, open_url
 
 
-def sync_all_pages():
+def fill_tokens_en():
+    for i, token in enumerate(db.Token.find()):
+        if cb_page_coll.find_one({'en': token.en}):
+            continue
+        print i, token.en
+        cb_page_coll.save({'en':token.en, 'content': u''})
 
+def sync_all_pages():
     def fetch_and_store(en, i=None):
-        if cb_page_coll.find_one({'en': en}):
+        cb_page = cb_page_coll.find_one({'en': en})
+
+        if cb_page and cb_page['content']:
             print i, 'skip:', en
             return
-
-        url = 'http://www.iciba.com/%s' % quote(en)
+        try:
+            url = 'http://www.iciba.com/%s' % quote(en)
+        except:
+            return
         content = open_url(url)
         doc = pq(content)
         html = unicode(doc('#center'))
+        if not cb_page:
+            cb_page = {'en': en, 'content': u''}
         if html:
-            page_doc = {
-                'en': en,
-                'content': html
-            }
-            cb_page_coll.save(page_doc)
+            cb_page['content'] = html
+            cb_page_coll.save(cb_page)
 #            print html
             print i, 'saved', en
         else:
             print i, 'empty', en
 
     for i, token in enumerate(db.Token.find()):
-        fetch_and_store(token.en, i)
-
-
-
-
+        en = token['en']
+        fetch_and_store(en, i)
 
 
 if __name__ == '__main__':
     sync_all_pages()
+
 
 
 

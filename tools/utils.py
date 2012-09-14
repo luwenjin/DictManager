@@ -21,7 +21,7 @@ def fetch_url(url, headers=None):
         return fetch_url(url)
 
 
-ghost = Ghost(cache_dir='d:/temp')
+ghost = Ghost(cache_dir='d:/temp/ghost')
 def open_url(url):
     try:
         ghost.open(url)

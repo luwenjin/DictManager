@@ -4,7 +4,7 @@ import os, sys
 parent_path = os.path.split(os.path.dirname(__file__))[0]
 sys.path.append(parent_path)
 #-------------------------------------------------
-from models import yd_simple_token_coll, Token
+from models import yd_simple_token_coll, db
 
 
 def fill_yd_phs():

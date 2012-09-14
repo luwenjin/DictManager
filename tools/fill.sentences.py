@@ -23,6 +23,7 @@ def fill_qiji_sentences():
             print 'skip:', sen.en
 
         sen.include.update(qj_sen['include'])
+        sen.sources.add(u'qiji')
         sen.save()
 
 
@@ -30,30 +31,11 @@ def fill_dictcn_sentences():
     pass
 
 
-def test():
-    f_count = 0
-    nf_count = 0
-    for token in db.Token.find():
-        en = token.en
-        sentences = db.Sentence.find({'include': en})
-        if not sentences:
-            continue
-        found = False
-        for sentence in sentences:
-            if token.exp.core in sentence.cn:
-#                print token.en
-#                print sentence.en
-#                print sentence.cn
-                found = True
-                f_count += 1
-                break
-        if not found:
-            nf_count += 1
-            print en, 'not found'
-    print f_count, nf_count
 
 
 if __name__ == '__main__':
-    test()
+#    db.sentences.drop()
+
+    fill_qiji_sentences()
 
 
