@@ -27,9 +27,6 @@ def query_page(coll_or_model, query, sort=None, page=1, count=20):
     return list(docs), pager
 
 
-
-
-
 def get_reference_tokens(en):
     results = []
     t = time.time()

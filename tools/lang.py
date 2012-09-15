@@ -51,7 +51,7 @@ def split_meaning_text(s):
 
 def split_meaning_spans(meaning_block):
     meaning_block = meaning_block.replace(u'．', '.')
-    starts = [x.start() for x in re.finditer(pattern_meaning_start, meaning_block)]
+    starts = [x.run() for x in re.finditer(pattern_meaning_start, meaning_block)]
     if starts:
         meaning_lines = split_by_starts(meaning_block, starts)
     else:

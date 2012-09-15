@@ -13,16 +13,17 @@ def fix_spells_and_sentence_include():
         en = token.en
         norm_en = Token.normalize(token.en)
         sent = db.Sentence.find_one({'include': en})
-        if en != norm_en and sent:
+        if en != norm_en:
             print en, '->', norm_en
-            print sent.en
-            print '-------------'
             token._en.add(en)
             token.en = norm_en
-            sent.include.discard(en)
-            sent.include.add(norm_en)
             token.save()
-            sent.save()
+            if sent:
+                sent.include.discard(en)
+                sent.include.add(norm_en)
+                sent.save()
+                print sent.en
+            print '-------------'
 
 
 if __name__ == '__main__':

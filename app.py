@@ -4,6 +4,7 @@ import urllib
 
 from flask import Flask, request, redirect, render_template, session, url_for
 from flask.ext.assets import Environment
+import jinja2
 
 from models import db
 from views import require_login, tokens_blueprints
@@ -11,10 +12,12 @@ from views import require_login, tokens_blueprints
 app = Flask(__name__)
 app.config.from_object('settings')
 
-app.register_blueprint(tokens_blueprints, url_prefix='/tokens')
-
 app.jinja_env.filters['max'] = max
 app.jinja_env.filters['min'] = min
+app.jinja_options['extensions'].append('jinja2.ext.loopcontrols')
+
+app.register_blueprint(tokens_blueprints, url_prefix='/tokens')
+
 
 assets = Environment(app)
 

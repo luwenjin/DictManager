@@ -1,80 +1,126 @@
-html, body{
-    background: white;
-    font-family: "Microsoft Yahei";
+html, body {
+  background: white;
+  font-family: "Microsoft Yahei";
 }
 
 .btn, input, textarea {
-    font-family: "Microsoft Yahei";
+  font-family: "Microsoft Yahei";
 }
 
-.brand small{
-    font-size:9px;
+.brand small {
+  font-size: 9px;
 }
 
-span.user-name{
-    color: #ccc;
-    display: block;
-    line-height: 40px;
-    height: 40px;
-    margin: 0 10px;
+span.user-name {
+  color: #ccc;
+  display: block;
+  line-height: 40px;
+  height: 40px;
+  margin: 0 10px;
 }
 
-
-#tokens-page{
-    .sidebar {
-        .pagination{
-            input{
-                width: 20px;
-            }
-            li{
-                a{
-                    padding: 0px 10px 0 10px;
-                }
-
-            }
+#tokens-page {
+  .sidebar {
+    .pagination {
+      input {
+        width: 20px;
+      }
+      li {
+        a {
+          padding: 0px 10px 0 10px;
         }
 
-        #token_list{
-            li{
-                line-height:25px;
-                font-size:14px;
-                border-bottom: 1px dashed #ddd;
-
-                a{
-                    padding-left: 10px;
-                    padding-right: 10px;
-                    display:block;
-                }
-                a[disabled] {
-                    color: grey;
-                }
-            }
-            li.active, li:hover{
-                background: #0088D3;
-
-                a {
-                    color: white;
-                    text-decoration:none;
-                }
-
-            }
-
-            li:hover{
-
-            }
-        }
+      }
     }
+
+    #token_list {
+      li {
+        line-height: 25px;
+        font-size: 14px;
+        border-bottom: 1px dashed #ddd;
+
+        a {
+          padding-left: 10px;
+          padding-right: 10px;
+          display: block;
+        }
+        a[disabled] {
+          color: grey;
+        }
+      }
+      li.active, li:hover {
+        background: #0088D3;
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+
+      }
+
+      li:hover {
+
+      }
+    }
+  }
+
+  .token-preview {
+    border: 1px solid #ddd;
+    padding: 30px;
+
+    h2.en {
+      display: block;
+      text-align: center;
+      font-size: 48px;
+    }
+    h2.cn {
+      font-size: 36px;
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+    }
+    span.ph {
+      display: block;
+      text-align:center;
+      margin-top: 20px;
+      font-family: "arial";
+      font-size: 16px;
+      font-style: italic;
+    }
+    p.sentence {
+      font-family: 'Arial', 'Microsoft Yahei';
+      margin: 0px;
+      padding: 0px;
+      text-align: center;
+      font-size: 18px;
+
+      &.en {
+        margin-top: 20px;
+      }
+      &.cn {
+        margin-top: 10px;
+      }
+    }
+
+    h4 {
+      display: block;
+      vertical-align: middle;
+      margin-top: 30px;
+      border-bottom: 1px dashed #ddd;
+    }
+
+
+
+  }
 }
 
-
-
-#login-page{
-    form#login{
-        margin-top: 30px;
-        #info .controls {
-            &.error {
-                color: red;
-            }
-        }
+#login-page {
+  form#login {
+    margin-top: 30px;
+    #info .controls {
+      &.error {
+        color: red;
+      }
     }
+  }
 }

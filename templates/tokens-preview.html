@@ -1,0 +1,14 @@
+<div class="token-preview">
+    {% if token.phs %}
+    <span class="ph">[ {{ token.phs | join(';') }} ]</span>
+    {% endif %}
+    <h2 class="en">{{ token.en }}</h2>
+    <h2 class="cn">{{ token.exp.core }}</h2>
+    {% set sentences = token.sentences() %}
+    {% if sentences|length > 0 %}
+    <p class="sentence en"> {{ sentences[0].en }} </p>
+    <p class="sentence cn"> {{ sentences[0].cn }} </p>
+    {% endif %}
+
+    <h4>详细解释</h4>
+</div>

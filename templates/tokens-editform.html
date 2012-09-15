@@ -1,0 +1,63 @@
+<form id="token_detail" class="form-horizontal" method="POST" action="/tokens">
+    <fieldset>
+        <input type="hidden" name="id" value="{{token._id}}">
+
+        <div id="foreign" class="control-group">
+            <label class="control-label">英文</label>
+            <div class="controls">
+                <input class="input-xlarge" name="en" value="{{token.en}}">
+                <small style="color: grey;">{{ token.phs | join(';') }}</small>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">核心解释</label>
+            <div class="controls">
+                <input type='text' name="exp_core" value="{{token.exp.core}}" class="input-xlarge"
+                       placeholder="要求：最核心最精简的词性和含义">
+                <small style="color: grey;"></small>
+            </div>
+        </div>
+
+        <div id="courses" class="control-group">
+            <label class="control-label">课程</label>
+            <div class="controls">
+                {% for course_name in token.courses %}
+                <input name="course" value="{{course_name}}" class="input-mini">
+                {% else %}
+                <input name="course" value="" class="input-mini">
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">备注</label>
+            <div class="controls">
+                <textarea name="note" class="input-xlarge">{{token.note|default("", true)}}</textarea>
+            </div>
+        </div>
+
+        <div id="trash" class="control-group">
+            <label class="control-label"></label>
+
+            <div class="controls">
+                <label class="checkbox">
+                    <input name="is_trash" type="checkbox" {% if 'trash' in token.tags %}checked{% endif %}>
+                    垃圾箱
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">
+                    <i class="icon-ok icon-white"></i>
+                    保存
+                </button>
+            </div>
+        </div>
+
+
+    </fieldset>
+
+</form>

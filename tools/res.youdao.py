@@ -38,7 +38,9 @@ def fetch_detail_xml(en):
     except:
         en = ''.join(re.findall("[a-zA-Z\-\s\'\.]+", en))
         encoded_en = urllib.quote(en)
-    url = 'http://dict.youdao.com/search?keyfrom=deskdict.main&q=' + encoded_en + '&xmlDetail=true&doctype=xml&xmlVersion=7.1&dogVersion=1.0&client=deskdict&id=0695430f503a8313&vendor=qiang.youdao&in=YoudaoDictFull_(1)&appVer=5.0.32.4695&appZengqiang=1&le=eng&xslVer=3.0&LTH=156'
+    url = 'http://dict.youdao.com/search?keyfrom=deskdict.main&q=' + \
+          encoded_en + \
+          '&xmlDetail=true&doctype=xml&xmlVersion=7.1&dogVersion=1.0&client=deskdict&id=0695430f503a8313&vendor=qiang.youdao&in=YoudaoDictFull_(1)&appVer=5.0.32.4695&appZengqiang=1&le=eng&xslVer=3.0&LTH=156'
     xml = requests.get(url, headers={'user-agent': 'Yodao Desktop Dict (Windows 6.1.7600)'}).content
     return xml
 

@@ -6,116 +6,31 @@
     <div class="span3 sidebar">{% include 'sidebar.html' %}</div>
 
     <div class="span9">
-        <ul class="nav nav-tabs">
-            <li {%if channel=='token'%}class="active"{%endif%}><a href="javascript:change_path('tokens')">词义</a></li>
-            <!--<li {%if channel=='sentence'%}class="active"{%endif%}><a href="javascript:change_path('sentences')">例句</a></li>-->
-            <!--<li {%if channel=='difference'%}class="active"{%endif%}><a href="javascript:change_path('differences')">辨析</a></li>-->
-        </ul>
-
-        {% from 'macros.html' import alerts %}
+        {% from 'macros.html' import alerts, references_table %}
         {{ alerts() }}
 
-        <form id="token_detail" class="form-horizontal" method="POST" action="/tokens">
-            <fieldset>
-                <input type="hidden" name="id" value="{{token._id}}">
-
-                <div id="foreign" class="control-group">
-                    <label class="control-label">英文</label>
-                    <div class="controls">
-                        <input class="input-xlarge" name="en" value="{{token.en}}">
-                        <small style="color: grey;">{{ token.phs | join(';') }}</small>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">核心解释</label>
-                    <div class="controls">
-                        <input type='text' name="exp_core" value="{{token.exp.core}}" class="input-xlarge"
-                               placeholder="要求：最核心最精简的词性和含义">
-                        <small style="color: grey;"></small>
-                    </div>
-                </div>
-
-                <div id="courses" class="control-group">
-                    <label class="control-label">课程</label>
-                    <div class="controls">
-                        {% for course_name in token.courses %}
-                            <input name="course" value="{{course_name}}" class="input-mini">
-                        {% else %}
-                            <input name="course" value="" class="input-mini">
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">备注</label>
-                    <div class="controls">
-                        <textarea name="note" class="input-xlarge">{{token.note|default("", true)}}</textarea>
-                    </div>
-                </div>
-
-                <div id="trash" class="control-group">
-                    <label class="control-label"></label>
-
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input name="is_trash" type="checkbox" {% if 'trash' in token.tags %}checked{% endif %}>
-                            垃圾箱
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="icon-ok icon-white"></i>
-                            保存
-                        </button>
-                    </div>
-                </div>
-
-
-            </fieldset>
-
-        </form>
-
-        <ul class="nav nav-tabs" id="resource_tabs">
-            <li class="active"><a href="javascript:void(0)" data-target="#meaning_pane">含意参考</a></li>
-            <li><a href="javascript:void(0)" data-target="#sentence_pane">例句</a></li>
-            <!--<li><a href="javascript:void(0)" data-target="#freq_ngram_pane">频率ngram</a></li>-->
-            <!--<li><a href="javascript:void(0)" data-target="#freq_20k_pane">频率20k</a></li>-->
+        <ul class="nav nav-tabs">
+            <li {%if mode=='edit'%}class="active"{%endif%}>
+                <a href="javascript:change_param('mode', 'edit')">编辑</a>
+            </li>
+            <li {%if mode=='preview'%}class="active"{%endif%}>
+                <a href="javascript:change_param('mode', 'preview')">预览</a>
+            </li>
         </ul>
 
         <div class="tab-content">
-            <div id="meaning_pane" class="tab-pane active">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>meaning</th>
-                        <th>source</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ref in references_tokens %}
-                    <tr>
-                        <td>{{ref.exp|safe}}</td>
-                        <td>{{ref.src|safe}}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <div class="tab-pane{% if mode=="edit" %} active {% endif %}" id="edit-pane">
+                {% include  "tokens-editform.html" %}
             </div>
 
-            <div id="sentence_pane" class="tab-pane">
-                <ul>
-                    {% for sentence in sentence_list %}
-                    <li style="border-top:1px dotted;padding: 5px;">
-                        <b>{{sentence.en}}</b><br/>
-                        <span>{{sentence.cn}}</span>
-                    </li>
-                    {% endfor %}
-                </ul>
+
+            <div class="tab-pane{% if mode=="preview" %} active {% endif %}" id="preview-pane">
+                {% include "tokens-preview.html" %}
             </div>
+
+        </div>
+
+
 
 
     </div><!--/.span9-->

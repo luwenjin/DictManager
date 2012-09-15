@@ -65,6 +65,7 @@ def view_token():
     page_info = query_sidebar_info(request)
     search_word = request.args.get('search_word', '').strip()
     token_id = request.args.get('token_id')
+    mode = request.args.get('mode', 'edit')
 
     if search_word and page_info['pager']['total'] > 0 and page_info['token_list']:
         token = page_info['token_list'][0]
@@ -79,7 +80,7 @@ def view_token():
 
     return render_template(
         'tokens.html',
-        channel = 'token',
+        mode = mode,
         page_info = page_info,
         token = token,
         sentence_list = Sentence.get_token_sentences(token),

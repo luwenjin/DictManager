@@ -44,9 +44,14 @@ class Token(Doc):
             {'fields': ['en']},
             {'fields': ['hash']},
             {'fields': ['courses']},
+            {'fields': ['tags']},
     ]
     use_dot_notation = True
     schemeless = True
+
+    def sentences(self):
+        sents = db.Sentence.find({'include': self.en})
+        return list(sents)
 
     @staticmethod
     def get_token(en):
